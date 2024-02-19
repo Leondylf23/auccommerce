@@ -1,0 +1,695 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Best Seller Card Correct Render 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="mainContainer"
+        data-testid="profile-container"
+      >
+        <h1
+          class="title"
+        >
+          Profile Anda
+        </h1>
+        <div
+          class="contentContainer"
+        >
+          <div
+            class="leftSide"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault profileImage css-2s90m6-MuiAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+                data-testid="PersonIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <label
+              class="button"
+              for="profileImageFile"
+            >
+              Ganti Gambar
+            </label>
+            <input
+              accept="image/*"
+              hidden=""
+              id="profileImageFile"
+              type="file"
+            />
+            <div
+              class="accountInfoContainer"
+            >
+              <p>
+                Bisnis
+              </p>
+              <p />
+            </div>
+          </div>
+          <div
+            class="rigthSide"
+          >
+            <h3
+              class="containerTitle"
+            >
+              General
+            </h3>
+            <label
+              class="label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              class="input"
+              disabled=""
+              id="email"
+              type="email"
+              value=""
+            />
+            <label
+              class="label"
+              for="fullname"
+            >
+              Nama Lengkap
+            </label>
+            <input
+              class="input"
+              id="fullname"
+              type="text"
+              value=""
+            />
+            <label
+              class="label"
+              for="dob"
+            >
+              Tanggal Lahir
+            </label>
+            <input
+              class="input"
+              id="dob"
+              type="date"
+              value=""
+            />
+            <label
+              class="label"
+              for="dob"
+            >
+              Kata Sandi
+            </label>
+            <div
+              class="password"
+            >
+              <input
+                class="input"
+                disabled=""
+                id="dob"
+                type="password"
+                value="*******"
+              />
+              <a
+                href="/change-password"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="ModeEditOutlineIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 5.63l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div
+              class="buttonConatainer"
+            >
+              <button
+                class="button"
+                data-testid="profile-button-submit"
+                type="button"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="mainContainer"
+      data-testid="profile-container"
+    >
+      <h1
+        class="title"
+      >
+        Profile Anda
+      </h1>
+      <div
+        class="contentContainer"
+      >
+        <div
+          class="leftSide"
+        >
+          <div
+            class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault profileImage css-2s90m6-MuiAvatar-root"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+              data-testid="PersonIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </div>
+          <label
+            class="button"
+            for="profileImageFile"
+          >
+            Ganti Gambar
+          </label>
+          <input
+            accept="image/*"
+            hidden=""
+            id="profileImageFile"
+            type="file"
+          />
+          <div
+            class="accountInfoContainer"
+          >
+            <p>
+              Bisnis
+            </p>
+            <p />
+          </div>
+        </div>
+        <div
+          class="rigthSide"
+        >
+          <h3
+            class="containerTitle"
+          >
+            General
+          </h3>
+          <label
+            class="label"
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            class="input"
+            disabled=""
+            id="email"
+            type="email"
+            value=""
+          />
+          <label
+            class="label"
+            for="fullname"
+          >
+            Nama Lengkap
+          </label>
+          <input
+            class="input"
+            id="fullname"
+            type="text"
+            value=""
+          />
+          <label
+            class="label"
+            for="dob"
+          >
+            Tanggal Lahir
+          </label>
+          <input
+            class="input"
+            id="dob"
+            type="date"
+            value=""
+          />
+          <label
+            class="label"
+            for="dob"
+          >
+            Kata Sandi
+          </label>
+          <div
+            class="password"
+          >
+            <input
+              class="input"
+              disabled=""
+              id="dob"
+              type="password"
+              value="*******"
+            />
+            <a
+              href="/change-password"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="ModeEditOutlineIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 5.63l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="buttonConatainer"
+          >
+            <button
+              class="button"
+              data-testid="profile-button-submit"
+              type="button"
+            >
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Profile Page Correct Render 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="mainContainer"
+        data-testid="profile-container"
+      >
+        <h1
+          class="title"
+        >
+          Profile Anda
+        </h1>
+        <div
+          class="contentContainer"
+        >
+          <div
+            class="leftSide"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault profileImage css-2s90m6-MuiAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+                data-testid="PersonIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <label
+              class="button"
+              for="profileImageFile"
+            >
+              Ganti Gambar
+            </label>
+            <input
+              accept="image/*"
+              hidden=""
+              id="profileImageFile"
+              type="file"
+            />
+            <div
+              class="accountInfoContainer"
+            >
+              <p>
+                Bisnis
+              </p>
+              <p />
+            </div>
+          </div>
+          <div
+            class="rigthSide"
+          >
+            <h3
+              class="containerTitle"
+            >
+              General
+            </h3>
+            <label
+              class="label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              class="input"
+              disabled=""
+              id="email"
+              type="email"
+              value=""
+            />
+            <label
+              class="label"
+              for="fullname"
+            >
+              Nama Lengkap
+            </label>
+            <input
+              class="input"
+              id="fullname"
+              type="text"
+              value=""
+            />
+            <label
+              class="label"
+              for="dob"
+            >
+              Tanggal Lahir
+            </label>
+            <input
+              class="input"
+              id="dob"
+              type="date"
+              value=""
+            />
+            <label
+              class="label"
+              for="dob"
+            >
+              Kata Sandi
+            </label>
+            <div
+              class="password"
+            >
+              <input
+                class="input"
+                disabled=""
+                id="dob"
+                type="password"
+                value="*******"
+              />
+              <a
+                href="/change-password"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="ModeEditOutlineIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 5.63l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div
+              class="buttonConatainer"
+            >
+              <button
+                class="button"
+                data-testid="profile-button-submit"
+                type="button"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="mainContainer"
+      data-testid="profile-container"
+    >
+      <h1
+        class="title"
+      >
+        Profile Anda
+      </h1>
+      <div
+        class="contentContainer"
+      >
+        <div
+          class="leftSide"
+        >
+          <div
+            class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault profileImage css-2s90m6-MuiAvatar-root"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+              data-testid="PersonIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </div>
+          <label
+            class="button"
+            for="profileImageFile"
+          >
+            Ganti Gambar
+          </label>
+          <input
+            accept="image/*"
+            hidden=""
+            id="profileImageFile"
+            type="file"
+          />
+          <div
+            class="accountInfoContainer"
+          >
+            <p>
+              Bisnis
+            </p>
+            <p />
+          </div>
+        </div>
+        <div
+          class="rigthSide"
+        >
+          <h3
+            class="containerTitle"
+          >
+            General
+          </h3>
+          <label
+            class="label"
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            class="input"
+            disabled=""
+            id="email"
+            type="email"
+            value=""
+          />
+          <label
+            class="label"
+            for="fullname"
+          >
+            Nama Lengkap
+          </label>
+          <input
+            class="input"
+            id="fullname"
+            type="text"
+            value=""
+          />
+          <label
+            class="label"
+            for="dob"
+          >
+            Tanggal Lahir
+          </label>
+          <input
+            class="input"
+            id="dob"
+            type="date"
+            value=""
+          />
+          <label
+            class="label"
+            for="dob"
+          >
+            Kata Sandi
+          </label>
+          <div
+            class="password"
+          >
+            <input
+              class="input"
+              disabled=""
+              id="dob"
+              type="password"
+              value="*******"
+            />
+            <a
+              href="/change-password"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="ModeEditOutlineIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 5.63l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="buttonConatainer"
+          >
+            <button
+              class="button"
+              data-testid="profile-button-submit"
+              type="button"
+            >
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

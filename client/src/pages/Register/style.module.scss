@@ -1,0 +1,14 @@
+@import '@styles/base';
+
+.register {
+  display: flex;
+  justify-content: center;
+  h5 {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: small;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+export const GET_PRODUCTS_DATA = 'Home/GET_PRODUCTS_DATA';
+export const GET_MY_PRODUCTS_DATA = 'Home/GET_MY_PRODUCTS_DATA';
+export const SET_PRODUCTS_DATA = 'Home/SET_PRODUCTS_DATA';
+
+export const GET_BEST_SELLER = 'Home/GET_BEST_SELLER';
+export const SET_BEST_SELLER = 'Home/SET_BEST_SELLER';

@@ -1,0 +1,42 @@
+[
+  {
+    "dataValues": {
+      "id": 15,
+      "transactionCode": "TRX/2024-02-09/NhTxt",
+      "status": "FAILED"
+    },
+    "product": {
+      "dataValues": {
+        "title": "product 2",
+        "imageUrl": "http://res.cloudinary.com/dwyzuwtel/image/upload/v1707507294/image/cmri23yzcdfennvhi5e2.jpg"
+      }
+    },
+    "user": {
+      "dataValues": {
+        "fullname": "user"
+      }
+    }
+  },
+  {
+    "dataValues": {
+      "id": 16,
+      "transactionCode": "TRX/2024-02-09/t1Fez",
+      "status": "SUCCESS",
+      "variant": {
+        "price": "10000",
+        "variantName": "fffff"
+      }
+    },
+    "product": {
+      "dataValues": {
+        "title": "product 2",
+        "imageUrl": "http://res.cloudinary.com/dwyzuwtel/image/upload/v1707507294/image/cmri23yzcdfennvhi5e2.jpg"
+      }
+    },
+    "user": {
+      "dataValues": {
+        "fullname": "user"
+      }
+    }
+  }
+]

@@ -1,0 +1,74 @@
+@import '../../styles/base.scss';
+
+.cardContainer {
+  @include padding(0.5rem);
+  @include directionY;
+
+  border-radius: 10px;
+  background-color: var(--color-bg);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  .cardImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+  }
+  .cardContent {
+    @include directionY;
+
+    width: 100%;
+    margin-top: 0.5rem;
+
+    .title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    .infoContainer {
+      @include directionY;
+
+      gap: 0.2rem;
+
+      .infoIconContainer {
+        @include directionX;
+
+        align-items: center;
+
+        .icon {
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+        }
+        .text {
+          font-size: 0.9rem;
+          width: 100%;
+          overflow-x: hidden;
+          text-overflow: ellipsis
+        }
+      }
+      .priceContainer {
+        @include directionX;
+
+        align-items: center;
+        margin-top: 0.6rem;
+
+        .icon {
+          margin-right: 0.5rem;
+          font-size: 1.8rem;
+        }
+        .text {
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+      }
+      .footer {
+        width: 100%;
+        text-align: end;
+        font-size: 0.8rem;
+        margin-top: -0.4rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "diskon 100k",
+        "priceCut": 100000
+    },
+    {
+        "id": 2,
+        "name": "diskon 50k",
+        "priceCut": 50000
+    },
+    {
+        "id": 3,
+        "name": "diskon 30k",
+        "priceCut": 30000
+    }
+]

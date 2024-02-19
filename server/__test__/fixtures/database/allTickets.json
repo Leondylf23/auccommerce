@@ -1,0 +1,32 @@
+[
+  {
+    "dataValues": {
+      "id": 1,
+      "imageUrl": "http://res.cloudinary.com/dwyzuwtel/image/upload/v1707507234/image/coigg6daa57si1smqema.jpg",
+      "location": "aaaaaa",
+      "title": "bikin baru edit 7",
+      "price": "10000000.00",
+      "variants": "[{\"variantName\":\"varian 1\",\"price\":\"10000000\"},{\"variantName\":\"varian 2\",\"price\":\"120000000\"},{\"variantName\":\"varian 3\",\"price\":\"600000000\"}]"
+    },
+    "user": {
+      "dataValues": {
+        "organization": "test edit name"
+      }
+    }
+  },
+  {
+    "dataValues": {
+      "id": 2,
+      "imageUrl": "http://res.cloudinary.com/dwyzuwtel/image/upload/v1707507294/image/cmri23yzcdfennvhi5e2.jpg",
+      "location": "wdadwadad",
+      "title": "tiket 2",
+      "price": "10000.00",
+      "variants": "[{\"variantName\":\"fffff\",\"price\":\"10000\"},{\"variantName\":\"asdwdwadw\",\"price\":\"1000000\"}]"
+    },
+    "user": {
+      "dataValues": {
+        "organization": "test edit name"
+      }
+    }
+  }
+]

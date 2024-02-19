@@ -1,0 +1,68 @@
+@import '@styles/base';
+
+.container {
+  @include padding(2rem);
+  @include directionY;
+
+  align-items: center;
+
+  .title {
+    @include paddingY(1rem);
+
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 32px;
+  }
+  .formFields {
+    @include directionY;
+
+    width: 100%;
+
+    .label {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .field {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  .footerText {
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+
+    .footerLink {
+      cursor: pointer;
+    }
+  }
+}
+
+.iconProfile {
+  margin-right: 10px;
+  color: #ffaf00;
+}
+.iconOrderings {
+  margin-right: 10px;
+  color: #87a900;
+}
+.iconDiscount {
+  margin-right: 10px;
+  color: #3b97d3;
+}
+.divider {
+  @include marginY(5px);
+  background-color: var(--color-bg-secondary);
+  width: 100%;
+  height: 1px;
+}
+.iconLogout {
+  margin-right: 10px;
+  color: #e50914;
+}

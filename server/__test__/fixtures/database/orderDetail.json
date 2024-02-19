@@ -1,0 +1,23 @@
+{
+  "dataValues": {
+    "bookingCode": "TRX/2024-02-09/s3fXd",
+    "status": "WAITING",
+    "address": "jalan jalan",
+    "phone": "123123123123",
+    "paymentMethod": "CASH",
+    "businessUserId": 1
+  },
+  "product": {
+    "dataValues": {
+      "title": "bikin baru edit 7",
+      "imageUrl": "http://res.cloudinary.com/dwyzuwtel/image/upload/v1707507234/image/coigg6daa57si1smqema.jpg",
+      "description": "test desc"
+    },
+    "user": {
+      "dataValues": {
+        "fullname": "user business",
+        "location": "Bekasi"
+      }
+    }
+  }
+}

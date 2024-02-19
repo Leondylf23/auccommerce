@@ -1,0 +1,23 @@
+@import './media-mixins.scss';
+
+@mixin light-theme {
+  --color-bg: #fff;
+  --color-bg-secondary: #e8eef1;
+  --color-text: #001a41;
+  --color-text-invert: #f4eee0;
+  --color-button: #83bfe7;
+  --color-button-hover: #6ba1c5;
+  --color-button-disabled: #557b94;
+  --color-border: #001a41;
+}
+
+@mixin dark-theme {
+  --color-bg: #4f4557;
+  --color-bg-secondary: #393646;
+  --color-text: #f4eee0;
+  --color-text-invert: #001a41;
+  --color-button:#557b94;
+  --color-button-hover: #5b8fb1;
+  --color-button-disabled: #83bfe7;
+  --color-border: #25487c;
+}

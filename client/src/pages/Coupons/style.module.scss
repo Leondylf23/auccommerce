@@ -1,0 +1,110 @@
+@import '@styles/base.scss';
+
+@include mainContainer {
+  .title {
+    margin-bottom: 0.6rem;
+  }
+  .topButtonContainer {
+    @include directionX;
+
+    justify-content: end;
+    margin-bottom: 1rem;
+
+    .button {
+      @include button;
+    }
+  }
+  .emptyContainer {
+    @include containerCenter;
+
+    width: 100%;
+    flex-grow: 1;
+  }
+  .dataContainer {
+    @include grid(1, 0.5rem);
+
+    @include apply-at-sm-size {
+      @include grid(2, 0.75rem);
+    }
+    @include apply-at-lg-size {
+      @include grid(3, 0.75rem);
+    }
+  }
+}
+.delBtn {
+  @include button;
+  @include directionX;
+  @include containerCenter;
+  @include padding(0 !important);
+
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  margin-left: 0.2rem;
+}
+.couponsCardContainer {
+  @include directionY;
+  @include padding(0.5rem);
+  @include shadow;
+
+  background-color: var(--color-bg);
+  border-radius: 10px;
+
+  .topContainer {
+    @include directionX;
+
+    justify-content: start;
+    margin-bottom: 0.5rem;
+
+    .name {
+      flex-grow: 1;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .contentContainer {
+    @include directionX;
+
+    align-items: center;
+
+    .number {
+      margin-left: 0.5rem;
+    }
+  }
+}
+.createNewContainer {
+  @include directionY;
+
+  width: 220px;
+
+  @include apply-at-sm-size {
+    width: 350px;
+  }
+
+  .topContainer {
+    @include directionX;
+
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .title {
+      flex-grow: 1;
+    }
+  }
+  .label {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+  .input {
+    @include input;
+
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .button {
+    @include button;
+
+    margin-top: 1rem;
+  }
+}

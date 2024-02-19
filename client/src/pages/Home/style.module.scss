@@ -1,0 +1,114 @@
+@import '@styles/base';
+
+@include mainContainer {
+  .title {
+    margin-bottom: 0.6rem;
+  }
+
+  .bestSeller {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    overflow-y: scroll;
+    width: 100%;
+    height: 150px;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .bestSeller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .createBtnContainer {
+    @include directionX;
+
+    justify-content: end;
+    margin-bottom: 0.6rem;
+
+    .button {
+      @include button;
+    }
+  }
+  .searchContainer {
+    @include directionY;
+    @include padding(0.6rem);
+
+    background-color: var(--color-bg);
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+
+    .title {
+      font-size: 1rem;
+    }
+    .input {
+      @include input;
+      width: 100%;
+    }
+
+    .debounce {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .resetInput {
+        width: 100%;
+        position: relative;
+
+        .input {
+          position: relative;
+        }
+
+        .reset {
+          right: 0;
+          margin: 10px;
+          font-size: 20px;
+          position: absolute;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgb(191, 191, 191);
+            border-radius: 100%;
+          }
+        }
+      }
+    }
+  }
+  .dataContainer {
+    @include directionY;
+
+    flex-grow: 1;
+
+    .dataGrid {
+      width: 100%;
+
+      .innerDataGrid {
+        @include grid(1, 0.6rem);
+        width: 100%;
+
+        @include apply-at-sm-size {
+          @include grid(2, 0.6rem);
+        }
+        @include apply-at-lg-size {
+          @include grid(3, 0.6rem);
+        }
+      }
+    }
+
+    .loadMore {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .empty {
+      @include containerCenter;
+      flex-direction: column;
+      width: 100%;
+      flex-grow: 1;
+    }
+  }
+}

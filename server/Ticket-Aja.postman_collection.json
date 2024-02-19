@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "c5d9e8ba-958e-4dc9-af2c-795995fb2275",
+		"name": "Ticket-Aja",
+		"description": "Collection of Ticket Aja backend endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22956573"
+	},
+	"item": [
+		{
+			"name": "[GET AUTH] Get User Profile Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST AUTH] Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"U2FsdGVkX1+Kbv4eat40YMi1D8hWR92Of4bawIxapOQ=\",\r\n    \"password\": \"U2FsdGVkX18swOXDrfnCZBcMZZZRTzNZHnhX1/ZlvLc=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST AUTH] Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullname\": \"U2FsdGVkX19UD49az3JuF0VXEfVZIDf7KsGC8qJpL5E=\",\r\n    \"dob\": \"U2FsdGVkX1/SbPX2a0aox2Rjz7+4Ka2zXJbeqDIDVpo=\",\r\n    \"email\": \"U2FsdGVkX1/9idHRiXddxKPYQqaDZAVRL3un9enxlNo=\",\r\n    \"password\": \"U2FsdGVkX18U26W+1wY+pWFvb97N7s9ts9xnU67aSvg=\",\r\n    \"role\": \"U2FsdGVkX18KKP0JAwckeOLHzDkeLatH+bwwpey73q4=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST AUTH] Reset User Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@a.ab\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/resetpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"resetpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH AUTH] Change User Password",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oldPassword\": \"U2FsdGVkX1+0aSxGRuqp4We1lSnvoqLckdMd3a106N4=\",\r\n    \"newPassword\": \"U2FsdGVkX18BnxMAGMfT6dwpYJ9Td7vOLTVGRjAueYE=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/changepassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"changepassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH AUTH] Update User Profile Data",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fullname",
+							"value": "test edit name",
+							"type": "text"
+						},
+						{
+							"key": "dob",
+							"value": "2012-01-01",
+							"type": "text"
+						},
+						{
+							"key": "imageData",
+							"type": "file",
+							"src": "/D:/Pictures/333580.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Customer Bookings Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Customer Booking Detail Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking/detail?id=17",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "17"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Business Bookings Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking/business",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking",
+						"business"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Business Booking Detail Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking/business/detail?id=18",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking",
+						"business",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Business Coupons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/coupon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"coupon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Customer Coupons List By Ticket Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/coupon/byticket?id=18",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"coupon",
+						"byticket"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get All Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Ticket Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Business Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/mytickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"mytickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET TICKET] Get Business Ticket Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/mytickets/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"mytickets",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST TICKET] Create Customer Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": \"U2FsdGVkX1/5ojfIeq1VN6zL1ChOXw7/MkfsMabvayI/LncfJIjIGZWrDQe68tk2wyEwXemEYE7XNJyFF/hfb82gI6nGfdASOEJj/vtg5CuJqNvhJP3pkcZL5VplNg+CTYfpzTP52/3G74DVHgIuF3+zs1bVHo/ByicG2J16ENVIMNW87pY/z8FY+FDmAFJ9+7s2spHaVPtq0lHP7ODi4A==\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST TICKET] Create Business Coupon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test kupon\",\r\n    \"priceCut\": \"10000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/coupon/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"coupon",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PUT TICKET] Create Business New Ticket",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Test create",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Test Location",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test description inputed data",
+							"type": "text"
+						},
+						{
+							"key": "variants",
+							"value": "[{\"variantName\":\"test variant 1\",\"price\":\"10000\"},{\"variantName\":\"test variant 2\",\"price\":\"100000\"}]",
+							"type": "text"
+						},
+						{
+							"key": "imageData",
+							"type": "file",
+							"src": "/D:/Pictures/333580.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH TICKET] Edit Business Existing Ticket",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Test create",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Test Location",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test description inputed data",
+							"type": "text"
+						},
+						{
+							"key": "variants",
+							"value": "[{\"variantName\":\"test variant 1\",\"price\":\"10000\"},{\"variantName\":\"test variant 2\",\"price\":\"100000\"}]",
+							"type": "text"
+						},
+						{
+							"key": "imageData",
+							"type": "file",
+							"src": "/D:/Pictures/blur3.png"
+						},
+						{
+							"key": "id",
+							"value": "6",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH TICKET] Update Booking Status Form Business",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"isSuccess\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/booking/status/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"booking",
+						"status",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE TICKET] Delete Business Ticket",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/ticket/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"ticket",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE TICKET] Delete Business Coupon",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ticket/coupon/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ticket",
+						"coupon",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{user-business}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user-business",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTcwNzU2OTEyOCwiZXhwIjoxNzA3NjEyMzI4fQ.ZInWuYdaQr5l_V-U5qUc7gg2VYKpj6ocWKWN-9-MD5w",
+			"type": "string"
+		},
+		{
+			"key": "user-customer",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcwNzU3MjU2MCwiZXhwIjoxNzA3NjE1NzYwfQ.fN_8QB2ZIPzrtgO4nHOEhQwIluUWrxR9zaLmvA5uUfg"
+		}
+	]
+}
