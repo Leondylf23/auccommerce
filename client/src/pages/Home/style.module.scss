@@ -48,6 +48,10 @@
   .itemName {
     font-weight: 700;
     font-size: 1.4rem;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
   }
 
   .itemPrice {
@@ -143,6 +147,7 @@
   margin-bottom: 1rem;
   position: relative;
   align-items: center;
+  position: sticky;
 
   .input {
     @include paddingY(0.25rem);
@@ -181,10 +186,10 @@
 
     .item {
       @include paddingX(0.25rem);
-      @include paddingY(0.5rem);
 
       flex-shrink: 0;
       border-bottom: 4px solid transparent;
+      cursor: pointer;
 
       .name {
         font-weight: 500;

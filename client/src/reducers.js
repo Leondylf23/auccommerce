@@ -6,6 +6,7 @@ import languageReducer from '@containers/Language/reducer';
 
 import homeReducer from '@pages/Home/reducer';
 import profileReducer from '@pages/Profile/reducer';
+import itemDetailReducer from '@pages/ItemDetail/reducer';
 import { mapWithPersistor } from './persistence';
 
 const storedReducers = {
@@ -17,6 +18,7 @@ const temporaryReducers = {
   language: languageReducer,
   home: homeReducer,
   profile: profileReducer,
+  itemDetail: itemDetailReducer,
 };
 
 const createReducer = () => {

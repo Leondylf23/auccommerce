@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
@@ -50,8 +51,8 @@ const SearchComponent = ({ onSubmitSearch }) => {
         value={searchText}
         onChange={(e) => searchInputOnChange(e.target.value)}
       />
-      <button type="button" className={classes.searchBtn}>
-        <SearchIcon />
+      <button type="button" className={classes.searchBtn} onClick={() => setSearchText('')}>
+        {searchText !== '' ? <SearchOffIcon /> : <SearchIcon />}
       </button>
     </div>
   );

@@ -34,3 +34,21 @@ html[data-theme='dark'] {
 h1, h2, h3, h4, h5, h6, a, b, p {
   margin: 0;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}

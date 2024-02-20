@@ -7,7 +7,7 @@ import { formatDateOnly, formatTimeOnly, numberWithPeriods } from '@utils/allUti
 import classes from '../style.module.scss';
 
 const ItemCard = ({ data }) => {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className={classes.itemCardContainer} onClick={() => navigate(`/item/${data?.id}`)}>
