@@ -2,10 +2,6 @@ import { combineReducers } from 'redux';
 
 import appReducer, { storedKey as storedAppState } from '@containers/App/reducer';
 import clientReducer, { storedKey as storedClientState } from '@containers/Client/reducer';
-import paymentPageReducer from '@pages/PaymentPage/reducer';
-import productDetailReducer from '@pages/ProductDetail/reducer';
-import orderingsReducer from '@pages/Orderings/reducer';
-import productCreationReducer from '@pages/ProductCreation/reducer';
 import languageReducer from '@containers/Language/reducer';
 
 import homeReducer from '@pages/Home/reducer';
@@ -19,10 +15,6 @@ const storedReducers = {
 
 const temporaryReducers = {
   language: languageReducer,
-  paymentPage: paymentPageReducer,
-  productDetail: productDetailReducer,
-  orderings: orderingsReducer,
-  productCreation: productCreationReducer,
   home: homeReducer,
   profile: profileReducer,
 };

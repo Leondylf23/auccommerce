@@ -9,7 +9,6 @@ const app = express();
 const Port = process.env.NODEJS_PORT || 8080;
 
 // Import routes
-const OrderinAja = require('./server/api/orderinAja');
 const AuthUser = require('./server/api/authUser');
 
 // Middleware
@@ -72,7 +71,6 @@ app.use((req, res, next) => {
 });
 
 // Route middlewares
-app.use('/api/orderin-aja', OrderinAja);
 app.use('/api/auth', AuthUser);
 
 // Sys ping api 

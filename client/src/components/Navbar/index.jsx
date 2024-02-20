@@ -7,18 +7,16 @@ import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { createStructuredSelector } from 'reselect';
 import { getUserDataDecrypt } from '@utils/allUtils';
 
-import { setLocale, setTheme } from '@containers/App/actions';
+import { setLocale } from '@containers/App/actions';
 import { selectLogin, selectUserData } from '@containers/Client/selectors';
 import DropDownMenu from './components/DropdownMenu';
 
 import classes from './style.module.scss';
 
-const Navbar = ({ title, locale, theme, isUserLogined, userData, isUserLoginedTest }) => {
+const Navbar = ({ title, locale, isUserLogined, userData, isUserLoginedTest }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,10 +42,6 @@ const Navbar = ({ title, locale, theme, isUserLogined, userData, isUserLoginedTe
 
   const handleClose = () => {
     setMenuPosition(null);
-  };
-
-  const handleTheme = () => {
-    dispatch(setTheme(theme === 'light' ? 'dark' : 'light'));
   };
 
   const onSelectLang = (lang) => {
@@ -85,17 +79,14 @@ const Navbar = ({ title, locale, theme, isUserLogined, userData, isUserLoginedTe
             </div>
           ) : (
             <div className={classes.userButtons}>
-              <button type="submit" className={classes.login} onClick={() => navigate('/login')}>
+              <button type="button" className={classes.login}>
                 <FormattedMessage id="nav_login" />
               </button>
-              <button type="submit" className={classes.register} onClick={() => navigate('/register')}>
+              <button type="button" className={classes.register}>
                 <FormattedMessage id="nav_register" />
               </button>
             </div>
           )}
-          <div className={classes.theme} onClick={handleTheme} data-testid="toggleTheme">
-            {theme === 'light' ? <NightsStayIcon /> : <LightModeIcon />}
-          </div>
           <div className={classes.toggle} onClick={handleClick}>
             <Avatar className={classes.avatar} src={locale === 'id' ? '/id.png' : '/en.png'} />
             <div className={classes.lang}>{locale}</div>
@@ -128,7 +119,6 @@ const Navbar = ({ title, locale, theme, isUserLogined, userData, isUserLoginedTe
 Navbar.propTypes = {
   title: PropTypes.string,
   locale: PropTypes.string.isRequired,
-  theme: PropTypes.string,
   isUserLogined: PropTypes.bool,
   userData: PropTypes.string,
   isUserLoginedTest: PropTypes.bool,

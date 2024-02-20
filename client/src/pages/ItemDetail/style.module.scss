@@ -1,0 +1,7 @@
+@import '@styles/base';
+
+@include mainContainer {
+    .pageTitle {
+        margin-bottom: 0.5rem;
+    }
+}

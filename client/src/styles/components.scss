@@ -20,14 +20,14 @@
   @include paddingY(10px);
 
   border: none;
-  border-radius: 9999px;
+  border-radius: 10px;
   color: var(--color-text);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
   background-color: var(--color-button);
 
-  &:hover {
+  &:hover { 
     background-color: var(--color-button-hover);
   }
   &:disabled {
@@ -47,26 +47,26 @@
 }
 
 @mixin shadow {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @mixin statusContainer {
   @include directionX;
-      @include paddingY(0.2rem);
+  @include paddingY(0.2rem);
 
-      justify-content: center;
-      border-radius: 10px;
-      width: 100%;
-      background-color: #414141;
-      color: #dfdfdf;
+  justify-content: center;
+  border-radius: 10px;
+  width: 100%;
+  background-color: #414141;
+  color: #dfdfdf;
 
-      &[data-item='red'] {
-        background-color: #c51e1e;
-      }
-      &[data-item='yellow'] {
-        background-color: #9b800b;
-      }
-      &[data-item='green'] {
-        background-color: #35a713;
-      }
+  &[data-item='red'] {
+    background-color: #c51e1e;
+  }
+  &[data-item='yellow'] {
+    background-color: #9b800b;
+  }
+  &[data-item='green'] {
+    background-color: #35a713;
+  }
 }
