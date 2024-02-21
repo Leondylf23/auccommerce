@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import GavelIcon from '@mui/icons-material/Gavel';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import { formatDateOnly, formatTimeOnly, numberWithPeriods } from '@utils/allUtils';
 
@@ -16,7 +17,9 @@ const ItemCard = ({ data }) => {
       <p className={classes.itemPrice}>Rp. {numberWithPeriods(data?.startingBid)}</p>
       <div className={classes.midTextContainer}>
         <GavelIcon className={classes.icon} />
-        <p className={classes.endsOnText}>Ends on</p>
+        <p className={classes.endsOnText}>
+          <FormattedMessage id="home_item_card_ends_on" />
+        </p>
       </div>
       <div className={classes.auctionTimeContainer}>
         <p className={classes.dateContainer}>{formatDateOnly(data?.endBid)}</p>

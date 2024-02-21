@@ -3,10 +3,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 
 import classes from '../style.module.scss';
 
 const SearchComponent = ({ onSubmitSearch }) => {
+  const intl = useIntl();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const searchDataParam = searchParams?.get('search') || '';
 
@@ -46,12 +49,12 @@ const SearchComponent = ({ onSubmitSearch }) => {
     <div className={classes.searchComponentContainer}>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder={intl.formatMessage({ id: 'home_search_placeholder' })}
         className={classes.input}
         value={searchText}
         onChange={(e) => searchInputOnChange(e.target.value)}
       />
-      <button type="button" className={classes.searchBtn} onClick={() => setSearchText('')}>
+      <button type="button" className={classes.searchBtn} onClick={() => searchInputOnChange('')}>
         {searchText !== '' ? <SearchOffIcon /> : <SearchIcon />}
       </button>
     </div>

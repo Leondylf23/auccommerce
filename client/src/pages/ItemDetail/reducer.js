@@ -1,8 +1,8 @@
 import { produce } from 'immer';
-import {} from './constants';
+import { SET_ITEM_DETAIL } from './constants';
 
 export const initialState = {
-  itemDetail: null,
+  itemDetailData: null,
 };
 
 export const storedKey = [];
@@ -10,6 +10,8 @@ export const storedKey = [];
 const itemDetailReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case SET_ITEM_DETAIL:
+        draft.itemDetailData = action.data;
     }
   });
 

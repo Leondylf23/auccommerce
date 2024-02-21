@@ -2,33 +2,45 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect, useDispatch } from 'react-redux';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import classes from '../style.module.scss';
 import { selectSearchResult } from '../selectors';
 import EmptyContainer from './EmptyContainer';
 import ItemCard from './ItemCard';
+import { getSearchItems } from '../actions';
 
 const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCategory, searchResult }) => {
-  const [data, setData] = useState([]);
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
-  const fetchData = () => {
-    setData([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [nextOffset, setNextOffset] = useState('');
+
+  const fetchData = (isReset) => {
+    setIsLoading(true);
+    dispatch(
+      getSearchItems({ itemName: searchData, category: selectedCategory }, isReset, (nextOffsetData) => {
+        setIsLoading(false);
+        setNextOffset(nextOffsetData);
+      })
+    );
   };
 
   useEffect(() => {
     if (searchData !== '' || selectedCategory) {
-      fetchData();
+      fetchData(true);
     }
   }, [searchData, selectedCategory]);
-  useEffect(() => {
-    if (searchResult && Array.isArray(searchResult) && searchResult?.length > 0) {
-      setData((prevVal) => [...prevVal, ...searchResult]);
-    }
-  }, [searchResult]);
+
   return (
     <div className={classes.searchPageContainer}>
       <h1 className={classes.pageTitle}>
-        {searchData !== '' ? `Search Result for "${searchData}"` : 'Search by Category'}
+        {searchData !== '' ? (
+          `${intl.formatMessage({ id: 'home_search_result' })} "${searchData}"`
+        ) : (
+          <FormattedMessage id="home_search_by_category" />
+        )}
       </h1>
       <div className={classes.categoryTab}>
         <div className={classes.item} onClick={() => setSelectedCategory(null)} data-active={selectedCategory === null}>
@@ -36,6 +48,7 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
         </div>
         {categoryData?.map((category) => (
           <div
+            key={category?.id}
             className={classes.item}
             onClick={() => setSelectedCategory(category?.id)}
             data-active={selectedCategory === category?.id}
@@ -45,9 +58,9 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
         ))}
       </div>
       <div className={classes.resultContainer}>
-        {data?.length > 0 ? (
+        {searchResult?.length > 0 ? (
           <div className={classes.resultListContainer}>
-            {data?.map((item) => (
+            {searchResult?.map((item) => (
               <ItemCard data={item} />
             ))}
           </div>
@@ -55,6 +68,23 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
           <EmptyContainer />
         )}
       </div>
+      {isLoading ? (
+        <div className={classes.searchLoadingContainer}>
+          <p className={classes.text}>
+            <FormattedMessage id="loading" />
+          </p>
+        </div>
+      ) : (
+        nextOffset && (
+          <div className={classes.loadMoreBtncontainer}>
+            <button type="button" className={classes.button} onClick={() => fetchData(false)}>
+              <p className={classes.text}>
+                <FormattedMessage id="load_more" />
+              </p>
+            </button>
+          </div>
+        )
+      )}
     </div>
   );
 };

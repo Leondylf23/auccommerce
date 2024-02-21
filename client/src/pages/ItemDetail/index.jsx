@@ -1,99 +1,116 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import TimerIcon from '@mui/icons-material/Timer';
+import { useEffect, useState } from 'react';
 
-import { formatTimeOnly, numberWithPeriods, timerDisplay } from '@utils/allUtils';
+import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
+import { selectLogin } from '@containers/Client/selectors';
 import ImageCarousel from './components/ImageCarousel';
+import LivePeoplesDisplay from './components/LivePeoplesDisplay';
+import { selectItemDetail } from './selectors';
+import LiveBidPage from './components/LiveBidPage';
+import { getItemDetail } from './actions';
 
 import classes from './style.module.scss';
-import { useState } from 'react';
-import LivePeoplesDisplay from './components/LivePeoplesDisplay';
 
-const ItemDetail = ({ itemDetailData }) => {
-  const navigate = useNavigate();
+const ItemDetail = ({ isLogin, itemDetailData }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const imageDatastemp = [
-    'https://d2kwwar9pcd0an.cloudfront.net/6b9a7820fd8161e906f76e45aa152f00.jpeg',
-    'https://d2kwwar9pcd0an.cloudfront.net/92888dd36adfdc9c59a34f21af908f95.jpeg',
-    'https://d2kwwar9pcd0an.cloudfront.net/5c6e598bdd7799c2cdef4120c752dce3.jpeg',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-4-attatchments-wp2586787-wallpaper-minecraft.jpg',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-no%20effects.png',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-1-attatchments-path%20tracing.png',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-Screenshot%202023-09-13%20013302.png',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-2-attatchments-38070402-03d5-4227-b973-45a2438e39d4.jpg',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-alex_rainer-jVjlBQg-Gj8-unsplash.jpg',
-    'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-  ];
-  const peoples = [
-    {
-      id: 'dwadw',
-      image: 'https://d2kwwar9pcd0an.cloudfront.net/6b9a7820fd8161e906f76e45aa152f00.jpeg',
-    },
-    {
-      id: 'dwadwa',
-      image: 'https://d2kwwar9pcd0an.cloudfront.net/5c6e598bdd7799c2cdef4120c752dce3.jpeg',
-    },
-    {
-      id: 'dwadw1',
-      image: 'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-no%20effects.png',
-    },
-    {
-      id: 'dwad',
-      image: 'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-no%20effects.png',
-    },
-    {
-      id: '123adw1',
-      image:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-alex_rainer-jVjlBQg-Gj8-unsplash.jpg',
-    },
-    {
-      id: 'dasd22',
-      image:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-    },
-  ];
 
-  const [livePeoples, setLivePeoples] = useState(peoples);
+  const [isLive, setIsLive] = useState(false);
+  const [userIsJoin, setUserIsJoin] = useState(false);
+  const [timer, setTimer] = useState(0);
+
+  const userJoinLive = () => {
+    if (isLogin) {
+      setUserIsJoin(true);
+    } else {
+      navigate(`/login`);
+    }
+  };
+
+  const backBtnOnClick = () => {
+    if (userIsJoin) {
+      setUserIsJoin(false);
+    } else {
+      navigate('/');
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getItemDetail({ id }));
+
+    const intervalId = setInterval(() => {
+      setTimer((prevVal) => {
+        if (prevVal < 1000) {
+          dispatch(getItemDetail({ id }));
+        }
+        return prevVal >= 1 ? prevVal - 1 : 0;
+      });
+    }, 1000);
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, []);
+  useEffect(() => {
+    setTimer(itemDetailData?.isLiveNow ? itemDetailData?.timeRemaining : itemDetailData?.startingTimer || 0);
+    setIsLive(itemDetailData?.isLiveNow);
+  }, [itemDetailData]);
 
   return (
     <div className={classes.mainContainer}>
       <div className={classes.contentContainer}>
         <div className={classes.leftSide}>
-          <ImageCarousel imageDatas={imageDatastemp} />
+          <div className={classes.backBtnContainer}>
+            <button type="button" className={classes.backBtn} onClick={backBtnOnClick}>
+              Back
+            </button>
+          </div>
+          {itemDetailData?.itemImages && <ImageCarousel imageDatas={itemDetailData?.itemImages} />}
         </div>
         <div className={classes.rightSide}>
-          <h1 className={classes.itemName}>Test item</h1>
-          <div className={classes.bidPriceContainer}>
-            <div className={classes.priceContainer}>
-              <h3 className={classes.title}>Starting Price</h3>
-              <p className={classes.price}>Rp. {numberWithPeriods(10000)}</p>
-            </div>
-            <div className={classes.priceContainer}>
-              <h3 className={classes.title}>Highest Bid</h3>
-              <p className={classes.price}>Rp. {numberWithPeriods(10000)}</p>
-            </div>
-          </div>
-          <div className={classes.timerContainer}>
-            <div className={classes.leftContainer}>
-              <TimerIcon className={classes.icon} />
-              <p className={classes.timer}>{timerDisplay(1000000)}</p>
-            </div>
-            <div className={classes.rightContent}>
-              <LivePeoplesDisplay peoples={livePeoples} />
-            </div>
-          </div>
-          <button>
-            
-          </button>
-          <p className={classes.itemDesc}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet sollicitudin libero, quis vulputate
-            mauris. In porta dolor sollicitudin, faucibus lorem eget, cursus arcu. Donec at orci tincidunt, vulputate
-            lacus eu, luctus leo. Nam sed scelerisque mauris, lacinia efficitur diam. Praesent vel interdum purus. Ut
-            elementum dictum urna.
-          </p>
+          {userIsJoin ? (
+            <LiveBidPage />
+          ) : (
+            <>
+              <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>
+              <div className={classes.bidPriceContainer}>
+                <div className={classes.priceContainer}>
+                  <h3 className={classes.title}>Starting Price</h3>
+                  <p className={classes.price}>Rp. {numberWithPeriods(itemDetailData?.startingPrice)}</p>
+                </div>
+                {isLive && (
+                  <div className={classes.priceContainer}>
+                    <h3 className={classes.title}>Highest Bid</h3>
+                    <p className={classes.price}>Rp. {numberWithPeriods(itemDetailData?.highestBid)}</p>
+                  </div>
+                )}
+              </div>
+              <div className={classes.timerContainer}>
+                <div className={classes.leftContainer}>
+                  <TimerIcon className={classes.icon} />
+                  <p className={classes.timer}>{timerDisplay(timer)}</p>
+                </div>
+                <div className={classes.rightContainer}>
+                  {isLive ? (
+                    <LivePeoplesDisplay peoples={itemDetailData?.livePeoples} isShowTitle />
+                  ) : (
+                    <p className={classes.text}>Waiting to Start </p>
+                  )}
+                </div>
+              </div>
+              {isLive && (
+                <button type="button" onClick={userJoinLive} className={classes.joinBtn}>
+                  <p className={classes.textBtn}>Join Live Auction</p>
+                </button>
+              )}
+              <p className={classes.itemDesc}>{itemDetailData?.itemDescription}</p>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -102,8 +119,12 @@ const ItemDetail = ({ itemDetailData }) => {
 
 ItemDetail.propTypes = {
   itemDetailData: PropTypes.object,
+  isLogin: PropTypes.bool,
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  itemDetailData: selectItemDetail,
+  isLogin: selectLogin,
+});
 
 export default connect(mapStateToProps)(ItemDetail);

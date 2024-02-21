@@ -1,145 +1,17 @@
 import { produce } from 'immer';
-import {} from './constants';
+import {
+  RESET_ITEM_SEARCH,
+  SET_CATEGORY,
+  SET_FIVE_MORE_MIN_BID,
+  SET_ITEM_SEARCH,
+  SET_LATEST_BID_DATA,
+} from './constants';
 
 export const initialState = {
-  latestCreatedItem: [
-    {
-      id: 1,
-      itemName: 'test item asdwwd adw asd wasd',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-  ],
-  fiveMinOngoingBid: [
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-  ],
-  categories: [
-    {
-      id: 1,
-      pictureUrl: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      name: 'Electronics',
-    },
-    {
-      id: 2,
-      pictureUrl: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      name: 'Vehicles',
-    },
-    {
-      id: 3,
-      pictureUrl: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      name: 'Jewerly',
-    },
-    {
-      id: 4,
-      pictureUrl: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      name: 'Hobbies',
-    },
-    {
-      id: 5,
-      pictureUrl: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      name: 'Other',
-    },
-  ],
-  searchResults: [
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-    {
-      id: 1,
-      itemName: 'test item',
-      itemPicture: 'https://res.cloudinary.com/dwyzuwtel/image/upload/v1706151163/cld-sample-3.jpg',
-      startingBid: 1000,
-      endBid: '2024-02-29 00:00:00',
-    },
-  ],
+  latestCreatedItem: [],
+  fiveMinOngoingBid: [],
+  categories: [],
+  searchResults: [],
 };
 
 export const storedKey = [];
@@ -147,6 +19,21 @@ export const storedKey = [];
 const homeReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case SET_LATEST_BID_DATA:
+        draft.latestCreatedItem = action.data;
+        break;
+      case SET_FIVE_MORE_MIN_BID:
+        draft.fiveMinOngoingBid = action.data;
+        break;
+      case SET_CATEGORY:
+        draft.categories = action.data;
+        break;
+      case SET_ITEM_SEARCH:
+        draft.searchResults = [...draft.searchResults, ...action.data];
+        break;
+      case RESET_ITEM_SEARCH:
+        draft.searchResults = [];
+        break;
     }
   });
 

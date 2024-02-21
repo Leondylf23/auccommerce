@@ -3,15 +3,17 @@ import Avatar from '@mui/material/Avatar';
 
 import classes from '../style.module.scss';
 
-const LivePeoplesDisplay = ({ peoples }) => (
+const LivePeoplesDisplay = ({ peoples = [], isShowTitle = false }) => (
   <div className={classes.livePeopleDispContainer}>
-    <p className={classes.title}>Live Now</p>
+    {isShowTitle && <p className={classes.title}>Live Now</p>}
     <div className={classes.avatarsContainer}>
       {peoples[0] && <Avatar className={classes.avatar} src={peoples[0]?.image} alt={peoples[0]?.image} />}
       {peoples[0] && <Avatar className={classes.avatar} src={peoples[1]?.image} alt={peoples[1]?.image} />}
-      {peoples?.length > 3 && (
+      {peoples[0] && <Avatar className={classes.avatar} src={peoples[2]?.image} alt={peoples[2]?.image} />}
+      {peoples[0] && <Avatar className={classes.avatar} src={peoples[3]?.image} alt={peoples[3]?.image} />}
+      {peoples?.length > 4 && (
         <div className={classes.avatar} data-type="nonAvatar">
-          <p>+{peoples?.length - 2}</p>
+          <p>+{peoples?.length - 4}</p>
         </div>
       )}
     </div>
@@ -20,6 +22,7 @@ const LivePeoplesDisplay = ({ peoples }) => (
 
 LivePeoplesDisplay.propTypes = {
   peoples: PropTypes.array,
+  isShowTitle: PropTypes.bool,
 };
 
 export default LivePeoplesDisplay;

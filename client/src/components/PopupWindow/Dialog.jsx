@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import { Dialog } from '@mui/material';
 
@@ -9,9 +8,7 @@ import classes from './style.module.scss';
 const PopupWindow = ({ open, children, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} PaperProps={{ className: classes.dialogWrapper }}>
-      <div data-testid='popup-window'>
-        {children}
-      </div>
+      <div data-testid="popup-window">{children}</div>
     </Dialog>
   );
 };

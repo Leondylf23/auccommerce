@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from '../style.module.scss';
 
-const ImageCarousel = ({ imageDatas }) => {
+const ImageCarousel = ({ imageDatas = [] }) => {
   const [activeImageUrl, setActiveImageUrl] = useState(imageDatas[0] || '');
   const [activeIndex, setActiveIndex] = useState(0);
   const [opacityZero, setOpacityZero] = useState(false);
@@ -49,7 +49,7 @@ const ImageCarousel = ({ imageDatas }) => {
       </div>
       <div className={classes.imageSelector}>
         {imageDatas?.map((image, index) => (
-          <div className={classes.item} onClick={() => changeImage(image, index)}>
+          <div className={classes.item} key={index} onClick={() => changeImage(image, index)}>
             <img className={classes.data} src={image} alt={image} data-active={index === activeIndex} />
           </div>
         ))}

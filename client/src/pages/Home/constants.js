@@ -1,1 +1,12 @@
-export const GET_PRODUCTS_DATA = 'Home/GET_PRODUCTS_DATA';
+export const GET_LATEST_BID_DATA = 'Home/GET_LATEST_BID_DATA';
+export const SET_LATEST_BID_DATA = 'Home/SET_LATEST_BID_DATA';
+
+export const GET_FIVE_MORE_MIN_BID = 'Home/GET_FIVE_MORE_MIN_BID';
+export const SET_FIVE_MORE_MIN_BID = 'Home/SET_FIVE_MORE_MIN_BID';
+
+export const GET_CATEGORY = 'Home/GET_CATEGORY';
+export const SET_CATEGORY = 'Home/SET_CATEGORY';
+
+export const GET_ITEM_SEARCH = 'Home/GET_ITEM_SEARCH';
+export const SET_ITEM_SEARCH = 'Home/SET_ITEM_SEARCH';
+export const RESET_ITEM_SEARCH = 'Home/RESET_ITEM_SEARCH';
