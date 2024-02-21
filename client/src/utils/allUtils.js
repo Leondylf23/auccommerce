@@ -29,3 +29,16 @@ export const formatDateOnly = (value) =>
  * @param {String} value Value can be from date
  */
 export const formatTimeOnly = (value) => (value ? new Date(value).toISOString().slice(11, 19) : null);
+/**
+ * @param {Number} value Value must be number in ms
+ */
+export const timerDisplay = (value) => {
+  const display = {
+    days: String(Math.floor(value / (24 * 60 * 60))).padStart(2, '0'),
+    hours: String(Math.floor((value / 3600) % 24)).padStart(2, '0'),
+    minutes: String(Math.floor((value % 3600) / 60)).padStart(2, '0'),
+    seconds: String(Math.floor(value % 60)).padStart(2, '0'),
+  };
+
+  return `${display?.days}:${display?.hours}:${display?.minutes}:${display?.seconds}`;
+};
