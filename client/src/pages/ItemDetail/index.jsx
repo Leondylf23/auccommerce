@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import TimerIcon from '@mui/icons-material/Timer';
 import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
 import { selectLogin } from '@containers/Client/selectors';
@@ -67,7 +68,7 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
         <div className={classes.leftSide}>
           <div className={classes.backBtnContainer}>
             <button type="button" className={classes.backBtn} onClick={backBtnOnClick}>
-              Back
+              <FormattedMessage id="back" />
             </button>
           </div>
           {itemDetailData?.itemImages && <ImageCarousel imageDatas={itemDetailData?.itemImages} />}
@@ -80,12 +81,16 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
               <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>
               <div className={classes.bidPriceContainer}>
                 <div className={classes.priceContainer}>
-                  <h3 className={classes.title}>Starting Price</h3>
+                  <h3 className={classes.title}>
+                    <FormattedMessage id="item_detail_start_prc" />
+                  </h3>
                   <p className={classes.price}>Rp. {numberWithPeriods(itemDetailData?.startingPrice)}</p>
                 </div>
                 {isLive && (
                   <div className={classes.priceContainer}>
-                    <h3 className={classes.title}>Highest Bid</h3>
+                    <h3 className={classes.title}>
+                      <FormattedMessage id="item_detail_highest_prc" />
+                    </h3>
                     <p className={classes.price}>Rp. {numberWithPeriods(itemDetailData?.highestBid)}</p>
                   </div>
                 )}
@@ -99,13 +104,17 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
                   {isLive ? (
                     <LivePeoplesDisplay peoples={itemDetailData?.livePeoples} isShowTitle />
                   ) : (
-                    <p className={classes.text}>Waiting to Start </p>
+                    <p className={classes.text}>
+                      <FormattedMessage id="item_detail_status_waiting" />
+                    </p>
                   )}
                 </div>
               </div>
               {isLive && (
                 <button type="button" onClick={userJoinLive} className={classes.joinBtn}>
-                  <p className={classes.textBtn}>Join Live Auction</p>
+                  <p className={classes.textBtn}>
+                    <FormattedMessage id="item_detail_join_btn" />
+                  </p>
                 </button>
               )}
               <p className={classes.itemDesc}>{itemDetailData?.itemDescription}</p>

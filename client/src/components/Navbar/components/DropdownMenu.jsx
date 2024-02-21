@@ -24,7 +24,7 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu }) => {
         onClose();
         break;
       case 1:
-        navigate('/orderings');
+        navigate('/mybids');
         onClose();
         break;
       case 2:
@@ -62,7 +62,7 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu }) => {
         <MenuItem onClick={() => menuItemAction(1)}>
           <BallotIcon className={classes.iconOrderings} />
           <Typography variant="body2">
-            <FormattedMessage id="nav_orderings" />
+            <FormattedMessage id="nav_mybids" />
           </Typography>
         </MenuItem>
         <div className={classes.divider} />

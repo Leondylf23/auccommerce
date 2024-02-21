@@ -1,20 +1,21 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import { useDispatch } from 'react-redux';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 
 import { numberWithPeriods } from '@utils/allUtils';
+import PopupWindow from '@components/PopupWindow/Dialog';
 import { showPopup } from '@containers/App/actions';
 import LivePeoplesDisplay from './LivePeoplesDisplay';
+import LiveEndedPopUp from './LiveEndedPopup';
 
 import classes from '../style.module.scss';
-import PopupWindow from '@components/PopupWindow/Dialog';
-import LiveEndedPopUp from './LiveEndedPopup';
 
 const LiveBidPage = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const exampleDataPeople = [
     {
@@ -114,7 +115,12 @@ const LiveBidPage = () => {
     e.preventDefault();
 
     if (bidPriceInput < higestBidPrice) {
-      dispatch(showPopup('Price Too Low', 'Price must be higher than highest bid!'));
+      dispatch(
+        showPopup(
+          intl.formatMessage({ id: 'item_detail_bid_place_validation_title' }),
+          intl.formatMessage({ id: 'item_detail_bid_place_validation_msg' })
+        )
+      );
       return;
     }
 
@@ -129,6 +135,13 @@ const LiveBidPage = () => {
   useEffect(() => {
     setLivePeoples(exampleDataPeople);
     setIsLive(false);
+    setBidWinner({
+      profilePicture:
+        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
+      name: 'User Test',
+      price: 12312331,
+      isMine: true,
+    });
     setBidData(exampleBidData);
     setHigestBidPrice(123123);
   }, []);
@@ -139,15 +152,15 @@ const LiveBidPage = () => {
       <PopupWindow open={isShowConfirm} onClose={() => setIsShowConfirm(false)}>
         <div className={classes.confirmationDialog}>
           <p className={classes.message}>
-            Are you sure want to place your bid?
+            <FormattedMessage id="item_detail_bid_confirmation" />
             <p className={classes.price}>Rp. {numberWithPeriods(bidPriceInput)}</p>
           </p>
           <div className={classes.buttons}>
             <button type="button" className={classes.button} onClick={sendBidData}>
-              Yes
+              <FormattedMessage id="yes" />
             </button>
             <button type="button" className={classes.button} onClick={() => setIsShowConfirm(false)} data-type="red">
-              No
+              <FormattedMessage id="no" />
             </button>
           </div>
         </div>
@@ -155,24 +168,29 @@ const LiveBidPage = () => {
       <div className={classes.header}>
         <div className={classes.liveIndicator}>
           <div className={classes.indicator} data-active={isLive} />
-          <h3 className={classes.pageTitle}>LIVE AUCTION</h3>
+          <h3 className={classes.pageTitle}>
+            <FormattedMessage id="item_detail_live_auction" />
+          </h3>
         </div>
         <LivePeoplesDisplay peoples={livePeoples} />
       </div>
       <div className={classes.auctionListDatasContainer}>
         {bidData?.map((bid, index) => (
-          <div className={classes.bidData} data-ismine={bid?.isMine} data-isfirst={index === 0}>
+          <div key={bid?.id} className={classes.bidData} data-ismine={bid?.isMine} data-isfirst={index === 0}>
             <Avatar className={classes.avatar} src={bid?.profilePicture} alt={bid?.profilePicture} />
             <p className={classes.userNameText}>{bid?.name}</p>
             <p className={classes.bidPrice}>
-              Has place bid <p className={classes.price}>Rp. {numberWithPeriods(bid?.bidPrice)}</p>
+              <FormattedMessage id="item_detail_bid_has_placed_bid" />{' '}
+              <p className={classes.price}>Rp. {numberWithPeriods(bid?.bidPrice)}</p>
             </p>
           </div>
         ))}
       </div>
       {isLive && !bidWinner ? (
         <form className={classes.placeBidContainer} onSubmit={submitBid}>
-          <label htmlFor="bidPriceInput">Place Your Bid in Rp.</label>
+          <label htmlFor="bidPriceInput">
+            <FormattedMessage id="item_detail_bid_your_bid_label" />
+          </label>
           <div className={classes.inputContainer}>
             <input
               id="bidPriceInput"
@@ -184,17 +202,27 @@ const LiveBidPage = () => {
               className={classes.input}
             />
             <button className={classes.button} type="submit">
-              Place
+              <FormattedMessage id="item_detail_bid_place_btn" />
             </button>
           </div>
         </form>
       ) : (
         <div className={classes.auctionSummary}>
-          <h4 className={classes.title}>Highest bid in this auction is</h4>
+          <h4 className={classes.title}>
+            <FormattedMessage id="item_detail_highest_bid" />
+          </h4>
           <div className={classes.peopleContainer}>
-            <Avatar src={bidWinner?.profilePic} alt={bidWinner?.profilePic} />
+            <Avatar src={bidWinner?.profilePicture} alt={bidWinner?.profilePicture} className={classes.avatar} />
+            <div className={classes.textContainer}>
+              <p className={classes.peopleName}>{bidWinner?.name}</p>
+              <p className={classes.price}>Rp. {numberWithPeriods(bidWinner?.price)}</p>
+            </div>
           </div>
-          <p className={classes.price}>Rp. {numberWithPeriods(123123)}</p>
+          {bidWinner?.isMine && (
+            <button className={classes.button} type="button" onClick={() => navigate()}>
+              <FormattedMessage id="item_detail_bid_go_to_payment_btn" />
+            </button>
+          )}
         </div>
       )}
     </div>

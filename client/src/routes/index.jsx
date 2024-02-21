@@ -8,6 +8,7 @@ import Register from '@pages/Register';
 import Profile from '@pages/Profile';
 import ChangePassword from '@pages/ChangePassword';
 import ItemDetail from '@pages/ItemDetail';
+import MyBids from '@pages/MyBids';
 
 const routes = [
   {
@@ -55,6 +56,14 @@ const routes = [
     name: 'Item Detail',
     protected: false,
     component: ItemDetail,
+    layout: MainLayout,
+    role: '*',
+  },
+  {
+    path: '/mybids',
+    name: 'My Bids',
+    protected: true,
+    component: MyBids,
     layout: MainLayout,
     role: '*',
   },
