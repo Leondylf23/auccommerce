@@ -1,0 +1,28 @@
+@import '@styles/base';
+
+.statusCardContainer {
+    @include containerCenter;
+    @include paddingX(1rem);
+    @include paddingY(0.25rem);
+
+    background-color: #4b4b4b;
+    border-radius: 5px;
+    min-width: 120px;
+
+    .text {
+        color: #fff;
+        font-size: 0.8rem;
+    }
+
+    &[data-type='yellow'] {
+        background-color: #998200;
+    }
+
+    &[data-type='green'] {
+        background-color: #1ca800;
+    }
+
+    &[data-type='red'] {
+        background-color: #b30000;
+    }
+}

@@ -42,3 +42,15 @@ export const timerDisplay = (value) => {
 
   return `${display?.days}:${display?.hours}:${display?.minutes}:${display?.seconds}`;
 };
+/**
+ * @param {Number} value Value must valid date
+ */
+export const formatDateTimeSlashes = (value) => {
+  if (!value) return '';
+
+  const date = new Date(value);
+  const isoString = date.toISOString();
+  const formatted = isoString.replace('-', '/').replace('-', '/').replace('T', ' ').slice(0, 16);
+
+  return formatted;
+};

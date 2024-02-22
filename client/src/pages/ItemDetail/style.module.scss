@@ -71,6 +71,8 @@
 
             .timerContainer {
                 @include directionX;
+
+                width: 100%;
                 margin-bottom: 1rem;
 
                 .leftContainer {
@@ -95,6 +97,7 @@
 
                     width: 40%;
                     align-items: center;
+                    justify-content: center;
 
                     .text {
                         font-weight: 500;
@@ -382,7 +385,7 @@
 .liveEndedPopupContainer {
     @include padding(0.25rem);
     @include directionY;
-    
+
     width: 250px;
 
     .message {
@@ -399,7 +402,7 @@
 
 .auctionSummary {
     @include directionY;
-    
+
     align-content: center;
     width: 100%;
 
@@ -407,6 +410,7 @@
         text-align: center;
         margin-bottom: 0.75rem;
     }
+
     .peopleContainer {
         @include containerCenter;
 
@@ -417,16 +421,19 @@
             width: 70px;
             height: 70px;
         }
+
         .peopleName {
             font-weight: 500;
             font-size: 1.25rem;
         }
+
         .price {
             text-align: center;
             font-weight: 700;
             font-size: 1.25rem;
         }
     }
+
     .button {
         @include button;
     }

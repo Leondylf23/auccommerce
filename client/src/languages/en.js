@@ -18,7 +18,7 @@ export default {
   empty_data: 'Empty',
   status_waiting: 'Waiting',
   status_failed: 'Failed',
-  status_success: 'Ordered',
+  status_success: 'Success',
   back: 'Back',
   loading: 'Loading...',
   load_more: 'Load More',

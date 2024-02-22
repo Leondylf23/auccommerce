@@ -1,0 +1,35 @@
+@import '@styles/base';
+
+.container {
+    @include directionY;
+
+    width: 250px;
+
+    .title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .label {
+        margin-bottom: 0.25rem;
+        width: 100%;
+    }
+
+    .input {
+        @include input;
+        margin-bottom: 0.5rem;
+    }
+
+    .buttonContainer {
+        @include directionX;
+
+        gap: 2rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+
+        .button {
+            @include button;
+        }
+    }
+}
