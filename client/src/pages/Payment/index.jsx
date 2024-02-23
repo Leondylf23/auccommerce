@@ -5,8 +5,11 @@ import { useEffect, useState } from 'react';
 
 import classes from './style.module.scss';
 import ShipmentAddressForm from './components/ShipmentAddressForm';
+import ShippmentProviderForm from './components/ShippmentProviderForm';
+import PaymentMethod from './components/PaymentMethod';
+import SummaryPayment from './components/SummaryPayment';
 
-const Payment = ({ paymentData, bidData }) => {
+const Payment = ({ draftData, bidData }) => {
   const [pageTitle, setPageTitle] = useState('');
   const [step, setStep] = useState(1);
   const [page, setPage] = useState(null);
@@ -20,15 +23,15 @@ const Payment = ({ paymentData, bidData }) => {
         setPageTitle('Shipping Address');
         break;
       case 2:
-        setPage();
+        setPage(<ShippmentProviderForm />);
         setPageTitle('Shipping Provider');
         break;
       case 3:
-        setPage();
+        setPage(<PaymentMethod />);
         setPageTitle('Payment Method');
         break;
       case 4:
-        setPage();
+        setPage(<SummaryPayment />);
         setPageTitle('Summary');
         break;
       default:

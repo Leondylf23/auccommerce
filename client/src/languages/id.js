@@ -25,6 +25,7 @@ export default {
   yes: 'Ya',
   no: 'Tidak',
   close: 'Tutup',
+  days: 'Hari',
 
   login_title: 'Masuk',
   login_title_forgot: 'Lupa Kata Sandi',

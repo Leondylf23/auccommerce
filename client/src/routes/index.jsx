@@ -6,11 +6,11 @@ import Login from '@pages/Login';
 import NotFound from '@pages/NotFound';
 import Register from '@pages/Register';
 import Profile from '@pages/Profile';
-import ChangePassword from '@pages/ChangePassword';
 import ItemDetail from '@pages/ItemDetail';
 import MyBids from '@pages/MyBids';
 import Payment from '@pages/Payment';
 import MyBidDetail from '@pages/MyBidDetail';
+import AuctionForm from '@pages/AuctionForm';
 
 const routes = [
   {
@@ -34,14 +34,6 @@ const routes = [
     name: 'Profile',
     protected: true,
     component: Profile,
-    layout: MainLayout,
-    role: '*',
-  },
-  {
-    path: '/profile/change-password',
-    name: 'Profile',
-    protected: true,
-    component: ChangePassword,
     layout: MainLayout,
     role: '*',
   },
@@ -82,6 +74,22 @@ const routes = [
     name: 'Payment',
     protected: true,
     component: Payment,
+    layout: MainLayout,
+    role: '*',
+  },
+  {
+    path: '/create-auction',
+    name: 'Create Aution',
+    protected: false,
+    component: AuctionForm,
+    layout: MainLayout,
+    role: '*',
+  },
+  {
+    path: '/edit-auction/:id',
+    name: 'Edit Aution',
+    protected: false,
+    component: AuctionForm,
     layout: MainLayout,
     role: '*',
   },

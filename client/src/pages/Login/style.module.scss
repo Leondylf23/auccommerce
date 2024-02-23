@@ -1,62 +1,107 @@
 @import '@styles/base';
 
-.newPassContainer {
-  @include directionY;
-  align-items: center;
+.fullContainer {
+  @include containerCenter;
 
-  .title {
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-  }
-  .newPass {
-    @include directionX;
-  }
-  .content {
-    font-size: 1.2rem;
-  }
-}
+  width: 100%;
+  height: 100dvh;
+  background-image: url('../../static/images/bali_bg.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: multiply;
 
-.forgotPassFooter {
-  margin-top: 0.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  text-align: center;
-  font-size: small;
+  .innerContainer {
+    @include directionY;
+    @include padding(20px);
+    @include marginX(10px);
 
-  &:hover {
-    text-decoration: underline;
-  }
-}
+    width: 380px;
+    background-color: var(--color-bg);
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.3);
 
-.forgotPass {
-  display: flex;
-  justify-content: end;
-  h5 {
-    cursor: pointer;
-    font-weight: 500;
-    font-size: small;
-    &:hover {
-      text-decoration: underline;
+    .title {
+      font-size: 1.5rem;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .formContainer {
+      @include directionY;
+
+      font-size: 0.8rem;
+
+      .label {
+        margin-bottom: 5px;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .input {
+        @include input;
+
+        margin-bottom: 10px;
+      }
+
+      .forgotPasswordContainer {
+        @include directionX;
+
+        justify-content: end;
+        width: 100%;
+
+        .text {
+          margin-bottom: 0.5rem;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .newPassContainer {
+        @include directionY;
+
+        align-items: center;
+
+        .title {
+          font-size: 0.8rem;
+          margin-bottom: 0.5rem;
+        }
+        .content {
+          font-size: 1.2rem;
+        }
+      }
+
+      .button {
+        @include button;
+
+        margin-top: 20px;
+      }
+
+      .footer {
+        margin-top: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        width: 100%;
+        text-align: center;
+
+        .footerLink {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+      .forgotPassFooter {
+        margin-top: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
-}
-
-.register {
-  display: flex;
-  justify-content: center;
-  h5 {
-    cursor: pointer;
-    font-weight: 500;
-    font-size: small;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.copyText {
-  font-size: small;
-  font-weight: 500;
-  opacity: 0.5;
 }

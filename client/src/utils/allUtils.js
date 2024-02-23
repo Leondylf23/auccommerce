@@ -1,5 +1,6 @@
 import AES from 'crypto-js/aes';
 import encodeUtf8 from 'crypto-js/enc-utf8';
+import { useIntl as reactUseIntl } from 'react-intl';
 
 const encryptSecret = 'xS2atT7h810yD';
 
@@ -27,12 +28,15 @@ export const formatDateOnly = (value) =>
     : null;
 /**
  * @param {String} value Value can be from date
+ * @param {Number} isShowSeconds Whether to show seconds or not. Default value is false.
  */
-export const formatTimeOnly = (value) => (value ? new Date(value).toISOString().slice(11, 19) : null);
+export const formatTimeOnly = (value, isShowSeconds = false) =>
+  value ? new Date(value).toISOString().slice(11, isShowSeconds ? 19 : 16) : null;
 /**
  * @param {Number} value Value must be number in ms
  */
 export const timerDisplay = (value) => {
+  const intl = reactUseIntl();
   const display = {
     days: String(Math.floor(value / (24 * 60 * 60))).padStart(2, '0'),
     hours: String(Math.floor((value / 3600) % 24)).padStart(2, '0'),
@@ -40,7 +44,9 @@ export const timerDisplay = (value) => {
     seconds: String(Math.floor(value % 60)).padStart(2, '0'),
   };
 
-  return `${display?.days}:${display?.hours}:${display?.minutes}:${display?.seconds}`;
+  return `${display?.days} ${intl.formatMessage({ id: 'days' })} ${display?.hours}:${display?.minutes}:${
+    display?.seconds
+  }`;
 };
 /**
  * @param {Number} value Value must valid date

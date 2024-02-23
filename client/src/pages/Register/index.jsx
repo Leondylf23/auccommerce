@@ -9,15 +9,6 @@ import { sendRegisterData, showPopup } from '@containers/App/actions';
 import { encryptDataAES } from '@utils/allUtils';
 import { selectLogin } from '@containers/Client/selectors';
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Autocomplete from '@mui/material/Autocomplete';
-
 import classes from './style.module.scss';
 
 const Register = ({ isLogin }) => {
@@ -30,7 +21,6 @@ const Register = ({ isLogin }) => {
   const [password, setPassword] = useState('');
   const [dob, setDob] = useState('');
   const [role, setRole] = useState('');
-  const [location, setLocation] = useState('');
 
   const sendRegister = (e) => {
     e.preventDefault();
@@ -43,23 +33,12 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    }
-    if (location.length < 3 || location.length > 255) {
-      dispatch(
-        showPopup(
-          intl.formatMessage({ id: 'register_title' }),
-          intl.formatMessage({ id: 'register_fullname_validation' })
-        )
-      );
-      return;
-    }
-    if (dob === '') {
+    } else if (dob === '') {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_dob_validation' }))
       );
       return;
-    }
-    if (new Date().getTime - new Date(dob).getTime() < 15 * 365 * 24 * 3600000) {
+    } else if (new Date().getTime - new Date(dob).getTime() < 15 * 365 * 24 * 3600000) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'register_title' }),
@@ -67,14 +46,12 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_email_validation' }))
       );
       return;
-    }
-    if (password.length < 6 || password.length > 20) {
+    } else if (password.length < 6 || password.length > 20) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'register_title' }),
@@ -82,8 +59,7 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    }
-    if (role === '') {
+    } else if (role === '') {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_role_valiation' }))
       );
@@ -96,7 +72,6 @@ const Register = ({ isLogin }) => {
       password: encryptDataAES(password),
       dob: encryptDataAES(dob),
       role: encryptDataAES(role),
-      location: encryptDataAES(location),
     };
 
     dispatch(
@@ -121,143 +96,80 @@ const Register = ({ isLogin }) => {
     );
   };
 
-  const defaultTheme = createTheme();
-
   useEffect(() => {
     if (isLogin) navigate('/');
   }, [isLogin]);
 
   return (
-    <div data-testid="register-page">
-      <ThemeProvider theme={defaultTheme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
+    <div className={classes.fullContainer} data-testid="register-page">
+      <div className={classes.innerContainer}>
+        <h1 className={classes.title}>
+          <FormattedMessage id="register_title" />
+        </h1>
+        <form className={classes.formContainer} onSubmit={sendRegister}>
+          <label htmlFor="fullname" className={classes.label}>
+            <FormattedMessage id="register_fullname" />
+          </label>
+          <input
+            type="text"
+            id="fullname"
+            className={classes.input}
+            placeholder={intl.formatMessage({ id: 'register_fullname_placeholder' })}
+            onChange={(e) => setFullname(e.target.value)}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <Box
-              sx={{
-                my: 8,
-                mx: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Typography component="h1" variant="h5">
-                <FormattedMessage id="register_title" />
-              </Typography>
-              <Box component="form" noValidate onSubmit={sendRegister} sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="fullname"
-                  label={<FormattedMessage id="register_fullname" />}
-                  name="fullname"
-                  autoFocus
-                  onChange={(e) => setFullname(e.target.value)}
-                  size="small"
-                />
-                <TextField
-                  name="dob"
-                  label="Date of Birth"
-                  InputLabelProps={{ shrink: true, required: true }}
-                  type="date"
-                  onChange={(e) => setDob(e.target.value)}
-                  value={dob}
-                  size="small"
-                  fullWidth
-                  margin="normal"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label={<FormattedMessage id="register_email" />}
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={(e) => setEmail(e.target.value)}
-                  size="small"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label={<FormattedMessage id="register_password" />}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  size="small"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="location"
-                  label={<FormattedMessage id="register_location" />}
-                  id="location"
-                  onChange={(e) => setLocation(e.target.value)}
-                  size="small"
-                />
-                <Autocomplete
-                  margin="normal"
-                  disablePortal
-                  id="role"
-                  options={optionRole}
-                  size="small"
-                  value={role}
-                  onChange={(e, newValue) => setRole(newValue)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      name="role"
-                      margin="normal"
-                      size="small"
-                      required
-                      label={<FormattedMessage id="register_role" />}
-                    />
-                  )}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ my: 1, textTransform: 'none' }}
-                  size="small"
-                  data-testid="register-button-submit"
-                >
-                  <FormattedMessage id="register_title" />
-                </Button>
-                <div className={classes.register} data-testid="login-button">
-                  <h5 onClick={() => navigate('/login')}>
-                    <FormattedMessage id="register_login_footer" />
-                  </h5>
-                </div>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </ThemeProvider>
+          <label htmlFor="dob" className={classes.label}>
+            <FormattedMessage id="register_dob" />
+          </label>
+          <input type="date" id="dob" className={classes.input} onChange={(e) => setDob(e.target.value)} />
+          <label htmlFor="email" className={classes.label}>
+            <FormattedMessage id="register_email" />
+          </label>
+          <input
+            type="email"
+            id="email"
+            className={classes.input}
+            placeholder={intl.formatMessage({ id: 'register_email_placeholder' })}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="password" className={classes.label}>
+            <FormattedMessage id="register_password" />
+          </label>
+          <input
+            type="password"
+            id="password"
+            className={classes.input}
+            placeholder={intl.formatMessage({ id: 'register_password_placeholder' })}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label htmlFor="role" className={classes.label}>
+            <FormattedMessage id="register_role" />
+          </label>
+          <select name="role" id="role" className={classes.input} onChange={(e) => setRole(e.target.value)}>
+            <option value="">
+              <FormattedMessage id="register_role_placeholder" />
+            </option>
+            <option value="customer">
+              <FormattedMessage id="register_role_customer" />
+            </option>
+            <option value="business">
+              <FormattedMessage id="register_role_business" />
+            </option>
+          </select>
+          <button type="submit" className={classes.button}>
+            <FormattedMessage id="register_button" />
+          </button>
+          <h3 className={classes.footer}>
+            <FormattedMessage id="register_login_footer" />
+            <a onClick={() => navigate('/login')} className={classes.footerLink}>
+              <FormattedMessage id="register_login_footer_link" />
+            </a>
+            .
+          </h3>
+        </form>
+      </div>
     </div>
   );
 };
-
-const optionRole = ['customer', 'business'];
 
 Register.propTypes = {
   isLogin: PropTypes.bool,

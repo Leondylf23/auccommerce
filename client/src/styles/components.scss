@@ -44,6 +44,16 @@
       background-color: #961111;
     }
   }
+  &[data-type='clean'] {
+    background-color: transparent;
+
+    &:hover {
+      background-color: #c9c9c9;
+    }
+    &:disabled {
+      background-color: #949494;
+    }
+  }
 }
 
 @mixin shadow {

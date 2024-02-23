@@ -4,6 +4,7 @@
   .title {
     margin-bottom: 2rem;
   }
+
   .contentContainer {
     @include directionY;
 
@@ -23,6 +24,7 @@
       z-index: 0 !important;
 
       @include apply-at-sm-size {
+
         width: 30%;
 
         .profileImage {
@@ -40,6 +42,7 @@
         border-radius: 9999px;
         margin-bottom: 1rem;
       }
+
       .button {
         @include button;
         text-align: center;
@@ -53,6 +56,7 @@
         align-items: center;
       }
     }
+
     .rigthSide {
       @include directionY;
       width: 100%;
@@ -64,32 +68,16 @@
       .containerTitle {
         margin-bottom: 0.5rem;
       }
+
       .label {
         margin-bottom: 0.25rem;
       }
+
       .input {
         @include input;
 
         width: 100%;
         margin-bottom: 0.5rem;
-      }
-
-      .password {
-        display: flex;
-        justify-content: center;
-        align-items: start;
-        gap: 10px;
-
-        a {
-          background-color: rgb(27, 221, 27);
-          display: flex;
-          border-radius: 3px;
-          color: white;
-          justify-content: center;
-          height: 40px;
-          width: 60px;
-          align-items: center;
-        }
       }
 
       .buttonConatainer {
@@ -101,6 +89,93 @@
         .button {
           @include button;
         }
+      }
+    }
+  }
+}
+
+.adddressContainer {
+  @include directionY;
+
+  width: 100%;
+  margin-bottom: 1rem;
+
+  .header {
+    @include directionX;
+
+    align-items: center;
+
+    .containerTitle {
+      flex-grow: 1;
+    }
+    .button {
+      @include button;
+
+      flex-shrink: 0
+    }
+  }
+
+  .addressListContainer {
+    @include directionY;
+
+    gap: 0.5rem;
+    width: 100%;
+
+    .data {
+      @include directionX;
+      @include padding(0.5rem);
+
+      width: 100%;
+      align-items: center;
+
+      .textes {
+        @include directionY;
+
+        .label {
+          font-size: 1rem;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+        }
+
+        .address {
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+      }
+
+      .buttons {
+        @include directionX;
+
+        align-items: center;
+
+        .button {
+          @include button;
+
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+
+  .deletePopupContainer {
+    @include directionY;
+    @include padding(1rem);
+
+    width: 250px;
+
+    .message {
+      font-weight: 600;
+    }
+
+    .buttons {
+      @include directionX;
+
+      gap: 1rem;
+      justify-content: end;
+
+      .button {
+        @include button;
       }
     }
   }

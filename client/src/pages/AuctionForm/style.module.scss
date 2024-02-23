@@ -1,0 +1,159 @@
+@import '@styles/base';
+
+@include mainContainer {
+    .pageTitle {
+        margin-bottom: 1rem;
+    }
+
+    .inputFormContainer {
+        @include directionY;
+
+        width: 100%;
+        gap: 1rem;
+
+        .dividerContainer {
+            @include directionY;
+
+            width: 100%;
+            gap: 0.5rem;
+
+            @include apply-at-md-size {
+                @include directionX;
+            }
+
+            .inputContainer {
+                @include directionY;
+
+                width: 100%;
+
+                .label {
+                    margin-bottom: 0.25rem;
+                }
+
+                .input {
+                    @include input;
+                }
+            }
+        }
+
+        .spacer {
+            margin-top: 0.5rem;
+        }
+
+        .inputFormTitle {
+            width: 100%;
+        }
+
+        .imageInputContainer {
+            @include directionY;
+
+            @include apply-at-sm-size {
+                @include directionX;
+            }
+
+            .imagePreviewContainer {
+                @include containerCenter;
+
+                width: 100%;
+
+                .image {
+                    @include containerCenter;
+
+                    width: 80%;
+                    max-width: 400px;
+                    aspect-ratio: 1/1;
+                    background-color: #d1d1d1;
+                    border-radius: 10px;
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+
+            .imageInputFormContainer {
+                @include directionX;
+                @include padding(0.5rem);
+
+                width: 100%;
+                border: 1px solid #c7c7c7;
+                border-radius: 15px;
+
+                .imageListContainer {
+                    @include directionX;
+
+                    width: 100%;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                    flex-shrink: 0;
+
+                    .imageListDataContainer {
+                        @include directionX;
+
+                        position: relative;
+                        width: 30%;
+
+                        .imageContainer {
+                            width: 100%;
+                            cursor: pointer;
+
+                            .image {
+                                width: 100%;
+                                aspect-ratio: 1/1;
+                                object-fit: cover;
+                                object-position: center;
+                                border: 1px solid var(--color-text);
+                                border-radius: 10px;
+
+                                &[data-active='true'] {
+                                    border: 1px solid var(--color-text-invert);
+                                }
+                            }
+                        }
+
+
+                        .button {
+                            @include button;
+                            @include padding(0 !important);
+
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 9999px;
+                            color: var(--color-red);
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            z-index: 10;
+                        }
+                    }
+                }
+
+                .buttonContainer {
+                    width: 30%;
+                    aspect-ratio: 1/1;
+                    flex-shrink: 0;
+
+                    .imageInputBtn {
+                        @include button;
+                        @include containerCenter;
+                        @include padding(0 !important);
+
+                        width: 100%;
+                        aspect-ratio: 1/1;
+                    }
+                }
+            }
+        }
+    }
+
+    .buttons {
+        @include directionX;
+
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+
+        .button {
+            @include button;
+        }
+    }
+}
