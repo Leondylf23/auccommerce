@@ -11,6 +11,7 @@ import MyBids from '@pages/MyBids';
 import Payment from '@pages/Payment';
 import MyBidDetail from '@pages/MyBidDetail';
 import AuctionForm from '@pages/AuctionForm';
+import MyAuctions from '@pages/MyAuctions';
 
 const routes = [
   {
@@ -54,7 +55,7 @@ const routes = [
     role: '*',
   },
   {
-    path: '/mybids',
+    path: '/my-bids',
     name: 'My Bids',
     protected: true,
     component: MyBids,
@@ -62,7 +63,7 @@ const routes = [
     role: '*',
   },
   {
-    path: '/mybids/:id',
+    path: '/my-bids/:id',
     name: 'My Bid Detail',
     protected: true,
     component: MyBidDetail,
@@ -70,7 +71,7 @@ const routes = [
     role: '*',
   },
   {
-    path: '/mybids/:id/payment',
+    path: '/my-bids/:id/payment',
     name: 'Payment',
     protected: true,
     component: Payment,
@@ -90,6 +91,14 @@ const routes = [
     name: 'Edit Aution',
     protected: false,
     component: AuctionForm,
+    layout: MainLayout,
+    role: '*',
+  },
+  {
+    path: '/my-auction',
+    name: 'My Aution',
+    protected: false,
+    component: MyAuctions,
     layout: MainLayout,
     role: '*',
   },

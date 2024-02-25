@@ -1,159 +1,184 @@
 @import '@styles/base';
 
 @include mainContainer {
-    .pageTitle {
-        margin-bottom: 1rem;
-    }
+  .pageTitle {
+    margin-bottom: 1rem;
+  }
 
-    .inputFormContainer {
+  .inputFormContainer {
+    @include directionY;
+
+    width: 100%;
+    gap: 1rem;
+
+    .dividerContainer {
+      @include directionY;
+
+      width: 100%;
+      gap: 0.5rem;
+
+      @include apply-at-md-size {
+        @include directionX;
+      }
+
+      .inputContainer {
         @include directionY;
 
         width: 100%;
-        gap: 1rem;
 
-        .dividerContainer {
-            @include directionY;
-
-            width: 100%;
-            gap: 0.5rem;
-
-            @include apply-at-md-size {
-                @include directionX;
-            }
-
-            .inputContainer {
-                @include directionY;
-
-                width: 100%;
-
-                .label {
-                    margin-bottom: 0.25rem;
-                }
-
-                .input {
-                    @include input;
-                }
-            }
+        .label {
+          margin-bottom: 0.25rem;
         }
 
-        .spacer {
-            margin-top: 0.5rem;
+        .input {
+          @include input;
         }
-
-        .inputFormTitle {
-            width: 100%;
-        }
-
-        .imageInputContainer {
-            @include directionY;
-
-            @include apply-at-sm-size {
-                @include directionX;
-            }
-
-            .imagePreviewContainer {
-                @include containerCenter;
-
-                width: 100%;
-
-                .image {
-                    @include containerCenter;
-
-                    width: 80%;
-                    max-width: 400px;
-                    aspect-ratio: 1/1;
-                    background-color: #d1d1d1;
-                    border-radius: 10px;
-                    object-fit: cover;
-                    object-position: center;
-                }
-            }
-
-            .imageInputFormContainer {
-                @include directionX;
-                @include padding(0.5rem);
-
-                width: 100%;
-                border: 1px solid #c7c7c7;
-                border-radius: 15px;
-
-                .imageListContainer {
-                    @include directionX;
-
-                    width: 100%;
-                    flex-wrap: wrap;
-                    gap: 0.5rem;
-                    flex-shrink: 0;
-
-                    .imageListDataContainer {
-                        @include directionX;
-
-                        position: relative;
-                        width: 30%;
-
-                        .imageContainer {
-                            width: 100%;
-                            cursor: pointer;
-
-                            .image {
-                                width: 100%;
-                                aspect-ratio: 1/1;
-                                object-fit: cover;
-                                object-position: center;
-                                border: 1px solid var(--color-text);
-                                border-radius: 10px;
-
-                                &[data-active='true'] {
-                                    border: 1px solid var(--color-text-invert);
-                                }
-                            }
-                        }
-
-
-                        .button {
-                            @include button;
-                            @include padding(0 !important);
-
-                            width: 50px;
-                            height: 50px;
-                            border-radius: 9999px;
-                            color: var(--color-red);
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            z-index: 10;
-                        }
-                    }
-                }
-
-                .buttonContainer {
-                    width: 30%;
-                    aspect-ratio: 1/1;
-                    flex-shrink: 0;
-
-                    .imageInputBtn {
-                        @include button;
-                        @include containerCenter;
-                        @include padding(0 !important);
-
-                        width: 100%;
-                        aspect-ratio: 1/1;
-                    }
-                }
-            }
-        }
+      }
     }
 
-    .buttons {
+    .spacer {
+      margin-top: 0.5rem;
+    }
+
+    .inputFormTitle {
+      width: 100%;
+    }
+
+    .imageInputContainer {
+      @include directionY;
+
+      gap: 1rem;
+
+      @include apply-at-md-size {
         @include directionX;
 
-        gap: 0.5rem;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2rem;
+      }
 
-        .button {
-            @include button;
+      .imagePreviewContainer {
+        @include containerCenter;
+        @include directionY;
+
+        width: 100%;
+
+        .image {
+          @include containerCenter;
+
+          width: 100%;
+          aspect-ratio: 1.6/1;
+          background-color: #d1d1d1;
+          border-radius: 10px;
+          object-fit: cover;
+          object-position: center;
+          text-align: center;
         }
+
+        .errMsg {
+            @include padding(0.5rem);
+            @include directionY;
+
+            width: 100%;
+            margin-top: 1rem;
+            background-color: var(--color-red);
+            color: #fff;
+            border-radius: 10px;
+
+            .text {
+                width: 100%;
+                font-size: 0.8rem;
+            }
+        }
+      }
+
+      .imageInputFormContainer {
+        @include directionX;
+        @include padding(0.5rem);
+
+        width: 100%;
+        border: 1px solid #c7c7c7;
+        border-radius: 15px;
+        min-height: 400px;
+
+        .imageListContainer {
+          @include directionX;
+
+          width: 100%;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          flex-shrink: 0;
+          height: max-content;
+
+          .imageListDataContainer {
+            @include directionX;
+
+            position: relative;
+            width: 150px;
+
+            .imageContainer {
+              width: 100%;
+              cursor: pointer;
+
+              .image {
+                width: 100%;
+                aspect-ratio: 1.6/1;
+                object-fit: cover;
+                object-position: center;
+                border: 1px solid var(--color-text);
+                border-radius: 10px;
+
+                &[data-active='true'] {
+                  border: 1px solid var(--color-text-invert);
+                }
+              }
+            }
+
+            .button {
+              @include button;
+              @include padding(0 !important);
+              @include containerCenter;
+
+              width: 30px;
+              height: 30px;
+              border-radius: 9999px;
+              color: var(--color-red);
+              position: absolute;
+              top: 2%;
+              right: 2%;
+              z-index: 10;
+
+              .icon {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+
+        .buttonContainer {
+          width: 150px;
+          flex-shrink: 0;
+
+          .imageInputBtn {
+            @include button;
+            @include containerCenter;
+            @include padding(0 !important);
+
+            width: 100%;
+            aspect-ratio: 1.6/1;
+          }
+        }
+      }
     }
+  }
+
+  .buttons {
+    @include directionX;
+
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+
+    .button {
+      @include button;
+    }
+  }
 }

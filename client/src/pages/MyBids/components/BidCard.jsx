@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { formatDateOnly, numberWithPeriods } from '@utils/allUtils';
 import StatusCard from '@components/StatusCard/Card';
@@ -21,13 +22,15 @@ const BidCard = ({ data, isShowStatus }) => {
       <div className={classes.midCardContainer} onClick={detailBtn}>
         <p className={classes.name}>{data?.itemName}</p>
         <p className={classes.price}>Rp. {numberWithPeriods(data?.price)}</p>
-        <p className={classes.date}>Bid Date: {formatDateOnly('2024-02-12')}</p>
+        <p className={classes.date}>
+          <FormattedMessage id="my_bids_card_bid_date" /> {formatDateOnly('2024-02-12')}
+        </p>
       </div>
       <div className={classes.endCardContainer}>
         {isShowStatus && <StatusCard status={data?.status} />}
-        {data?.status === 'WAITING' && (
+        {data?.status === 'WAITING' && isShowStatus && (
           <button className={classes.button} type="button" onClick={() => navigate(`./${data?.id}/payment`)}>
-            Pay
+            <FormattedMessage id="my_bids_pay_btn" />
           </button>
         )}
       </div>

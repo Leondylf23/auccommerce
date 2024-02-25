@@ -8,13 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import BallotIcon from '@mui/icons-material/Ballot';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 import { setLogin, setToken, setUserData } from '@containers/Client/actions';
 
 import classes from './style.module.scss';
 
 // eslint-disable-next-line react/prop-types
-const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu }) => {
+const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu, isBusiness }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   function menuItemAction(id) {
@@ -24,11 +25,11 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu }) => {
         onClose();
         break;
       case 1:
-        navigate('/mybids');
+        navigate('/my-bids');
         onClose();
         break;
       case 2:
-        navigate('/coupons');
+        navigate('/my-auction');
         onClose();
         break;
       case 3:
@@ -54,20 +55,29 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu }) => {
         }}
       >
         <MenuItem onClick={() => menuItemAction(0)}>
-          <Person2OutlinedIcon className={classes.iconProfile} />
+          <Person2OutlinedIcon className={classes.icon} data-type="profile" />
           <Typography variant="body2">
             <FormattedMessage id="nav_profile" />
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => menuItemAction(1)}>
-          <BallotIcon className={classes.iconOrderings} />
-          <Typography variant="body2">
-            <FormattedMessage id="nav_mybids" />
-          </Typography>
-        </MenuItem>
+        {isBusiness ? (
+          <MenuItem onClick={() => menuItemAction(1)}>
+            <BallotIcon className={classes.icon} data-type="mybids" />
+            <Typography variant="body2">
+              <FormattedMessage id="nav_mybids" />
+            </Typography>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => menuItemAction(2)}>
+            <InventoryIcon className={classes.icon} data-type="myauctions" />
+            <Typography variant="body2">
+              <FormattedMessage id="nav_myauction" />
+            </Typography>
+          </MenuItem>
+        )}
         <div className={classes.divider} />
         <MenuItem onClick={() => menuItemAction(3)}>
-          <LogoutIcon className={classes.iconLogout} />
+          <LogoutIcon className={classes.icon} data-type="logout" />
           <Typography variant="body2">
             <FormattedMessage id="nav_logout" />
           </Typography>

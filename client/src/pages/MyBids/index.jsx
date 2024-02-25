@@ -45,10 +45,14 @@ const MyBids = ({ bidsData }) => {
     <div className={classes.mainContainer}>
       <div className={classes.tabs}>
         <div className={classes.tab} data-active={tabIndex === 0} onClick={() => changeTab(0)}>
-          <p className={classes.text}>Successful Bids</p>
+          <p className={classes.text}>
+            <FormattedMessage id="my_bids_tab_1_title" />
+          </p>
         </div>
         <div className={classes.tab} data-active={tabIndex === 1} onClick={() => changeTab(1)}>
-          <p className={classes.text}>Bid History</p>
+          <p className={classes.text}>
+            <FormattedMessage id="my_bids_tab_2_title" />
+          </p>
         </div>
       </div>
       <div className={classes.listBidItemsContainer}>

@@ -13,10 +13,11 @@ import { getUserDataDecrypt } from '@utils/allUtils';
 import { setLocale } from '@containers/App/actions';
 import { selectLogin, selectUserData } from '@containers/Client/selectors';
 import DropDownMenu from './components/DropdownMenu';
+import Logo from '../../static/images/auction.png';
 
 import classes from './style.module.scss';
 
-const Navbar = ({ title, locale, isUserLogined, userData, isUserLoginedTest }) => {
+const Navbar = ({ locale, isUserLogined, userData, isUserLoginedTest }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -67,7 +68,7 @@ const Navbar = ({ title, locale, isUserLogined, userData, isUserLoginedTest }) =
     <div className={classes.headerWrapper} data-testid="navbar">
       <div className={classes.contentWrapper}>
         <div className={classes.logoImage} onClick={goHome}>
-          <div className={classes.title}>{title}</div>
+          <img className={classes.logo} src={Logo} alt="Logo" />
         </div>
         <div className={classes.toolbar}>
           {isUserLogined || isUserLoginedTest ? (
@@ -75,14 +76,20 @@ const Navbar = ({ title, locale, isUserLogined, userData, isUserLoginedTest }) =
               <div onClick={openCloseProfileMenu}>
                 <Avatar className={classes.avatar} src={profileImg} />
               </div>
-              <DropDownMenu isOpen={isOpenMenu} anchorEl={anchorEl} onClose={openCloseProfileMenu} labeledMenu="" />
+              <DropDownMenu
+                isOpen={isOpenMenu}
+                isBusiness={isBusiness}
+                anchorEl={anchorEl}
+                onClose={openCloseProfileMenu}
+                labeledMenu=""
+              />
             </div>
           ) : (
             <div className={classes.userButtons}>
-              <button type="button" className={classes.login}>
+              <button type="button" className={classes.login} onClick={() => navigate('/login')}>
                 <FormattedMessage id="nav_login" />
               </button>
-              <button type="button" className={classes.register}>
+              <button type="button" className={classes.register} onClick={() => navigate('/register')}>
                 <FormattedMessage id="nav_register" />
               </button>
             </div>
@@ -117,7 +124,6 @@ const Navbar = ({ title, locale, isUserLogined, userData, isUserLoginedTest }) =
 };
 
 Navbar.propTypes = {
-  title: PropTypes.string,
   locale: PropTypes.string.isRequired,
   isUserLogined: PropTypes.bool,
   userData: PropTypes.string,

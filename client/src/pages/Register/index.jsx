@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { sendRegisterData, showPopup } from '@containers/App/actions';
 import { encryptDataAES } from '@utils/allUtils';
 import { selectLogin } from '@containers/Client/selectors';
+import Logo from '../../static/images/auction.png';
 
 import classes from './style.module.scss';
 
@@ -33,12 +34,14 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    } else if (dob === '') {
+    }
+    if (dob === '') {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_dob_validation' }))
       );
       return;
-    } else if (new Date().getTime - new Date(dob).getTime() < 15 * 365 * 24 * 3600000) {
+    }
+    if (new Date().getTime - new Date(dob).getTime() < 15 * 365 * 24 * 3600000) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'register_title' }),
@@ -46,12 +49,14 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_email_validation' }))
       );
       return;
-    } else if (password.length < 6 || password.length > 20) {
+    }
+    if (password.length < 6 || password.length > 20) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'register_title' }),
@@ -59,7 +64,8 @@ const Register = ({ isLogin }) => {
         )
       );
       return;
-    } else if (role === '') {
+    }
+    if (role === '') {
       dispatch(
         showPopup(intl.formatMessage({ id: 'register_title' }), intl.formatMessage({ id: 'register_role_valiation' }))
       );
@@ -103,6 +109,11 @@ const Register = ({ isLogin }) => {
   return (
     <div className={classes.fullContainer} data-testid="register-page">
       <div className={classes.innerContainer}>
+        <div className={classes.logoContainer}>
+          <div onClick={() => navigate('/')}>
+            <img className={classes.logo} src={Logo} alt="Logo" />
+          </div>
+        </div>
         <h1 className={classes.title}>
           <FormattedMessage id="register_title" />
         </h1>
@@ -158,13 +169,17 @@ const Register = ({ isLogin }) => {
           <button type="submit" className={classes.button}>
             <FormattedMessage id="register_button" />
           </button>
-          <h3 className={classes.footer}>
-            <FormattedMessage id="register_login_footer" />
-            <a onClick={() => navigate('/login')} className={classes.footerLink}>
-              <FormattedMessage id="register_login_footer_link" />
-            </a>
-            .
-          </h3>
+          <div className={classes.footer}>
+            <h3 className={classes.footerInner}>
+              <FormattedMessage id="register_login_footer" />
+              <div className={classes.textContainer} onClick={() => navigate('/login')}>
+                <p className={classes.footerLink}>
+                  <FormattedMessage id="register_login_footer_link" />
+                </p>
+              </div>
+              .
+            </h3>
+          </div>
         </form>
       </div>
     </div>

@@ -7,11 +7,15 @@ import { formatDateOnly, formatTimeOnly, numberWithPeriods } from '@utils/allUti
 
 import classes from '../style.module.scss';
 
-const ItemCard = ({ data }) => {
+const ItemCard = ({ data, isFull }) => {
   const navigate = useNavigate();
 
   return (
-    <div className={classes.itemCardContainer} onClick={() => navigate(`/item/${data?.id}`)}>
+    <div
+      className={classes.itemCardContainer}
+      data-type={isFull && 'full'}
+      onClick={() => navigate(`/item/${data?.id}`)}
+    >
       <img className={classes.image} src={data?.itemPicture} alt="Url Broken" />
       <p className={classes.itemName}>{data?.itemName}</p>
       <p className={classes.itemPrice}>Rp. {numberWithPeriods(data?.startingBid)}</p>
@@ -31,6 +35,7 @@ const ItemCard = ({ data }) => {
 
 ItemCard.propTypes = {
   data: PropTypes.object.isRequired,
+  isFull: PropTypes.bool,
 };
 
 export default ItemCard;

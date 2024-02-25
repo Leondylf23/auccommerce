@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { numberWithPeriods } from '@utils/allUtils';
 import { selectPaymentData, selectProviderData, selectShippingProviders } from '../selectors';
-import { getShippingProviderData, getShippingProviders, getUserAddresses } from '../actions';
+import { getShippingProviderData, getShippingProviders } from '../actions';
 
 import classes from '../style.module.scss';
 
@@ -25,7 +26,9 @@ const ShippmentProviderFormComponent = ({ draftData, providerList, providerInfor
 
   return (
     <div className={classes.innerContainer}>
-      <h3 className={classes.title}>Choose Shipping Provider</h3>
+      <h3 className={classes.title}>
+        <FormattedMessage id="payment_step_2_h2" />
+      </h3>
       <div className={classes.selectorContainer}>
         <select
           className={classes.input}
@@ -34,7 +37,9 @@ const ShippmentProviderFormComponent = ({ draftData, providerList, providerInfor
           value={selectedProvider}
           onChange={(e) => providerSelectorOnChange(e.target.value)}
         >
-          <option value="">- Choose -</option>
+          <option value="">
+            <FormattedMessage id="payment_step_2_choose" />
+          </option>
           {providerList?.map((provider) => (
             <option value={provider?.id}>{provider?.name}</option>
           ))}
@@ -42,9 +47,13 @@ const ShippmentProviderFormComponent = ({ draftData, providerList, providerInfor
       </div>
       {selectedProvider !== '' && providerInformation && (
         <div className={classes.providerInfoContainer}>
-          <p className={classes.label}>Ship to:</p>
+          <p className={classes.label}>
+            <FormattedMessage id="payment_step_2_ship_to" />:
+          </p>
           <p className={classes.data}>{providerInformation?.address}</p>
-          <p className={classes.labelEst}>Estimate price:</p>
+          <p className={classes.labelEst}>
+            <FormattedMessage id="payment_step_2_est_time" />:
+          </p>
           <p className={classes.dataEst}>Rp. {numberWithPeriods(providerInformation?.price)}</p>
         </div>
       )}

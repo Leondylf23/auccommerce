@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import classes from './style.module.scss';
 import ShipmentAddressForm from './components/ShipmentAddressForm';
@@ -10,6 +11,7 @@ import PaymentMethod from './components/PaymentMethod';
 import SummaryPayment from './components/SummaryPayment';
 
 const Payment = ({ draftData, bidData }) => {
+  const intl = useIntl();
   const [pageTitle, setPageTitle] = useState('');
   const [step, setStep] = useState(1);
   const [page, setPage] = useState(null);
@@ -20,22 +22,23 @@ const Payment = ({ draftData, bidData }) => {
     switch (stepData) {
       case 1:
         setPage(<ShipmentAddressForm />);
-        setPageTitle('Shipping Address');
+        setPageTitle(intl.formatMessage({ id: 'payment_step_1_h1' }));
         break;
       case 2:
         setPage(<ShippmentProviderForm />);
-        setPageTitle('Shipping Provider');
+        setPageTitle(intl.formatMessage({ id: 'payment_step_2_h1' }));
         break;
       case 3:
         setPage(<PaymentMethod />);
-        setPageTitle('Payment Method');
+        setPageTitle(intl.formatMessage({ id: 'payment_step_3_h1' }));
         break;
       case 4:
         setPage(<SummaryPayment />);
-        setPageTitle('Summary');
+        setPageTitle(intl.formatMessage({ id: 'payment_step_4_h1' }));
         break;
       default:
         setPage(null);
+        setPageTitle('');
         break;
     }
 
@@ -53,11 +56,11 @@ const Payment = ({ draftData, bidData }) => {
       <div className={classes.footer}>
         {step > 1 && (
           <button type="button" className={classes.button} onClick={() => changePageStep(step - 1)}>
-            Previous
+            <FormattedMessage id="previous" />
           </button>
         )}
         <button type="button" className={classes.button} onClick={() => changePageStep(step + 1)}>
-          {step === 4 ? 'Finish' : 'Next'}
+          {step === 4 ? intl.formatMessage({ id: 'send' }) : intl.formatMessage({ id: 'next' })}
         </button>
       </div>
     </div>
@@ -65,7 +68,7 @@ const Payment = ({ draftData, bidData }) => {
 };
 
 Payment.propTypes = {
-  paymentData: PropTypes.object,
+  draftData: PropTypes.object,
   bidData: PropTypes.object,
 };
 

@@ -7,7 +7,17 @@ import itemDetailSaga from '@pages/ItemDetail/saga';
 import myBidsSaga from '@pages/MyBids/saga';
 import bidDetailSaga from '@pages/MyBidDetail/saga';
 import paymentPageSaga from '@pages/Payment/saga';
+import myAuctionsSaga from '@pages/MyAuctions/saga';
 
 export default function* rootSaga() {
-  yield all([appSaga(), homeSaga(), profileSaga(), itemDetailSaga(), myBidsSaga(), bidDetailSaga(), paymentPageSaga()]);
+  yield all([
+    appSaga(),
+    homeSaga(),
+    profileSaga(),
+    itemDetailSaga(),
+    myBidsSaga(),
+    bidDetailSaga(),
+    paymentPageSaga(),
+    myAuctionsSaga(),
+  ]);
 }

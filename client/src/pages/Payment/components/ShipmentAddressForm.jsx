@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import EditIcon from '@mui/icons-material/Edit';
+import { FormattedMessage } from 'react-intl';
 
 import PopupWindow from '@components/PopupWindow/Dialog';
 import LocationInputForm from '@components/LocationInputForm';
@@ -44,7 +45,9 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
 
   return (
     <div className={classes.innerContainer}>
-      <h3 className={classes.title}>Address List</h3>
+      <h3 className={classes.title}>
+        <FormattedMessage id="payment_step_1_h2" />
+      </h3>
       <PopupWindow onClose={() => closeLocationForm(false)} open={isOpenLocationInput}>
         <LocationInputForm id={editId} onClose={closeLocationForm} />
       </PopupWindow>
@@ -52,7 +55,9 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
         <div className={classes.addressListContainer}>
           {addressList?.map((address) => (
             <div className={classes.addressData} key={address?.id} data-active={selectedAddress === address?.id}>
-              <FmdGoodIcon className={classes.icon} />
+              <div className={classes.iconContainer} onClick={() => selectAddress(address?.id)}>
+                <FmdGoodIcon className={classes.icon} />
+              </div>
               <div className={classes.data} onClick={() => selectAddress(address?.id)}>
                 <p className={classes.addressLabel}>{address?.label}</p>
                 <p className={classes.addressText}>{address?.address}</p>

@@ -79,6 +79,21 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
           ) : (
             <>
               <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>
+              <div className={classes.timerContainer}>
+                <div className={classes.leftContainer}>
+                  <TimerIcon className={classes.icon} />
+                  <p className={classes.timer}>{timerDisplay(timer)}</p>
+                </div>
+                <div className={classes.rightContainer}>
+                  {isLive ? (
+                    <LivePeoplesDisplay peoples={itemDetailData?.livePeoples} isShowTitle />
+                  ) : (
+                    <p className={classes.text}>
+                      <FormattedMessage id="item_detail_status_waiting" />
+                    </p>
+                  )}
+                </div>
+              </div>
               <div className={classes.bidPriceContainer}>
                 <div className={classes.priceContainer}>
                   <h3 className={classes.title}>
@@ -94,21 +109,6 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
                     <p className={classes.price}>Rp. {numberWithPeriods(itemDetailData?.highestBid)}</p>
                   </div>
                 )}
-              </div>
-              <div className={classes.timerContainer}>
-                <div className={classes.leftContainer}>
-                  <TimerIcon className={classes.icon} />
-                  <p className={classes.timer}>{timerDisplay(timer)}</p>
-                </div>
-                <div className={classes.rightContainer}>
-                  {isLive ? (
-                    <LivePeoplesDisplay peoples={itemDetailData?.livePeoples} isShowTitle />
-                  ) : (
-                    <p className={classes.text}>
-                      <FormattedMessage id="item_detail_status_waiting" />
-                    </p>
-                  )}
-                </div>
               </div>
               {isLive && (
                 <button type="button" onClick={userJoinLive} className={classes.joinBtn}>

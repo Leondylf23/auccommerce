@@ -222,7 +222,7 @@ const LiveBidPage = () => {
             <button
               className={classes.button}
               type="button"
-              onClick={() => navigate(`/mybids/${bidWinner?.myBidId || 1}/payment`)}
+              onClick={() => navigate(`/my-bids/${bidWinner?.myBidId || 1}/payment`)}
             >
               <FormattedMessage id="item_detail_bid_go_to_payment_btn" />
             </button>

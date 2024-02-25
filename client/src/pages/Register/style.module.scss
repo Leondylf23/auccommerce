@@ -22,6 +22,18 @@
     border-radius: 10px;
     box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.3);
 
+    .logoContainer {
+      @include directionX;
+
+      justify-content: center;
+      margin-bottom: 0.5rem;
+
+      .logo {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
     .title {
       font-size: 1.5rem;
       width: 100%;
@@ -53,15 +65,29 @@
       }
 
       .footer {
-        margin-top: 20px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        width: 100%;
-        text-align: center;
+        @include directionX;
 
-        .footerLink {
-          text-decoration: underline;
-          cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+
+        .footerInner {
+          @include directionX;
+
+          font-size: 0.8rem;
+          font-weight: 500;
+          width: max-content;
+
+          .textContainer {
+            width: max-content;
+            margin-left: 0.25rem;
+
+            .footerLink {
+              text-decoration: underline;
+              width: max-content;
+              cursor: pointer;
+            }
+          }
         }
       }
     }

@@ -44,17 +44,21 @@
   }
 }
 
-.iconProfile {
+.icon {
   margin-right: 10px;
-  color: #ffaf00;
-}
-.iconOrderings {
-  margin-right: 10px;
-  color: #87a900;
-}
-.iconDiscount {
-  margin-right: 10px;
-  color: #3b97d3;
+
+  &[data-type="profile"] {
+    color: #ffaf00;
+  }
+  &[data-type="mybids"] {
+    color: #45a845;
+  }
+  &[data-type="myauctions"] {
+    color: #55a2c5;
+  }
+  &[data-type="logout"] {
+    color: #e50914;
+  }
 }
 .divider {
   @include marginY(5px);

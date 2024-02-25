@@ -11,7 +11,7 @@
     .title {
       font-weight: 700;
       font-size: 1.5rem;
-      margin-bottom: 1rem
+      margin-bottom: 1rem;
     }
 
     .listItemsX {
@@ -43,12 +43,17 @@
   flex-shrink: 0;
   cursor: pointer;
 
+  &[data-type='full'] {
+    width: 100%;
+  }
+
   .image {
     width: 100%;
     object-fit: cover;
     object-position: center;
     margin-bottom: 0.6rem;
     border-radius: 10px;
+    aspect-ratio: 1.6/1;
   }
 
   .itemName {
@@ -81,7 +86,6 @@
       font-size: 0.8rem;
     }
   }
-
 
   .auctionTimeContainer {
     @include directionX;
@@ -205,22 +209,30 @@
         border-bottom: 4px solid #ff9900;
       }
     }
-
   }
 
   .resultContainer {
     @include directionX;
 
     width: 100%;
+    justify-content: center;
     flex-grow: 1;
 
     .resultListContainer {
-      @include grid(2, 0.5rem);
-
+      @include grid(1, 0.5rem);
+      
       width: 100%;
-      justify-content: center;
-    }
 
+      @include apply-at-sm-size {
+        @include grid(2, 0.5rem);
+      }
+      @include apply-at-md-size {
+        @include grid(2, 1rem);
+      }
+      @include apply-at-lg-size {
+        @include grid(3, 1rem);
+      }
+    }
   }
 
   .searchLoadingContainer {

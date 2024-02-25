@@ -1,30 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
-import { selectPaymentData, selectPaymentMethods } from '../selectors';
-import { getPaymentMethods } from '../actions';
+import { numberWithPeriods } from '@utils/allUtils';
+import { selectPaymentData } from '../selectors';
 
 import classes from '../style.module.scss';
-import { numberWithPeriods } from '@utils/allUtils';
 
-const SummaryPaymentComponent = ({ draftData, paymentMethods }) => {
+const SummaryPaymentComponent = ({ draftData }) => {
   const dispatch = useDispatch();
-
-  const [selectedMethod, setSelectedPayment] = useState(-1);
-
-  const selectMethod = (id) => {
-    if (selectedMethod === id) {
-      setSelectedPayment(null);
-    } else {
-      setSelectedPayment(id);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getPaymentMethods());
-  }, []);
 
   return (
     <div className={classes.innerContainer}>
@@ -57,12 +42,10 @@ const SummaryPaymentComponent = ({ draftData, paymentMethods }) => {
 
 SummaryPaymentComponent.propTypes = {
   draftData: PropTypes.object,
-  paymentMethods: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
   draftData: selectPaymentData,
-  paymentMethods: selectPaymentMethods,
 });
 
 export default connect(mapStateToProps)(SummaryPaymentComponent);

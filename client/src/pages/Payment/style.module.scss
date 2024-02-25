@@ -66,7 +66,6 @@
 
         .addressData {
             @include directionX;
-            @include padding(1rem);
 
             width: 100%;
             align-items: center;
@@ -77,13 +76,19 @@
                 background-color: var(--color-primary);
             }
 
-            .icon {
-                font-size: 2rem;
-                margin-right: 1rem;
+            .iconContainer {
+                @include padding(1rem);
+                cursor: pointer;
+
+                .icon {
+                    font-size: 2rem;
+                    flex-shrink: 0;
+                }
             }
 
             .data {
                 @include directionY;
+                @include paddingY(1rem);
 
                 flex-grow: 1;
                 cursor: pointer;
@@ -108,6 +113,7 @@
                 width: 50px;
                 height: 50px;
                 border-radius: 9999px;
+                margin-right: 1rem;
                 cursor: pointer;
 
                 &:hover {
@@ -195,6 +201,7 @@
             align-items: center;
             border-radius: 10px;
             background-color: var(--color-bg);
+            cursor: pointer;
 
             &[data-active='true'] {
                 background-color: var(--color-primary);

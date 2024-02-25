@@ -15,7 +15,7 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [nextOffset, setNextOffset] = useState('');
+  const [nextOffset, setNextOffset] = useState(null);
 
   const fetchData = (isReset) => {
     setIsLoading(true);
@@ -61,7 +61,7 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
         {searchResult?.length > 0 ? (
           <div className={classes.resultListContainer}>
             {searchResult?.map((item) => (
-              <ItemCard data={item} />
+              <ItemCard data={item} isFull />
             ))}
           </div>
         ) : (

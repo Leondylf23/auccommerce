@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { selectPaymentData, selectPaymentMethods } from '../selectors';
 import { getPaymentMethods } from '../actions';
@@ -27,7 +28,9 @@ const PaymentMethodComponent = ({ draftData, paymentMethods }) => {
 
   return (
     <div className={classes.innerContainer}>
-      <h3 className={classes.title}>Select Payment Method</h3>
+      <h3 className={classes.title}>
+        <FormattedMessage id="payment_step_3_h2" />
+      </h3>
       <div className={classes.paymentMethodListContainer}>
         {paymentMethods?.map((method) => (
           <div
