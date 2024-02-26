@@ -150,6 +150,7 @@ export default {
   auction_form_general_end_bid_date_err: 'Deadline bid date must be later 10 minutes from start bid date!',
   auction_form_general_desc_err: 'Description must be at least 10 characters!',
   auction_form_general_img_err: 'At least have 1 image!',
+  auction_form_success_save: 'Successfully save auction data!',
 
   profile_title: 'Your Profile',
   profile_chg_img: 'Change Image',

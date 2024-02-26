@@ -1,11 +1,11 @@
 import { GET_AUCTION_DETAIL, SAVE_AUCTION_DATA, SET_AUCTION_DETAIL } from './constants';
 
-export const getAuctionData = (formData) => ({
+export const getAuctionDetailData = (formData) => ({
   type: GET_AUCTION_DETAIL,
   formData,
 });
 
-export const setAuctionData = (data) => ({
+export const setAuctionDetailData = (data) => ({
   type: SET_AUCTION_DETAIL,
   data,
 });

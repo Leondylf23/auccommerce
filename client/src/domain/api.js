@@ -10,7 +10,7 @@ const urls = {
   profile: 'auth/profile',
   resetpassword: 'auth/reset-password',
   changepassword: 'auth/change-password',
-  auction: 'auction',
+  auction: 'auction/auctions',
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -59,7 +59,8 @@ export const deleteUserAddressApi = (formData) =>
   callAPI(`${urls.profile}/addresses/delete`, 'delete', {}, {}, formData);
 
 // Auctions
-export const getAuctionDetailApi = (formData) => callAPI(`${urls.auction}/detail`, 'get', {}, formData);
+export const getMyAuctionsApi = (formData) => callAPI(`${urls.auction}/my-auctions`, 'get', {}, formData);
+export const getAuctionDetailApi = (formData) => callAPI(`${urls.auction}/my-auctions/detail`, 'get', {}, formData);
 
 export const saveNewAuctionDataApi = (formData) =>
   callAPI(

@@ -10,6 +10,7 @@ const Port = process.env.NODEJS_PORT || 8080;
 
 // Import routes
 const AuthUser = require('./server/api/authUser');
+const Auctions = require('./server/api/auctions');
 
 // Middleware
 app.use(cors());
@@ -72,6 +73,7 @@ app.use((req, res, next) => {
 
 // Route middlewares
 app.use('/api/auth', AuthUser);
+app.use('/api/auction', Auctions);
 
 // Sys ping api 
 app.get('/sys/ping', (req, res) => {

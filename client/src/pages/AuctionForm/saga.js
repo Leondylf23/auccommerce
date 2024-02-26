@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { setLoading, showPopup } from '@containers/App/actions';
 import { getAuctionDetailApi, saveEditAuctionDataApi, saveNewAuctionDataApi } from '@domain/api';
-import { setAuctionData } from './actions';
+import { setAuctionDetailData } from './actions';
 import { GET_AUCTION_DETAIL, SAVE_AUCTION_DATA } from './constants';
 
 function* doGetAuctionDetailData({ formData }) {
@@ -10,7 +10,7 @@ function* doGetAuctionDetailData({ formData }) {
   try {
     const res = yield call(getAuctionDetailApi, formData);
 
-    yield put(setAuctionData(res?.data));
+    yield put(setAuctionDetailData(res?.data));
   } catch (error) {
     yield put(showPopup());
   }
@@ -23,11 +23,13 @@ function* doSaveAuctionData({ formData, isEdit, cb }) {
 
   try {
     if (isEdit) {
-      yield call(saveEditAuctionDataApi, formData);
+      const res = yield call(saveEditAuctionDataApi, formData);
+
+      yield put(setAuctionDetailData(res?.data?.updatedData));
       cb(null, null);
     } else {
       const res = yield call(saveNewAuctionDataApi, formData);
-      cb(null, res?.createdId);
+      cb(null, res?.data?.createdId);
     }
   } catch (error) {
     yield put(showPopup());

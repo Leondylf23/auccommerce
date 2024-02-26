@@ -152,6 +152,7 @@ export default {
   auction_form_general_end_bid_date_err: 'Tanggal tenggang lelang harus lebih 10 menit dari tanggal mulai lelang!',
   auction_form_general_desc_err: 'Deskripsi harus setidaknya memiliki 10 karakter!',
   auction_form_general_img_err: 'Setidaknya memiliki 1 gambar!',
+  auction_form_success_save: 'Data lelang berhasil disimpan!',
 
   profile_title: 'Profile Anda',
   profile_chg_img: 'Ganti Gambar',

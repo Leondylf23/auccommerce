@@ -37,9 +37,6 @@ module.exports = {
       itemDeadlineBid: {
         type: Sequelize.DATE
       },
-      itemDirectPrice: {
-        type: Sequelize.DECIMAL(11,2)
-      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: true

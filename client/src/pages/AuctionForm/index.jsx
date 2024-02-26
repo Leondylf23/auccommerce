@@ -11,7 +11,7 @@ import uuid from 'react-uuid';
 
 import { showPopup } from '@containers/App/actions';
 import { selectAuctionDetailData } from './selectors';
-import { saveAuctionData } from './actions';
+import { getAuctionDetailData, saveAuctionData } from './actions';
 
 import classes from './style.module.scss';
 
@@ -164,30 +164,46 @@ const AuctionForm = ({ detailData }) => {
 
     const formData = new FormData();
 
+    if (id) {
+      formData.append('id', id);
+      formData.append(
+        'imageArray',
+        JSON.stringify(itemImages?.filter((image) => image?.url !== '').map((image) => image.url))
+      );
+    }
     formData.append('itemGeneralData', JSON.stringify(itemGeneralData));
     formData.append('itemSpecificationData', JSON.stringify(itemSpecificationData));
 
     for (let index = 0; index < itemImages.length; index++) {
       const image = itemImages[index];
-      formData.append('images', image?.imageData);
+      if (image?.imageData) formData.append('images', image?.imageData);
     }
 
     dispatch(
       saveAuctionData(formData, Boolean(id), (err, createdId) => {
         if (err) return;
 
-        navigate(`edit-auction/${createdId}`);
+        if (createdId) navigate(`/edit-auction/${createdId}`);
+        dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_success_save' })));
       })
     );
   };
+
+  // TODO: add delete popup and functions
 
   useEffect(() => {
     if (id && detailData) {
       setItemGeneralData(detailData?.itemGeneralData);
       setItemSpecificationData(detailData?.itemSpecificationData);
       setIsLive(detailData?.isLive);
+      setItemImages(detailData?.itemImages?.map((image) => ({ id: uuid(), imageData: null, url: image })));
     }
   }, [detailData]);
+  useEffect(() => {
+    if (id) {
+      dispatch(getAuctionDetailData({ id }));
+    }
+  }, []);
 
   return (
     <div className={classes.mainContainer}>

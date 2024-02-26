@@ -27,7 +27,7 @@ const MyAuctions = ({ myAuctionsData }) => {
 
     dispatch(
       getMyAuctions(
-        { offset: nextOffsetTemp },
+        { nextId: nextOffsetTemp },
         (nextOffsetData) => {
           setIsLoading(false);
           setNextOffset(nextOffsetData);

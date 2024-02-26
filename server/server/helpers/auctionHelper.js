@@ -1,59 +1,196 @@
 const _ = require("lodash");
 const Boom = require("boom");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { lte } = require("sequelize/lib/operators");
 
 const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
-const { encryptData, generateRandomString } = require("./utilsHelper");
 const cloudinary = require("../services/cloudinary");
-
-const passwordSaltRound = bcrypt.genSaltSync(12);
-const signatureSecretKey = process.env.SIGN_SECRET_KEY || "pgJApn9pJ8";
-const sessionAge = process.env.SESSION_AGE || "365d";
+const { decryptData, encryptData } = require("./utilsHelper");
 
 // PRIVATE FUNCTIONS
-const __generateHashPassword = (password) =>
-  bcrypt.hashSync(password, passwordSaltRound);
-
-const __compareHashPassword = (inputedPassword, hashedPassword) =>
-  bcrypt.compareSync(inputedPassword, hashedPassword);
+const __formatDateNonISO = (date) =>
+  new Date(date).toISOString().replace("T", " ").slice(0, 19);
 
 // AUTH USER HELPERS FUNCTIONS
-const loginAuthentication = async (dataObject) => {
-  const { email, password } = dataObject;
+const getMyAuctionsData = async (dataObject, userId) => {
+  const { nextId } = dataObject;
 
   try {
-    const data = await db.user.findOne({
-      where: { email },
+    let nextIdData = null;
+
+    try {
+      nextIdData = decryptData(nextId);
+    } catch (error) {
+      nextIdData = null;
+    }
+
+    const data = await db.item.findAll({
+      attributes: [
+        "id",
+        "itemName",
+        "itemPictures",
+        ["itemDeadlineBid", "endsOn"],
+        ["itemStartBidDate", "startDate"],
+        ["itemStartBidPrice", "price"],
+        "status",
+        "createdAt",
+      ],
+      where: {
+        userId,
+        isActive: true,
+        ...(nextIdData && { id: { [lte]: nextIdData } }),
+      },
+      order: [["id", "DESC"]],
+      limit: 10,
     });
 
-    if (_.isEmpty(data))
-      throw Boom.unauthorized("Account not found from this email!");
+    let next = null;
+    if (data?.length > 9) {
+      next = data[9]?.dataValues?.id;
+      data.pop();
+    }
 
-    const hashedPassword = data?.dataValues?.password;
-    const isValid = __compareHashPassword(password, hashedPassword);
+    const remappedData = data?.map((element) => ({
+      ...element?.dataValues,
+      itemImage: element?.dataValues?.itemPictures[0],
+      itemPictures: undefined,
+    }));
 
-    if (!isValid) throw Boom.unauthorized("Wrong email or password!");
+    return Promise.resolve({
+      nextId: next ? encryptData(next) : null,
+      datas: remappedData,
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
 
-    const fullname = data?.dataValues?.fullname;
-    const profileImage = data?.dataValues?.profileImage;
-    const role = data?.dataValues?.role;
-    const userId = data?.dataValues?.id;
-    const constructData = { userId, role };
-    const frontEndUserData = {
-      fullname,
-      profileImage,
-      role,
-    };
-    const encryptedUserData = encryptData(JSON.stringify(frontEndUserData));
-    const token = jwt.sign(constructData, signatureSecretKey, {
-      expiresIn: sessionAge,
+const getMyAuctionDetailData = async (dataObject, userId) => {
+  const { id } = dataObject;
+
+  try {
+    const data = await db.item.findOne({
+      attributes: [
+        "itemName",
+        "itemPictures",
+        ["itemDeadlineBid", "deadlineBid"],
+        ["itemStartBidDate", "startBidDate"],
+        ["itemStartBidPrice", "startBid"],
+        ["itemDescription", "description"],
+        "itemPhysicalSpec",
+        "status",
+      ],
+      where: { id, userId, isActive: true },
     });
 
     return Promise.resolve({
-      token,
-      userData: encryptedUserData,
+      itemGeneralData: {
+        ...data?.dataValues,
+        itemPictures: undefined,
+        itemPhysicalSpec: undefined,
+        deadlineBid: __formatDateNonISO(data?.dataValues?.deadlineBid),
+        startBidDate: __formatDateNonISO(data?.dataValues?.startBidDate),
+        status: undefined
+      },
+      itemSpecificationData: data?.dataValues.itemPhysicalSpec,
+      itemImages: JSON.parse(data?.dataValues.itemPictures),
+      isLive: data?.dataValues?.status === "LIVE",
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
+  const { itemGeneralData, itemSpecificationData } = dataObject;
+
+  try {
+    if (!(imageFiles?.length > 0))
+      throw Boom.badRequest("At least have 1 image!");
+
+    const imageResults = [];
+
+    for (let index = 0; index < imageFiles.length; index++) {
+      const image = imageFiles[index];
+
+      const imageResult = await cloudinary.uploadToCloudinary(image, "image");
+      if (!imageResult) throw Boom.internal("Cloudinary image upload failed");
+
+      imageResults.push(imageResult?.url);
+    }
+
+    const createdData = await db.item.create({
+      userId,
+      itemName: JSON.parse(itemGeneralData)?.itemName,
+      itemPictures: imageResults,
+      itemDescription: JSON.parse(itemGeneralData)?.description,
+      itemPhysicalSpec: JSON.parse(itemSpecificationData),
+      itemStartBidPrice: JSON.parse(itemGeneralData)?.startBid,
+      itemStartBidDate: JSON.parse(itemGeneralData)?.startBidDate,
+      itemDeadlineBid: JSON.parse(itemGeneralData)?.deadlineBid,
+      status: "ACTIVED",
+    });
+
+    if (!createdData) throw Boom.internal("Auction item is not created!");
+
+    return Promise.resolve({
+      createdId: createdData?.id,
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const editAuctionItem = async (dataObject, imageFiles, userId) => {
+  const { id, itemGeneralData, itemSpecificationData, imageArray } = dataObject;
+
+  try {
+    const itemData = await db.item.findOne({
+      where: { id, isActive: true, userId },
+    });
+    if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
+
+    const imageResults = [];
+    if (imageFiles?.length > 0) {
+      for (let index = 0; index < imageFiles.length; index++) {
+        const image = imageFiles[index];
+
+        const imageResult = await cloudinary.uploadToCloudinary(image, "image");
+        if (!imageResult) throw Boom.internal("Cloudinary image upload failed");
+
+        imageResults.push(imageResult?.url);
+      }
+    }
+
+    let existingImgs = [];
+    try {
+      existingImgs = JSON.parse(imageArray);
+    } catch (error) {
+      existingImgs = [];
+    }
+
+    const imagesData = [...existingImgs, ...imageResults];
+
+    const updatedData = await itemData.update({
+      itemName: JSON.parse(itemGeneralData)?.itemName,
+      itemPictures: imagesData,
+      itemDescription: JSON.parse(itemGeneralData)?.description,
+      itemPhysicalSpec: JSON.parse(itemSpecificationData),
+      itemStartBidPrice: JSON.parse(itemGeneralData)?.startBid,
+      itemStartBidDate: JSON.parse(itemGeneralData)?.startBidDate,
+      itemDeadlineBid: JSON.parse(itemGeneralData)?.deadlineBid,
+      status: "ACTIVED",
+    });
+
+    if (!updatedData) throw Boom.internal("Auction item is not updated!");
+
+    return Promise.resolve({
+      updatedData: {
+        itemGeneralData: JSON.parse(itemGeneralData),
+        itemSpecificationData: JSON.parse(itemSpecificationData),
+        itemImages: imagesData,
+        isLive: false,
+      },
     });
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));
@@ -61,5 +198,8 @@ const loginAuthentication = async (dataObject) => {
 };
 
 module.exports = {
-  loginAuthentication,
+  getMyAuctionsData,
+  getMyAuctionDetailData,
+  createNewAuctionItem,
+  editAuctionItem,
 };

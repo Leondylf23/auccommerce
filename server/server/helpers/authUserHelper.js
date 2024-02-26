@@ -193,17 +193,10 @@ const resetPassword = async (dataObject) => {
 };
 
 const updateProfile = async (dataObject, imageFile, userId) => {
-  const { fullname, dob, location } = dataObject;
-  console.log(location);
+  const { fullname, dob } = dataObject;
 
   try {
     const data = await db.user.findByPk(userId);
-
-    if (location && data.role !== "business") {
-      throw Boom.unauthorized(
-        "You are a customer. Cannot update store location"
-      );
-    }
 
     if (_.isEmpty(data))
       throw Boom.badData("Profile data not found, maybe bad session data!");
@@ -217,7 +210,6 @@ const updateProfile = async (dataObject, imageFile, userId) => {
     const checkUpdate = await data.update({
       fullname,
       dob,
-      location,
       ...(imageResult && { pictureUrl: imageResult?.url }),
     });
     if (_.isEmpty(checkUpdate)) throw Boom.internal("Profile not updated!");

@@ -1,6 +1,26 @@
 const Joi = require("joi");
 const Boom = require("boom");
 
+const idValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
+const getMyAcutionValidation = (data) => {
+  const schema = Joi.object({
+    nextId: Joi.string().description("Offset of the page"),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
 const createNewAuctionValidation = (data) => {
   const schema = Joi.object({
     itemGeneralData: Joi.string()
@@ -19,6 +39,7 @@ const createNewAuctionValidation = (data) => {
 const editAuctionValidation = (data) => {
   const schema = Joi.object({
     id: Joi.number().required().description("Id of item in number"),
+    imageArray: Joi.string().required().description("Image array in json"),
     itemGeneralData: Joi.string()
       .required()
       .description("General information of item in json string"),
@@ -66,6 +87,8 @@ const specAuctionFormDataValidation = (data) => {
 };
 
 module.exports = {
+  idValidation,
+  getMyAcutionValidation,
   createNewAuctionValidation,
   editAuctionValidation,
   generalAuctionFormDataValidation,
