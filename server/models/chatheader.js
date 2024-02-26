@@ -15,11 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   chatHeader.init({
     userIdOrigin: DataTypes.INTEGER,
-    storeIdDest: DataTypes.INTEGER,
+    userIdDest: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN
   }, {
-    sequelize,
-    modelName: 'chatHeader',
+    sequelize,    modelName: 'chatHeader',
   });
   return chatHeader;
 };

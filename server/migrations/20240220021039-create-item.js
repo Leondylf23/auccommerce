@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      storeId: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'stores',
+          model: 'users',
           key: 'id',
-          as: 'storeId',
+          as: 'userId',
         },
       },
       itemName: {

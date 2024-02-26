@@ -16,7 +16,15 @@ const AuctionDataCard = ({ data }) => {
       <p className={classes.itemName}>{data?.itemName}</p>
       <p className={classes.price}>Rp. {numberWithPeriods(data?.price)}</p>
       <p className={classes.endsOn}>
-        <FormattedMessage id="home_item_card_ends_on" /> : {formatDateTimeSlashes(data?.endsOn)}
+        {data?.status === 'LIVE' ? (
+          <>
+            <FormattedMessage id="home_item_card_ends_on" /> : {formatDateTimeSlashes(data?.endsOn)}
+          </>
+        ) : (
+          <>
+            <FormattedMessage id="home_item_card_starts" /> : {formatDateTimeSlashes(data?.startDate)}
+          </>
+        )}
       </p>
       <p className={classes.endsOnData}>{data?.itemBidDeadline}</p>
       <StatusCard status={data?.status} />

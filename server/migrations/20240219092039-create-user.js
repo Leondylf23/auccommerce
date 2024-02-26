@@ -12,19 +12,10 @@ module.exports = {
       fullname: {
         type: Sequelize.STRING
       },
-      displayName: {
-        type: Sequelize.STRING
-      },
       email: {
         type: Sequelize.STRING
       },
       password: {
-        type: Sequelize.TEXT
-      },
-      phone: {
-        type: Sequelize.STRING
-      },
-      bio: {
         type: Sequelize.TEXT
       },
       pictureUrl: {
@@ -32,9 +23,6 @@ module.exports = {
       },
       dob: {
         type: Sequelize.DATE
-      },
-      googleKey: {
-        type: Sequelize.TEXT
       },
       isActive: {
         type: Sequelize.BOOLEAN,

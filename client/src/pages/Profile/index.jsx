@@ -11,15 +11,21 @@ import { setUserData } from '@containers/Client/actions';
 import { decryptDataAES, encryptDataAES } from '@utils/allUtils';
 import { getProfileData, saveNewPassword, saveProfileData } from './actions';
 import { selectProfileData } from './selectors';
+import { produce } from 'immer';
 
 import classes from './style.module.scss';
 import AddressesComponenet from './components/Addresses';
+
+const userDataDefault = {
+  fullname: '',
+  dob: '',
+};
 
 const ProfilePage = ({ profileData, userDataSelect }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
 
-  const [userData, setUserDataInternal] = useState();
+  const [userDataInternal, setUserDataInternal] = useState(userDataDefault);
   const [userPassword, setUserPassword] = useState({ oldPass: '', newPass: '', confirmPass: '' });
   const [profileImg, setProfileImg] = useState(null);
 
@@ -29,7 +35,7 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
   };
 
   const saveGeneralData = () => {
-    if (userData?.fullname.length < 3 || userData?.length > 255) {
+    if (userDataInternal?.fullname.length < 3 || userDataInternal?.length > 255) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'profile_title' }),
@@ -38,13 +44,13 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
       );
       return;
     }
-    if (userData?.dob === '') {
+    if (userDataInternal?.dob === '') {
       dispatch(
         showPopup(intl.formatMessage({ id: 'profile_title' }), intl.formatMessage({ id: 'register_dob_validation' }))
       );
       return;
     }
-    if (new Date().getTime - new Date(userData?.dob).getTime() < 15 * 365 * 24 * 3600000) {
+    if (new Date().getTime - new Date(userDataInternal?.dob).getTime() < 15 * 365 * 24 * 3600000) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'profile_title' }),
@@ -56,8 +62,8 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
 
     const form = new FormData();
 
-    form.append('fullname', userData?.fullname);
-    form.append('dob', userData?.dob);
+    form.append('fullname', userDataInternal?.fullname);
+    form.append('dob', userDataInternal?.dob);
     if (profileImg) form.append('imageData', profileImg);
 
     dispatch(
@@ -150,7 +156,7 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
         <div className={classes.leftSide}>
           <Avatar
             className={classes.profileImage}
-            src={profileImg ? URL.createObjectURL(profileImg) : profileData?.profileImage}
+            src={profileImg ? URL.createObjectURL(profileImg) : profileData?.pictureUrl}
             alt="Load image failed!"
           />
           {profileImg ? (
@@ -167,9 +173,9 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
           )}
           <div className={classes.accountInfoContainer}>
             <p>
-              {profileData?.role === 'customer'
-                ? intl.formatMessage({ id: 'profile_customer' })
-                : intl.formatMessage({ id: 'profile_business' })}
+              {profileData?.role === 'buyer'
+                ? intl.formatMessage({ id: 'profile_buyer' })
+                : intl.formatMessage({ id: 'profile_seller' })}
             </p>
             <p>{profileData?.createdAt}</p>
           </div>
@@ -181,7 +187,7 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
           <label htmlFor="email" className={classes.label}>
             <FormattedMessage id="profile_email" />
           </label>
-          <input type="email" id="email" disabled className={classes.input} value={userData?.email} />
+          <input type="email" id="email" disabled className={classes.input} value={userDataInternal?.email} />
           <label htmlFor="fullname" className={classes.label}>
             <FormattedMessage id="profile_fullname" />
           </label>
@@ -189,8 +195,14 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
             type="text"
             id="fullname"
             className={classes.input}
-            value={userData?.fullname}
-            onChange={(e) => setUserData((prevVal) => ({ ...prevVal, fullname: e.target.value }))}
+            value={userDataInternal?.fullname}
+            onChange={(e) =>
+              setUserDataInternal(
+                produce((draft) => {
+                  draft.fullname = e.target.value;
+                })
+              )
+            }
           />
           <label htmlFor="dob" className={classes.label}>
             <FormattedMessage id="profile_dob" />
@@ -199,15 +211,21 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
             type="date"
             id="dob"
             className={classes.input}
-            value={userData?.dob}
-            onChange={(e) => setUserData((prevVal) => ({ ...prevVal, dob: e.target.value }))}
+            value={userDataInternal?.dob}
+            onChange={(e) =>
+              setUserDataInternal(
+                produce((draft) => {
+                  draft.dob = e.target.value;
+                })
+              )
+            }
           />
           <div className={classes.buttonConatainer}>
             <button type="button" className={classes.button} onClick={saveGeneralData}>
               <FormattedMessage id="profile_save" />
             </button>
           </div>
-          <AddressesComponenet userData={userData} />
+          <AddressesComponenet />
           <h3 className={classes.containerTitle}>
             <FormattedMessage id="profile_passwords" />
           </h3>

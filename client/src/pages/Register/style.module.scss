@@ -15,12 +15,14 @@
   .innerContainer {
     @include directionY;
     @include padding(20px);
-    @include marginX(10px);
 
+    margin: 10px;
     width: 380px;
+    max-height: 95vh;
     background-color: var(--color-bg);
     border-radius: 10px;
     box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.3);
+    overflow-y: auto;
 
     .logoContainer {
       @include directionX;

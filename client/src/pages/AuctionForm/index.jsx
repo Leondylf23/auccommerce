@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -9,24 +9,31 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { produce } from 'immer';
 import uuid from 'react-uuid';
 
+import { showPopup } from '@containers/App/actions';
+import { selectAuctionDetailData } from './selectors';
+import { saveAuctionData } from './actions';
+
 import classes from './style.module.scss';
 
 const itemGeneralDataDefault = {
   itemName: '',
   startBid: 0,
+  startBidDate: '',
   deadlineBid: '',
   description: '',
 };
 const itemSpecificationDefault = {
-  length: 0,
-  width: 0,
-  height: 0,
-  weight: 0,
+  length: 1,
+  width: 1,
+  height: 1,
+  weight: 1,
 };
 
 const AuctionForm = ({ detailData }) => {
   const { id } = useParams();
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [itemGeneralData, setItemGeneralData] = useState(itemGeneralDataDefault);
   const [itemSpecificationData, setItemSpecificationData] = useState(itemSpecificationDefault);
@@ -61,7 +68,7 @@ const AuctionForm = ({ detailData }) => {
         // eslint-disable-next-line no-continue
         continue;
       }
-      if (file.size > 5000) {
+      if (file.size > 5000000) {
         isAnySizeErr = true;
         // eslint-disable-next-line no-continue
         continue;
@@ -97,11 +104,90 @@ const AuctionForm = ({ detailData }) => {
     setIsShowFileForm(true);
   };
 
+  const onChangeInputItmSpec = (dataLabel, data) => {
+    if ((dataLabel === 'weight', dataLabel === 'height', dataLabel === 'width', dataLabel === 'length') && data < 0)
+      return;
+    setItemSpecificationData(
+      produce((draft) => {
+        draft[dataLabel] = data;
+      })
+    );
+  };
+
   const deleteImage = (selectedIndex) => {
     const deletedId = itemImages[selectedIndex]?.id;
     setItemImages(produce((draft) => draft.filter((_, index) => index !== selectedIndex)));
     if (deletedId === previewImage?.id) setPreviewImage(null);
   };
+
+  const saveDataToDb = () => {
+    const pageTitle = id
+      ? intl.formatMessage({ id: 'auction_form_title_edit' })
+      : intl.formatMessage({ id: 'auction_form_title_new' });
+    if (
+      itemGeneralData?.itemName === '' ||
+      itemGeneralData?.startBid === 0 ||
+      itemGeneralData?.deadlineBid === '' ||
+      itemGeneralData?.description === '' ||
+      itemGeneralData?.startBidDate === ''
+    ) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_empty_err' })));
+      return;
+    }
+    if (itemGeneralData?.itemName?.length < 5) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_itm_nm_err' })));
+      return;
+    }
+    if (itemGeneralData?.startBid < 5000 || itemGeneralData?.startBid > 50000000000) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_start_bid_err' })));
+      return;
+    }
+    if (new Date(itemGeneralData?.startBidDate).getTime() < new Date().getTime() + 10 * 60 * 1000) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_start_bid_date_err' })));
+      return;
+    }
+    if (
+      new Date(itemGeneralData?.deadlineBid).getTime() <
+      new Date(itemGeneralData?.startBidDate).getTime() + 10 * 60 * 1000
+    ) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_end_bid_date_err' })));
+      return;
+    }
+    if (itemGeneralData?.description?.length < 10) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_desc_err' })));
+      return;
+    }
+    if (itemImages?.length < 1) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_img_err' })));
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('itemGeneralData', JSON.stringify(itemGeneralData));
+    formData.append('itemSpecificationData', JSON.stringify(itemSpecificationData));
+
+    for (let index = 0; index < itemImages.length; index++) {
+      const image = itemImages[index];
+      formData.append('images', image?.imageData);
+    }
+
+    dispatch(
+      saveAuctionData(formData, Boolean(id), (err, createdId) => {
+        if (err) return;
+
+        navigate(`edit-auction/${createdId}`);
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (id && detailData) {
+      setItemGeneralData(detailData?.itemGeneralData);
+      setItemSpecificationData(detailData?.itemSpecificationData);
+      setIsLive(detailData?.isLive);
+    }
+  }, [detailData]);
 
   return (
     <div className={classes.mainContainer}>
@@ -122,6 +208,7 @@ const AuctionForm = ({ detailData }) => {
               type="text"
               className={classes.input}
               value={itemGeneralData?.itemName}
+              maxLength={255}
               onChange={(e) =>
                 setItemGeneralData(
                   produce((draft) => {
@@ -155,6 +242,25 @@ const AuctionForm = ({ detailData }) => {
         </div>
         <div className={classes.dividerContainer}>
           <div className={classes.inputContainer}>
+            <label htmlFor="itemStartBidDate" className={classes.label}>
+              <FormattedMessage id="auction_form_general_itm_bid_strt" />
+            </label>
+            <input
+              id="itemStartBidDate"
+              type="datetime-local"
+              className={classes.input}
+              value={itemGeneralData?.startBidDate}
+              onChange={(e) =>
+                setItemGeneralData(
+                  produce((draft) => {
+                    draft.startBidDate = e.target.value;
+                  })
+                )
+              }
+              disabled={isLive}
+            />
+          </div>
+          <div className={classes.inputContainer}>
             <label htmlFor="itemDeadline" className={classes.label}>
               <FormattedMessage id="auction_form_general_itm_bid_ddl" />
             </label>
@@ -185,6 +291,7 @@ const AuctionForm = ({ detailData }) => {
               type="text"
               className={classes.input}
               value={itemGeneralData?.description}
+              maxLength={500}
               onChange={(e) =>
                 setItemGeneralData(
                   produce((draft) => {
@@ -207,17 +314,11 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemlen"
-              min={0}
+              min={1}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.length}
-              onChange={(e) =>
-                setItemSpecificationData(
-                  produce((draft) => {
-                    draft.length = e.target.value;
-                  })
-                )
-              }
+              onChange={(e) => onChangeInputItmSpec('length', e.target.value)}
               disabled={isLive}
             />
           </div>
@@ -227,17 +328,11 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemWidth"
-              min={0}
+              min={1}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.width}
-              onChange={(e) =>
-                setItemSpecificationData(
-                  produce((draft) => {
-                    draft.width = e.target.value;
-                  })
-                )
-              }
+              onChange={(e) => onChangeInputItmSpec('width', e.target.value)}
               disabled={isLive}
             />
           </div>
@@ -249,17 +344,11 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemHeight"
-              min={0}
+              min={1}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.height}
-              onChange={(e) =>
-                setItemSpecificationData(
-                  produce((draft) => {
-                    draft.height = e.target.value;
-                  })
-                )
-              }
+              onChange={(e) => onChangeInputItmSpec('height', e.target.value)}
               disabled={isLive}
             />
           </div>
@@ -269,17 +358,11 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemWeight"
-              min={0}
+              min={1}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.weight}
-              onChange={(e) =>
-                setItemSpecificationData(
-                  produce((draft) => {
-                    draft.weight = e.target.value;
-                  })
-                )
-              }
+              onChange={(e) => onChangeInputItmSpec('weight', e.target.value)}
               disabled={isLive}
             />
           </div>
@@ -351,7 +434,7 @@ const AuctionForm = ({ detailData }) => {
         </div>
       </div>
       <div className={classes.buttons}>
-        <button type="button" className={classes.button} disabled={isLive}>
+        <button type="button" className={classes.button} disabled={isLive} onClick={saveDataToDb}>
           <FormattedMessage id="save" />
         </button>
         {id && (
@@ -368,6 +451,8 @@ AuctionForm.propTypes = {
   detailData: PropTypes.object,
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  detailData: selectAuctionDetailData,
+});
 
 export default connect(mapStateToProps)(AuctionForm);

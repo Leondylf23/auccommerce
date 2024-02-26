@@ -34,10 +34,9 @@ const registerFormValidation = (data) => {
       ),
     dob: Joi.date().required().description("Date of birth must be valid date"),
     role: Joi.string()
-      .valid("customer", "business")
+      .valid("buyer", "seller")
       .required()
       .description("Role must be filled"),
-    location: Joi.string().required().description("Location must be filled"),
   });
 
   if (schema.validate(data).error) {
@@ -105,10 +104,70 @@ const updateProfileFormValidation = (data) => {
   }
 };
 
+const addressNewValidation = (data) => {
+  const schema = Joi.object({
+    label: Joi.string().required().min(3).max(255).description("Address label"),
+    address: Joi.string().required().min(6).max(255).description("Address"),
+    phone: Joi.string().required().min(10).max(14).description("Phone"),
+    pic: Joi.string()
+      .required()
+      .min(3)
+      .max(255)
+      .description("Address reciever"),
+    note: Joi.string().required().min(10).max(500).description("Address note"),
+    postalCode: Joi.string()
+      .required()
+      .min(5)
+      .max(5)
+      .description("Address postal code"),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
+const addressEditValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    label: Joi.string().required().min(3).max(255).description("Address label"),
+    address: Joi.string().required().min(6).max(255).description("Address"),
+    phone: Joi.string().required().min(10).max(14).description("Phone"),
+    pic: Joi.string()
+      .required()
+      .min(3)
+      .max(255)
+      .description("Address reciever"),
+    note: Joi.string().required().min(10).max(500).description("Address note"),
+    postalCode: Joi.string()
+      .required()
+      .min(5)
+      .max(5)
+      .description("Address postal code"),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
+const idValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
 module.exports = {
   loginFormValidation,
   registerFormValidation,
   changePasswordFormValidation,
   resetPasswordFormValidation,
   updateProfileFormValidation,
+  addressNewValidation,
+  addressEditValidation,
+  idValidation
 };

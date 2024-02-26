@@ -3,12 +3,28 @@
 .container {
     @include directionY;
 
-    width: 250px;
+    width: 100%;
+    min-width: 250px;
 
     .title {
         font-weight: 600;
         font-size: 1.2rem;
         margin-bottom: 1rem;
+    }
+
+    .dividerContainer {
+        @include directionY;
+
+        width: 100%;
+
+        @include apply-at-md-size {
+            @include directionX;
+            gap: 0.5rem;
+        }
+
+        .inputContainer {
+            @include directionY;
+        }
     }
 
     .label {

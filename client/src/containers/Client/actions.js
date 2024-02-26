@@ -1,4 +1,4 @@
-import { SET_LOGIN, SET_TOKEN, SET_USER_DATA } from '@containers/Client/constants';
+import { SAVE_USER_ADDRESS, SET_LOGIN, SET_TOKEN, SET_USER_DATA } from '@containers/Client/constants';
 
 export const setLogin = (login) => ({
   type: SET_LOGIN,
@@ -12,5 +12,12 @@ export const setToken = (token) => ({
 
 export const setUserData = (userData) => ({
   type: SET_USER_DATA,
-  userData
+  userData,
+});
+
+export const saveUserAddress = (isEdit, formData, cb) => ({
+  type: SAVE_USER_ADDRESS,
+  isEdit,
+  formData,
+  cb,
 });

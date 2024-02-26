@@ -4,3 +4,4 @@ import { initialState } from '@containers/App/reducer';
 const selectProfileState = (state) => state.profile || initialState;
 
 export const selectProfileData = createSelector(selectProfileState, (state) => state.profileData);
+export const selectProfileAddressesData = createSelector(selectProfileState, (state) => state.profileAddresses);

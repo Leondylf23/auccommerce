@@ -19,6 +19,15 @@ const StatusCard = ({ status = '' }) => {
       case 'FAILED':
         setStatusData({ label: intl.formatMessage({ id: 'status_failed' }), color: 'red' });
         break;
+      case 'ACTIVED':
+        setStatusData({ label: intl.formatMessage({ id: 'status_actived' }), color: 'green' });
+        break;
+      case 'DEACTIVED':
+        setStatusData({ label: intl.formatMessage({ id: 'status_deactived' }), color: 'red' });
+        break;
+      case 'LIVE':
+        setStatusData({ label: intl.formatMessage({ id: 'status_live' }), color: 'yellow' });
+        break;
       default:
         setStatusData({ label: 'Unknown', color: '' });
         break;

@@ -61,7 +61,7 @@ const loginAuthentication = async (dataObject) => {
 };
 
 const registerUser = async (dataObject) => {
-  const { fullname, dob, email, password, role, location } = dataObject;
+  const { fullname, dob, email, password, role } = dataObject;
 
   try {
     const checkData = await db.user.findOne({
@@ -78,7 +78,6 @@ const registerUser = async (dataObject) => {
       email,
       password: hashedPassword,
       role,
-      location,
     });
     if (_.isEmpty(createdUser)) throw Boom.internal("User not created!");
 
@@ -96,8 +95,7 @@ const getUserProfile = async (userId) => {
       attributes: [
         "email",
         "fullname",
-        "location",
-        "profileImage",
+        "pictureUrl",
         "dob",
         "role",
         "createdAt",
@@ -120,6 +118,27 @@ const getUserProfile = async (userId) => {
     };
 
     return Promise.resolve(filteredData);
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const getUserAddresses = async (userId) => {
+  try {
+    const data = await db.address.findAll({
+      attributes: [
+        "id",
+        ["addressLabel", "label"],
+        "address",
+        "phone",
+        ["picName", "pic"],
+        ["addressNote", "note"],
+        "postalCode",
+      ],
+      where: { userId, isActive: true },
+    });
+
+    return Promise.resolve(data);
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));
   }
@@ -199,7 +218,7 @@ const updateProfile = async (dataObject, imageFile, userId) => {
       fullname,
       dob,
       location,
-      ...(imageResult && { profileImage: imageResult?.url }),
+      ...(imageResult && { pictureUrl: imageResult?.url }),
     });
     if (_.isEmpty(checkUpdate)) throw Boom.internal("Profile not updated!");
 
@@ -212,11 +231,88 @@ const updateProfile = async (dataObject, imageFile, userId) => {
   }
 };
 
+const saveUserAddress = async (dataObject, userId, isEdit) => {
+  const { id, label, address, phone, pic, note, postalCode } = dataObject;
+  let modifiedId = "";
+
+  try {
+    if (isEdit) {
+      const data = await db.address.findOne({ where: { id, isActive: true } });
+      if (_.isEmpty(data)) throw Boom.badRequest("Unknown data!");
+      if (data?.dataValues?.userId !== userId)
+        throw Boom.unauthorized("Cannot edit other user data!");
+
+      const checkUpdate = await data.update({
+        addressLabel: label,
+        address,
+        phone,
+        picName: pic,
+        addressNote: note,
+        postalCode,
+      });
+
+      if (_.isEmpty(checkUpdate)) throw Boom.internal("Address update failed!");
+      modifiedId = id;
+    } else {
+      const { count } = await db.address.findAndCountAll({
+        where: { userId, isActive: true },
+      });
+
+      if (count > 4) throw Boom.badRequest("Address cannot more than 5 items!");
+      const checkInsert = await db.address.create({
+        addressLabel: label,
+        address,
+        phone,
+        picName: pic,
+        addressNote: note,
+        postalCode,
+        userId,
+      });
+
+      if (_.isEmpty(checkInsert)) throw Boom.internal("Address insert failed!");
+      modifiedId = checkInsert?.id;
+    }
+
+    return Promise.resolve({
+      message: `Address has been ${isEdit ? "edited" : "created"}!`,
+      ...(isEdit ? { modifiedId } : { createdId: modifiedId }),
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const deleteUserAddress = async (dataObject, userId) => {
+  const { id } = dataObject;
+
+  try {
+    const data = await db.address.findOne({ where: { id, isActive: true } });
+    if (_.isEmpty(data)) throw Boom.badRequest("Unknown data!");
+    if (data?.dataValues?.userId !== userId)
+      throw Boom.unauthorized("Cannot delete other user data!");
+
+    const checkUpdate = await data.update({
+      isActive: false,
+    });
+
+    if (_.isEmpty(checkUpdate)) throw Boom.internal("Address update failed!");
+
+    return Promise.resolve({
+      message: `Address has been deleted successfully`,
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
 module.exports = {
   loginAuthentication,
   registerUser,
   getUserProfile,
+  getUserAddresses,
   changePassword,
   resetPassword,
   updateProfile,
+  saveUserAddress,
+  deleteUserAddress,
 };

@@ -14,14 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   item.init({
-    storeId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     itemName: DataTypes.STRING,
     itemPictures: DataTypes.JSON,
     itemDescription: DataTypes.TEXT,
     itemPhysicalSpec: DataTypes.JSON,
     itemStartBidPrice: DataTypes.DECIMAL,
     itemDeadlineBid: DataTypes.DATE,
-    itemDirectPrice: DataTypes.DECIMAL,
+    itemStartBidDate: DataTypes.DATE,
+    status: DataTypes.ENUM('DEACTIVATED','ACTIVED','LIVE'),
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,

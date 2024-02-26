@@ -29,16 +29,6 @@ module.exports = {
           as: 'userId',
         },
       },
-      storeId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'stores',
-          key: 'id',
-          as: 'storeId',
-        },
-      },
       message: {
         type: Sequelize.TEXT
       },

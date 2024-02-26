@@ -26,6 +26,23 @@ const getUserProfileData = async (request, reply) => {
   }
 };
 
+const getUserAddressesData = async (request, reply) => {
+  try {
+    const userData = GeneralHelper.getUserData(request);
+    const response = await AuthUserHelper.getUserAddresses(userData.userId);
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Get User Addresses API", "ERROR"], {
+      info: `${err}`,
+    });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
 const login = async (request, reply) => {
   try {
     const formData = request.body;
@@ -142,6 +159,75 @@ const updateProfile = async (request, reply) => {
   }
 };
 
+const saveUserAddressNew = async (request, reply) => {
+  try {
+    ValidationAuthUser.addressNewValidation(request.body);
+
+    const formData = request.body;
+    const userData = GeneralHelper.getUserData(request);
+    const response = await AuthUserHelper.saveUserAddress(
+      formData,
+      userData?.userId,
+      false
+    );
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Save New Address API", "ERROR"], {
+      info: `${err}`,
+    });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
+const saveUserAddressEdit = async (request, reply) => {
+  try {
+    ValidationAuthUser.addressEditValidation(request.body);
+
+    const formData = request.body;
+    const userData = GeneralHelper.getUserData(request);
+    const response = await AuthUserHelper.saveUserAddress(
+      formData,
+      userData?.userId,
+      true
+    );
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Save Edit Address API", "ERROR"], {
+      info: `${err}`,
+    });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
+const deleteUserAddress = async (request, reply) => {
+  try {
+    ValidationAuthUser.idValidation(request.body);
+
+    const formData = request.body;
+    const userData = GeneralHelper.getUserData(request);
+    const response = await AuthUserHelper.deleteUserAddress(
+      formData,
+      userData?.userId
+    );
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Delete Address API", "ERROR"], { info: `${err}` });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
 // Public Routes
 Router.post("/login", login);
 Router.post("/register", register);
@@ -149,7 +235,23 @@ Router.post("/reset-password", resetPassword);
 
 // Authenticated Only Routes
 Router.get("/profile", AuthMiddleware.validateToken, getUserProfileData);
+Router.get(
+  "/profile/addresses",
+  AuthMiddleware.validateToken,
+  getUserAddressesData
+);
 
+Router.post(
+  "/profile/addresses/new",
+  AuthMiddleware.validateToken,
+  saveUserAddressNew
+);
+
+Router.patch(
+  "/profile/addresses/edit",
+  AuthMiddleware.validateToken,
+  saveUserAddressEdit
+);
 Router.patch(
   "/profile/update",
   MulterMiddleware.fields([{ name: "imageData", maxCount: 1 }]),
@@ -157,5 +259,11 @@ Router.patch(
   updateProfile
 );
 Router.patch("/change-password", AuthMiddleware.validateToken, changePassword);
+
+Router.delete(
+  "/profile/addresses/delete",
+  AuthMiddleware.validateToken,
+  deleteUserAddress
+);
 
 module.exports = Router;

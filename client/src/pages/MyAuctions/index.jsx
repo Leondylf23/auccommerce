@@ -28,9 +28,9 @@ const MyAuctions = ({ myAuctionsData }) => {
     dispatch(
       getMyAuctions(
         { offset: nextOffsetTemp },
-        () => {
+        (nextOffsetData) => {
           setIsLoading(false);
-          setNextOffset('adwa');
+          setNextOffset(nextOffsetData);
         },
         (err) => {
           setIsLoading(false);

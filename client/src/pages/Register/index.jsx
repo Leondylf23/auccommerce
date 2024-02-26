@@ -159,11 +159,11 @@ const Register = ({ isLogin }) => {
             <option value="">
               <FormattedMessage id="register_role_placeholder" />
             </option>
-            <option value="customer">
-              <FormattedMessage id="register_role_customer" />
+            <option value="buyer">
+              <FormattedMessage id="register_role_buyer" />
             </option>
-            <option value="business">
-              <FormattedMessage id="register_role_business" />
+            <option value="seller">
+              <FormattedMessage id="register_role_seller" />
             </option>
           </select>
           <button type="submit" className={classes.button}>

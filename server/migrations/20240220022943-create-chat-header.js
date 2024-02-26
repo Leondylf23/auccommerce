@@ -19,14 +19,14 @@ module.exports = {
           as: 'userId',
         },
       },
-      storeIdDest: {
-        allowNull: false,
+      userIdDest: {
+        allowNull:false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'stores',
+          model: 'users',
           key: 'id',
-          as: 'storeId',
+          as: 'userId',
         },
       },
       isActive: {

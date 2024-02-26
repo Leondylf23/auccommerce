@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   chatDetail.init({
     chatHeaderId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    storeId: DataTypes.INTEGER,
     message: DataTypes.TEXT,
     isActive: DataTypes.BOOLEAN,
   }, {
