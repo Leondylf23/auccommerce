@@ -1,0 +1,27 @@
+.confirmationPopupContainer {
+  @include directionY;
+  @include padding(0.25rem);
+
+  width: 250px;
+
+  .message {
+    font-weight: 500;
+    margin-bottom: 1rem;
+
+    .data {
+      font-weight: 600;
+      margin-left: 0.25rem;
+    }
+  }
+
+  .buttons {
+    @include directionX;
+
+    gap: 1rem;
+    justify-content: end;
+
+    .button {
+      @include button;
+    }
+  }
+}

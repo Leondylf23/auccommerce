@@ -84,3 +84,5 @@ export const saveEditAuctionDataApi = (formData) =>
     {},
     formData
   );
+
+export const deleteAuctionDataApi = (formData) => callAPI(`${urls.auction}/delete`, 'delete', {}, {}, formData);

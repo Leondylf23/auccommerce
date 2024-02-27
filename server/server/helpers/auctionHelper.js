@@ -398,6 +398,31 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
   }
 };
 
+const deleteAuctionItemData = async (dataObject, userId) => {
+  const { id } = dataObject;
+
+  try {
+    const itemData = await db.item.findOne({
+      where: { id, isActive: true, userId },
+    });
+    if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
+
+   
+
+    const updatedData = await itemData.update({
+      isActive: false,
+    });
+
+    if (!updatedData) throw Boom.internal("Auction item is not deleted!");
+
+    return Promise.resolve({
+      deletedId: id,
+    });
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
 module.exports = {
   getMyAuctionsData,
   getMyAuctionDetailData,
@@ -410,4 +435,6 @@ module.exports = {
   createNewAuctionItem,
 
   editAuctionItem,
+
+  deleteAuctionItemData,
 };

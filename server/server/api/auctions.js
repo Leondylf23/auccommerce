@@ -28,7 +28,7 @@ const getMyAuctions = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get All My Auction API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -53,7 +53,7 @@ const getMyAuctionDetail = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get My Auction Detail API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -69,7 +69,7 @@ const getCategories = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get Categories API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -85,7 +85,7 @@ const getLatestAuctions = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get Latest Auction API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -101,7 +101,7 @@ const getFiveMinAuction = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get Five Min Auction API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -119,7 +119,7 @@ const getAllAuctions = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get All Auction API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -137,7 +137,7 @@ const getAuctionDetail = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Get Auction Detail API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -211,7 +211,32 @@ const updateAuction = async (request, reply) => {
       data: response,
     });
   } catch (err) {
-    console.log([fileName, "Create Item Auction API", "ERROR"], {
+    console.log([fileName, "Update Item Auction API", "ERROR"], {
+      info: `${err}`,
+    });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
+const deleteAuction = async (request, reply) => {
+  try {
+    ValidationAuction.idValidation(request.body);
+
+    const userData = GeneralHelper.getUserData(request);
+    if (userData?.role !== "seller")
+      throw Boom.unauthorized("User with this role cannot access!");
+
+    const response = await AuctionHelper.deleteAuctionItemData(
+      request?.body,
+      userData.userId
+    );
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Delete Item Auction API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -229,26 +254,11 @@ Router.get(
   AuthMiddleware.validateToken,
   getMyAuctionDetail
 );
-Router.get(
-  "/auctions/categories",
-  getCategories
-);
-Router.get(
-  "/auctions/latest",
-  getLatestAuctions
-);
-Router.get(
-  "/auctions/fivemin",
-  getFiveMinAuction
-);
-Router.get(
-  "/auctions",
-  getAllAuctions
-);
-Router.get(
-  "/auctions/detail",
-  getAuctionDetail
-);
+Router.get("/auctions/categories", getCategories);
+Router.get("/auctions/latest", getLatestAuctions);
+Router.get("/auctions/fivemin", getFiveMinAuction);
+Router.get("/auctions", getAllAuctions);
+Router.get("/auctions/detail", getAuctionDetail);
 
 Router.put(
   "/auctions/new",
@@ -262,6 +272,12 @@ Router.patch(
   AuthMiddleware.validateToken,
   MulterMiddleware.fields([{ name: "images", maxCount: 8 }]),
   updateAuction
+);
+
+Router.delete(
+  "/auctions/delete",
+  AuthMiddleware.validateToken,
+  deleteAuction
 );
 
 module.exports = Router;

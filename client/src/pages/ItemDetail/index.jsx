@@ -25,11 +25,10 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   const [isLive, setIsLive] = useState(false);
   const [userIsJoin, setUserIsJoin] = useState(false);
   const [timer, setTimer] = useState(0);
-  const [isBuyer, setIsBuyer] = useState(false);
 
   const userJoinLive = () => {
     if (isLogin) {
-      socket.emit('auction/JOIN_LIVE', { id, token });
+      socket.emit('auction/JOIN_LIVE', { id, token, userData });
     } else {
       navigate(`/login`);
     }
@@ -37,6 +36,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
 
   const backBtnOnClick = () => {
     if (userIsJoin) {
+      socket.emit('auction/LEAVE_LIVE', { id, token });
       setUserIsJoin(false);
     } else {
       navigate('/');
@@ -44,16 +44,15 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   };
 
   const joinedLive = () => {
-    setUserIsJoin();
+    setUserIsJoin(true);
+  };
+
+  const errSocketMsg = (err) => {
+    console.log(err);
   };
 
   useEffect(() => {
     dispatch(getItemDetail({ id }));
-
-    if (userData) {
-      const user = getUserDataDecrypt(userData);
-      setIsBuyer(user?.role === 'buyer');
-    }
 
     const intervalId = setInterval(() => {
       setTimer((prevVal) => {
@@ -77,9 +76,11 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   useEffect(() => {
     if (socket) {
       socket.on('auction/JOINED_LIVE', joinedLive);
+      socket.on('auction/ERROR', errSocketMsg);
 
       return () => {
         socket.off('auction/JOINED_LIVE', joinedLive);
+        socket.on('auction/ERROR', errSocketMsg);
       };
     }
   }, [socket]);
@@ -97,7 +98,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
         </div>
         <div className={classes.rightSide}>
           {userIsJoin ? (
-            <LiveBidPage socket={socket} />
+            <LiveBidPage id={id} socket={socket} startingPrice={itemDetailData?.price} />
           ) : (
             <>
               <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>
@@ -132,7 +133,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
                   </div>
                 )}
               </div>
-              {isLive && (isLogin ? isBuyer : true) && (
+              {isLive && (
                 <button type="button" onClick={userJoinLive} className={classes.joinBtn}>
                   <p className={classes.textBtn}>
                     <FormattedMessage id="item_detail_join_btn" />

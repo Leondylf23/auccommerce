@@ -1,40 +1,59 @@
 const jwt = require("jsonwebtoken");
 const { v4: uuid } = require("uuid");
-const { setHashKey } = require("../services/redis");
+const { setKeyJSONValue } = require("../services/redis");
+const { decryptData } = require("../helpers/utilsHelper");
+const { produce } = require("immer");
 
 const signatureSecretKey = process.env.SIGN_SECRET_KEY || "pgJApn9pJ8";
+
+// SCOPE VAR
+const tempLiveData = [];
 
 // PRIVATE FUNCTION
 const __verifiedUser = (token) => jwt.verify(token, signatureSecretKey);
 
 const AucommerceLiveBid = (io, socket) => {
-  const tempLiveData = [];
-
-  const join = async ({ id, token }) => {
+  const join = async ({ id, token, userData }) => {
     try {
       const user = __verifiedUser(token);
 
       const liveDataIndex = tempLiveData.findIndex((data) => data.id === id);
+      const userDataDecrypted = JSON.parse(decryptData(userData));
       let liveUsers = [];
 
       if (liveDataIndex !== -1) {
         const tempData = tempLiveData[liveDataIndex];
 
-        tempData.users = [...tempData.users, { id: user?.userId }];
+        tempData.users = [
+          ...tempData.users,
+          {
+            id: user?.userId,
+            image: userDataDecrypted?.profileImage,
+            role: userDataDecrypted?.profileImage,
+            fullname: userDataDecrypted?.fullname,
+          },
+        ];
         liveUsers = tempData.users;
 
-        const err = await setHashKey(`livebid-${id}`, tempData);
+        const err = await setKeyJSONValue(`LIVEBID-${id}`, tempData);
         if (err) throw err;
       } else {
         const newData = {
           id,
-          users: [{ id: user?.userId }],
+          users: [
+            {
+              id: user?.userId,
+              image: userDataDecrypted?.profileImage,
+              role: userDataDecrypted?.profileImage,
+              fullname: userDataDecrypted?.fullname,
+            },
+          ],
           bids: [],
         };
 
         tempLiveData.push(newData);
 
-        const err = await setHashKey(`livebid-${id}`, newData);
+        const err = await setKeyJSONValue(`LIVEBID-${id}`, newData);
         if (err) throw err;
       }
 
@@ -44,8 +63,43 @@ const AucommerceLiveBid = (io, socket) => {
     } catch (error) {
       console.log(error);
 
-      socket.emit("auction/ERROR", { type: "JOIN_LIVE" });
+      socket.emit("auction/ERROR", {
+        type: "JOIN_LIVE",
+        message: error.message,
+      });
     }
+  };
+
+  const leave = ({ id, token }) => {
+    try {
+      const user = __verifiedUser(token);
+
+      const liveDataIndex = tempLiveData.findIndex((data) => data?.id === id);
+
+      if (liveDataIndex !== -1) {
+        tempLiveData[liveDataIndex] = {
+          ...tempLiveData[liveDataIndex],
+          users: tempLiveData[liveDataIndex].users.filter(
+            (userEl) => userEl?.id !== user?.userId
+          ),
+        };
+
+        io.to(id).emit("auction/UPDATE_LIVE_USERS", {
+          users: tempLiveData[liveDataIndex].users,
+        });
+      } else {
+        throw new Error("Live data not found for leaving!");
+      }
+    } catch (error) {
+      console.log(error);
+
+      socket.emit("auction/ERROR", {
+        type: "LEAVE_LIVE",
+        message: error.message,
+      });
+    }
+
+    socket.leave(id);
   };
 
   const getLiveData = async ({ id }) => {
@@ -92,6 +146,7 @@ const AucommerceLiveBid = (io, socket) => {
   socket.on("auction/JOIN_LIVE", join);
   socket.on("auction/GET_LIVE_DATA", getLiveData);
   socket.on("auction/PLACE_BID", placeBid);
+  socket.on("auction/LEAVE_LIVE", leave);
 
   socket.on("disconnect", () => {
     console.log(["info"], `Socket id ${socket?.id} is disconnected`);

@@ -33,19 +33,28 @@ const Home = ({ latestItem, fiveMinBid, categories }) => {
     setIsLoadingCategories(true);
 
     dispatch(
-      getLatestBidData(() => {
-        setIsLoadingLatesBid(false);
-      })
+      getLatestBidData(
+        () => {
+          setIsLoadingLatesBid(false);
+        },
+        (err) => {}
+      )
     );
     dispatch(
-      getFiveMoreMinBids(() => {
-        setIsLoadingFiveMoreMin(false);
-      })
+      getFiveMoreMinBids(
+        () => {
+          setIsLoadingFiveMoreMin(false);
+        },
+        (err) => {}
+      )
     );
     dispatch(
-      getCategory(() => {
-        setIsLoadingCategories(false);
-      })
+      getCategory(
+        () => {
+          setIsLoadingCategories(false);
+        },
+        (err) => {}
+      )
     );
   }, []);
 
@@ -82,7 +91,7 @@ const Home = ({ latestItem, fiveMinBid, categories }) => {
             {fiveMinBid.length > 0 ? (
               <div className={classes.listItemsX}>
                 {fiveMinBid.map((item) => (
-                  <ItemCard data={item} />
+                  <ItemCard data={item} key={item?.id} />
                 ))}
               </div>
             ) : (

@@ -13,7 +13,7 @@ import LiveEndedPopUp from './LiveEndedPopup';
 
 import classes from '../style.module.scss';
 
-const LiveBidPage = ({ socket }) => {
+const LiveBidPage = ({ socket, id, startingPrice }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ const LiveBidPage = ({ socket }) => {
 
   const [higestBidPrice, setHigestBidPrice] = useState(0);
   const [livePeoples, setLivePeoples] = useState([]);
-  const [isLive, setIsLive] = useState(false);
+  const [isLive, setIsLive] = useState(true);
   const [bidData, setBidData] = useState([]);
   const [bidPriceInput, setBidPriceInput] = useState(1);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
@@ -136,19 +136,25 @@ const LiveBidPage = ({ socket }) => {
   const setLiveData = (data) => {
     setLivePeoples(data?.users);
     setBidData(data?.bids);
+    setIsLive(true);
+  };
+
+  const updateLiveUsers = (data) => {
+    setLivePeoples(data?.users);
   };
 
   useEffect(() => {
     socket.on('auction/SET_LIVE_DATA', setLiveData);
+    socket.on('auction/UPDATE_LIVE_USERS', updateLiveUsers);
 
     return () => {
       socket.off('auction/SET_LIVE_DATA', setLiveData);
+      socket.off('auction/UPDATE_LIVE_USERS', updateLiveUsers);
     };
   }, [socket]);
 
   useEffect(() => {
     // setLivePeoples(exampleDataPeople);
-    setIsLive(true);
     // setBidWinner({
     //   profilePicture:
     //     'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
@@ -158,6 +164,8 @@ const LiveBidPage = ({ socket }) => {
     // });
     // setBidData(exampleBidData);
     // setHigestBidPrice(123123);
+    setHigestBidPrice(startingPrice);
+    socket.emit('auction/GET_LIVE_DATA', { id });
   }, []);
 
   return (
@@ -249,6 +257,8 @@ const LiveBidPage = ({ socket }) => {
 
 LiveBidPage.propTypes = {
   socket: PropTypes.object,
+  id: PropTypes.number,
+  startingPrice: PropTypes.number,
 };
 
 export default LiveBidPage;

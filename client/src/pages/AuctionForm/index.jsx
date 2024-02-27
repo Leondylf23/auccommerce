@@ -13,8 +13,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { showPopup } from '@containers/App/actions';
 import { selectCategory } from '@pages/Home/selectors';
 import { getCategory } from '@pages/Home/actions';
+import PopupConfirmation from '@components/PopupConfirmation/Dialog';
 import { selectAuctionDetailData } from './selectors';
-import { getAuctionDetailData, saveAuctionData } from './actions';
+import { deleteAuctionData, getAuctionDetailData, saveAuctionData } from './actions';
 
 import classes from './style.module.scss';
 
@@ -48,6 +49,7 @@ const AuctionForm = ({ detailData, categories }) => {
   const [errTimoutId, setErrTimeoutId] = useState(null);
   const [isLive, setIsLive] = useState(false);
   const [isLoadingCategory, setIsLoadingCategory] = useState(false);
+  const [isShowDeletePopup, setIsShowDeletePopup] = useState(false);
 
   const addImageData = (e) => {
     const { files } = e.target;
@@ -218,6 +220,18 @@ const AuctionForm = ({ detailData, categories }) => {
 
   // TODO: add delete popup and functions
 
+  const deleteOnConfirmation = (isDelete) => {
+    if (isDelete) {
+      dispatch(
+        deleteAuctionData({ id }, (err) => {
+          if (!err) navigate('/my-auction');
+        })
+      );
+    } else {
+      setIsShowDeletePopup(false);
+    }
+  };
+
   useEffect(() => {
     if (id && detailData) {
       setItemGeneralData(detailData?.itemGeneralData);
@@ -245,6 +259,12 @@ const AuctionForm = ({ detailData, categories }) => {
 
   return (
     <div className={classes.mainContainer}>
+      <PopupConfirmation
+        isOpen={isShowDeletePopup}
+        onConfirmation={deleteOnConfirmation}
+        data={itemGeneralData?.itemName}
+        message={intl.formatMessage({ id: 'profile_address_del_confirmations' })}
+      />
       <div className={classes.header}>
         <button type="button" className={classes.button} onClick={() => navigate('/my-auction')}>
           <ArrowBackIosNewIcon className={classes.icon} />
@@ -540,7 +560,13 @@ const AuctionForm = ({ detailData, categories }) => {
           <FormattedMessage id="save" />
         </button>
         {id && (
-          <button type="button" className={classes.button} data-type="red" disabled={isLive}>
+          <button
+            type="button"
+            className={classes.button}
+            data-type="red"
+            disabled={isLive}
+            onClick={() => setIsShowDeletePopup(true)}
+          >
             <FormattedMessage id="delete" />
           </button>
         )}

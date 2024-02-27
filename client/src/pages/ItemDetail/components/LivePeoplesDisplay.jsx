@@ -13,9 +13,9 @@ const LivePeoplesDisplay = ({ peoples = [], isShowTitle = false }) => (
     )}
     <div className={classes.avatarsContainer}>
       {peoples[0] && <Avatar className={classes.avatar} src={peoples[0]?.image} alt={peoples[0]?.image} />}
-      {peoples[0] && <Avatar className={classes.avatar} src={peoples[1]?.image} alt={peoples[1]?.image} />}
-      {peoples[0] && <Avatar className={classes.avatar} src={peoples[2]?.image} alt={peoples[2]?.image} />}
-      {peoples[0] && <Avatar className={classes.avatar} src={peoples[3]?.image} alt={peoples[3]?.image} />}
+      {peoples[1] && <Avatar className={classes.avatar} src={peoples[1]?.image} alt={peoples[1]?.image} />}
+      {peoples[2] && <Avatar className={classes.avatar} src={peoples[2]?.image} alt={peoples[2]?.image} />}
+      {peoples[3] && <Avatar className={classes.avatar} src={peoples[3]?.image} alt={peoples[3]?.image} />}
       {peoples?.length > 4 && (
         <div className={classes.avatar} data-type="nonAvatar">
           <p>+{peoples?.length - 4}</p>

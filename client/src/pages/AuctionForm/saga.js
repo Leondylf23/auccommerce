@@ -1,8 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { setLoading, showPopup } from '@containers/App/actions';
-import { getAuctionDetailApi, saveEditAuctionDataApi, saveNewAuctionDataApi } from '@domain/api';
+import { deleteAuctionDataApi, getAuctionDetailApi, saveEditAuctionDataApi, saveNewAuctionDataApi } from '@domain/api';
 import { setAuctionDetailData } from './actions';
-import { GET_AUCTION_DETAIL, SAVE_AUCTION_DATA } from './constants';
+import { DELETE_AUCTION_DATA, GET_AUCTION_DETAIL, SAVE_AUCTION_DATA } from './constants';
 
 function* doGetAuctionDetailData({ formData }) {
   yield put(setLoading(true));
@@ -40,7 +40,24 @@ function* doSaveAuctionData({ formData, isEdit, cb }) {
   yield put(setLoading(false));
 }
 
+function* doDeleteAuctionData({ formData, cb }) {
+  yield put(setLoading(true));
+
+  try {
+    yield call(deleteAuctionDataApi, formData);
+
+    cb(null);
+  } catch (error) {
+    yield put(showPopup());
+
+    cb(error);
+  }
+
+  yield put(setLoading(false));
+}
+
 export default function* auctionFormSaga() {
   yield takeLatest(GET_AUCTION_DETAIL, doGetAuctionDetailData);
   yield takeLatest(SAVE_AUCTION_DATA, doSaveAuctionData);
+  yield takeLatest(DELETE_AUCTION_DATA, doDeleteAuctionData);
 }

@@ -24,7 +24,6 @@
       z-index: 0 !important;
 
       @include apply-at-sm-size {
-
         width: 30%;
 
         .profileImage {
@@ -114,7 +113,7 @@
     .button {
       @include button;
 
-      flex-shrink: 0
+      flex-shrink: 0;
     }
   }
 
@@ -181,34 +180,5 @@
     @include containerCenter;
 
     flex-grow: 1;
-  }
-
-}
-
-.deletePopupContainer {
-  @include directionY;
-  @include padding(0.25rem);
-
-  width: 250px;
-
-  .message {
-    font-weight: 500;
-    margin-bottom: 1rem;
-
-    .data {
-      font-weight: 600;
-      margin-left: 0.25rem;
-    }
-  }
-
-  .buttons {
-    @include directionX;
-
-    gap: 1rem;
-    justify-content: end;
-
-    .button {
-      @include button;
-    }
   }
 }

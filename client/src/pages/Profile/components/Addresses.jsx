@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,6 +9,7 @@ import { createStructuredSelector } from 'reselect';
 import PopupWindow from '@components/PopupWindow/Dialog';
 import LocationInputForm from '@components/LocationInputForm';
 import { showPopup } from '@containers/App/actions';
+import PopupConfirmation from '@components/PopupConfirmation/Dialog';
 import { selectProfileAddressesData } from '../selectors';
 import { deleteUserAddress, getUserAddresses } from '../actions';
 
@@ -16,6 +17,7 @@ import classes from '../style.module.scss';
 
 const AddressesComponenet = ({ addressData }) => {
   const dispatch = useDispatch();
+  const intl = useIntl();
 
   const [deleteData, setDeleteData] = useState(null);
   const [editData, setEditData] = useState(null);
@@ -49,13 +51,17 @@ const AddressesComponenet = ({ addressData }) => {
     setDeleteData(null);
   };
 
-  const deleteDataBtn = () => {
-    dispatch(
-      deleteUserAddress({ id: deleteData?.id }, (err) => {
-        if (err) return;
-        closePopup(true);
-      })
-    );
+  const deleteDataBtn = (isDeleted) => {
+    if (isDeleted) {
+      dispatch(
+        deleteUserAddress({ id: deleteData?.id }, (err) => {
+          if (err) return;
+          closePopup(true);
+        })
+      );
+    } else {
+      closePopup(false);
+    }
   };
 
   useEffect(() => {
@@ -77,22 +83,12 @@ const AddressesComponenet = ({ addressData }) => {
       <PopupWindow onClose={() => closePopup(false)} open={isOpenAddressForm}>
         <LocationInputForm id={editData?.id} onClose={closePopup} locationData={editData} />
       </PopupWindow>
-      <PopupWindow onClose={() => closePopup(false)} open={isOpenDeletePopup}>
-        <div className={classes.deletePopupContainer}>
-          <p className={classes.message}>
-            <FormattedMessage id="profile_address_del_confirmations" />
-            <p className={classes.data}>{deleteData?.label}</p>?
-          </p>
-          <div className={classes.buttons}>
-            <button type="button" className={classes.button} onClick={deleteDataBtn} data-type="red">
-              <FormattedMessage id="yes" />
-            </button>
-            <button type="button" className={classes.button} onClick={() => closePopup(false)}>
-              <FormattedMessage id="no" />
-            </button>
-          </div>
-        </div>
-      </PopupWindow>
+      <PopupConfirmation
+        data={deleteData?.label}
+        message={intl.formatMessage({ id: 'profile_address_del_confirmations' })}
+        isOpen={isOpenDeletePopup}
+        onConfirmation={deleteDataBtn}
+      />
       {addressData?.length > 0 ? (
         <div className={classes.addressListContainer}>
           {addressData?.map((address) => (

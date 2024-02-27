@@ -97,6 +97,10 @@
           object-fit: cover;
           object-position: center;
           text-align: center;
+
+          .text {
+            margin: 0.25rem;
+          }
         }
 
         .errMsg {
