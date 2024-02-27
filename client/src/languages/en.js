@@ -35,6 +35,8 @@ export default {
   save: 'Save',
   delete: 'Delete',
   add: 'Add',
+  all: 'All',
+  lang: 'en',
 
   login_title: 'Login',
   login_title_forgot: 'Forgot Password',
@@ -133,6 +135,8 @@ export default {
   auction_form_general_itm_bid_ddl: 'Bid Deadline',
   auction_form_general_itm_bid_strt: 'Bid Start Date',
   auction_form_general_itm_desc: 'Description',
+  auction_form_general_itm_ctg: 'Category',
+  auction_form_general_itm_ctg_op: '- Choose -',
   auction_form_spec: 'Item Physical Specification',
   auction_form_spec_length: 'Item Length (Centimeters)',
   auction_form_spec_width: 'Item Width (Centimeters)',
@@ -149,7 +153,10 @@ export default {
   auction_form_general_start_bid_date_err: 'Start bid date must be later 10 minutes from now!',
   auction_form_general_end_bid_date_err: 'Deadline bid date must be later 10 minutes from start bid date!',
   auction_form_general_desc_err: 'Description must be at least 10 characters!',
+  auction_form_general_ctg_err: 'Category must be choosen!',
   auction_form_general_img_err: 'At least have 1 image!',
+  auction_form_item_spec_err_nan: 'Item specification must be numbers!',
+  auction_form_item_spec_err_below_zero: 'Item specification must be greater than 0!',
   auction_form_success_save: 'Successfully save auction data!',
 
   profile_title: 'Your Profile',

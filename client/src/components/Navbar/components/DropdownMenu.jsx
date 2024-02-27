@@ -60,7 +60,7 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu, isBusiness }) =>
             <FormattedMessage id="nav_profile" />
           </Typography>
         </MenuItem>
-        {isBusiness ? (
+        {!isBusiness ? (
           <MenuItem onClick={() => menuItemAction(1)}>
             <BallotIcon className={classes.icon} data-type="mybids" />
             <Typography variant="body2">

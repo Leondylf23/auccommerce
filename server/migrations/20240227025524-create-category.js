@@ -2,28 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('balanceUsers', {
+    await queryInterface.createTable('categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        allowNull:false,
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'users',
-          key: 'id',
-          as: 'userId',
-        },
-      },
-      remainingBalance: {
-        type: Sequelize.DECIMAL(20,2)
-      },
-      lastTransactionId: {
-        type: Sequelize.INTEGER
+      name: {
+        type: Sequelize.STRING
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -40,6 +27,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('balanceUsers');
+    await queryInterface.dropTable('categories');
   }
 };

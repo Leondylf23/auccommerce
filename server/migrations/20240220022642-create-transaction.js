@@ -53,13 +53,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       totalPayment: {
-        type: Sequelize.DECIMAL(11,2)
+        type: Sequelize.DECIMAL(20,2)
       },
       bidPrice: {
-        type: Sequelize.DECIMAL(11,2)
+        type: Sequelize.DECIMAL(20,2)
       },
       shippingPrice: {
-        type: Sequelize.DECIMAL(11,2)
+        type: Sequelize.DECIMAL(20,2)
       },
       shippingjson: {
         type: Sequelize.JSON

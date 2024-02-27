@@ -6,8 +6,9 @@ import TimerIcon from '@mui/icons-material/Timer';
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
-import { selectLogin } from '@containers/Client/selectors';
+import { getUserDataDecrypt, numberWithPeriods, timerDisplay } from '@utils/allUtils';
+import { selectLogin, selectToken, selectUserData } from '@containers/Client/selectors';
+import { selectSocket } from '@containers/App/selectors';
 import ImageCarousel from './components/ImageCarousel';
 import LivePeoplesDisplay from './components/LivePeoplesDisplay';
 import { selectItemDetail } from './selectors';
@@ -16,7 +17,7 @@ import { getItemDetail } from './actions';
 
 import classes from './style.module.scss';
 
-const ItemDetail = ({ isLogin, itemDetailData }) => {
+const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -24,10 +25,11 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
   const [isLive, setIsLive] = useState(false);
   const [userIsJoin, setUserIsJoin] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [isBuyer, setIsBuyer] = useState(false);
 
   const userJoinLive = () => {
     if (isLogin) {
-      setUserIsJoin(true);
+      socket.emit('auction/JOIN_LIVE', { id, token });
     } else {
       navigate(`/login`);
     }
@@ -41,12 +43,21 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
     }
   };
 
+  const joinedLive = () => {
+    setUserIsJoin();
+  };
+
   useEffect(() => {
     dispatch(getItemDetail({ id }));
 
+    if (userData) {
+      const user = getUserDataDecrypt(userData);
+      setIsBuyer(user?.role === 'buyer');
+    }
+
     const intervalId = setInterval(() => {
       setTimer((prevVal) => {
-        if (prevVal < 1000) {
+        if (prevVal < 1) {
           dispatch(getItemDetail({ id }));
         }
         return prevVal >= 1 ? prevVal - 1 : 0;
@@ -57,10 +68,21 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
       if (intervalId) clearInterval(intervalId);
     };
   }, []);
+
   useEffect(() => {
     setTimer(itemDetailData?.isLiveNow ? itemDetailData?.timeRemaining : itemDetailData?.startingTimer || 0);
     setIsLive(itemDetailData?.isLiveNow);
   }, [itemDetailData]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('auction/JOINED_LIVE', joinedLive);
+
+      return () => {
+        socket.off('auction/JOINED_LIVE', joinedLive);
+      };
+    }
+  }, [socket]);
 
   return (
     <div className={classes.mainContainer}>
@@ -75,7 +97,7 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
         </div>
         <div className={classes.rightSide}>
           {userIsJoin ? (
-            <LiveBidPage />
+            <LiveBidPage socket={socket} />
           ) : (
             <>
               <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>
@@ -110,7 +132,7 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
                   </div>
                 )}
               </div>
-              {isLive && (
+              {isLive && (isLogin ? isBuyer : true) && (
                 <button type="button" onClick={userJoinLive} className={classes.joinBtn}>
                   <p className={classes.textBtn}>
                     <FormattedMessage id="item_detail_join_btn" />
@@ -128,12 +150,18 @@ const ItemDetail = ({ isLogin, itemDetailData }) => {
 
 ItemDetail.propTypes = {
   itemDetailData: PropTypes.object,
+  token: PropTypes.string,
   isLogin: PropTypes.bool,
+  userData: PropTypes.string,
+  socket: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   itemDetailData: selectItemDetail,
+  token: selectToken,
   isLogin: selectLogin,
+  userData: selectUserData,
+  socket: selectSocket,
 });
 
 export default connect(mapStateToProps)(ItemDetail);

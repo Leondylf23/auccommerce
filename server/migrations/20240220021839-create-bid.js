@@ -30,7 +30,7 @@ module.exports = {
         },
       },
       bidPlacePrice: {
-        type: Sequelize.DECIMAL(11,2)
+        type: Sequelize.DECIMAL(20,2)
       },
       isActive: {
         type: Sequelize.BOOLEAN,

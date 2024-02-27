@@ -10,6 +10,7 @@ const config = {
   api: {
     host: env.API_HOST,
   },
+  socket: env.SOCKET_HOST,
 };
 
 export default config;

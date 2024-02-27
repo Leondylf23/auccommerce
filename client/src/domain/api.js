@@ -61,6 +61,11 @@ export const deleteUserAddressApi = (formData) =>
 // Auctions
 export const getMyAuctionsApi = (formData) => callAPI(`${urls.auction}/my-auctions`, 'get', {}, formData);
 export const getAuctionDetailApi = (formData) => callAPI(`${urls.auction}/my-auctions/detail`, 'get', {}, formData);
+export const getCategoriesApi = () => callAPI(`${urls.auction}/categories`, 'get');
+export const getLatestAuctionApi = (formData) => callAPI(`${urls.auction}/latest`, 'get', {}, formData);
+export const getFiveMinAuctionApi = (formData) => callAPI(`${urls.auction}/fivemin`, 'get', {}, formData);
+export const getAllAuctionsApi = (formData) => callAPI(`${urls.auction}`, 'get', {}, formData);
+export const getAuctionItemDetailApi = (formData) => callAPI(`${urls.auction}/detail`, 'get', {}, formData);
 
 export const saveNewAuctionDataApi = (formData) =>
   callAPI(

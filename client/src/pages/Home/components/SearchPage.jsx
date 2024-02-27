@@ -20,17 +20,19 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
   const fetchData = (isReset) => {
     setIsLoading(true);
     dispatch(
-      getSearchItems({ itemName: searchData, category: selectedCategory }, isReset, (nextOffsetData) => {
-        setIsLoading(false);
-        setNextOffset(nextOffsetData);
-      })
+      getSearchItems(
+        { ...(searchData !== '' && { search: searchData }), ...(selectedCategory && { category: selectedCategory }) },
+        isReset,
+        (nextOffsetData) => {
+          setIsLoading(false);
+          setNextOffset(nextOffsetData);
+        }
+      )
     );
   };
 
   useEffect(() => {
-    if (searchData !== '' || selectedCategory) {
-      fetchData(true);
-    }
+    fetchData(true);
   }, [searchData, selectedCategory]);
 
   return (
@@ -44,7 +46,9 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
       </h1>
       <div className={classes.categoryTab}>
         <div className={classes.item} onClick={() => setSelectedCategory(null)} data-active={selectedCategory === null}>
-          <p className={classes.name}>All</p>
+          <p className={classes.name}>
+            <FormattedMessage id="all" />
+          </p>
         </div>
         {categoryData?.map((category) => (
           <div
@@ -53,7 +57,9 @@ const SearchPage = ({ searchData, categoryData, selectedCategory, setSelectedCat
             onClick={() => setSelectedCategory(category?.id)}
             data-active={selectedCategory === category?.id}
           >
-            <p className={classes.name}>{category?.name}</p>
+            <p className={classes.name}>
+              {intl.formatMessage({ id: 'lang' }) === 'id' ? category?.nameId : category?.name}
+            </p>
           </div>
         ))}
       </div>

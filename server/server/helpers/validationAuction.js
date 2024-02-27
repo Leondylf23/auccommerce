@@ -21,6 +21,18 @@ const getMyAcutionValidation = (data) => {
   }
 };
 
+const getAllAuctionValidation = (data) => {
+  const schema = Joi.object({
+    search: Joi.string().optional().description("Search item name"),
+    category: Joi.number().optional().description("Category must be number"),
+    nextId: Joi.string().optional().description("Offset of the page"),
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  }
+};
+
 const createNewAuctionValidation = (data) => {
   const schema = Joi.object({
     itemGeneralData: Joi.string()
@@ -66,6 +78,9 @@ const generalAuctionFormDataValidation = (data) => {
       .min(10)
       .max(500)
       .description("Description in string"),
+    categoryId: Joi.number()
+      .required()
+      .description("Category id must be a number"),
   });
 
   if (schema.validate(data).error) {
@@ -93,4 +108,5 @@ module.exports = {
   editAuctionValidation,
   generalAuctionFormDataValidation,
   specAuctionFormDataValidation,
+  getAllAuctionValidation,
 };

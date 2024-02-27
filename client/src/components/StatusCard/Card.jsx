@@ -22,7 +22,7 @@ const StatusCard = ({ status = '' }) => {
       case 'ACTIVED':
         setStatusData({ label: intl.formatMessage({ id: 'status_actived' }), color: 'green' });
         break;
-      case 'DEACTIVED':
+      case 'DEACTIVATED':
         setStatusData({ label: intl.formatMessage({ id: 'status_deactived' }), color: 'red' });
         break;
       case 'LIVE':

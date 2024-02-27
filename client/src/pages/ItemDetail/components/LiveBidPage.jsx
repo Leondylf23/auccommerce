@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import { useDispatch } from 'react-redux';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { numberWithPeriods } from '@utils/allUtils';
 import PopupWindow from '@components/PopupWindow/Dialog';
@@ -12,7 +13,7 @@ import LiveEndedPopUp from './LiveEndedPopup';
 
 import classes from '../style.module.scss';
 
-const LiveBidPage = () => {
+const LiveBidPage = ({ socket }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -132,18 +133,31 @@ const LiveBidPage = () => {
     setIsShowConfirm(false);
   };
 
+  const setLiveData = (data) => {
+    setLivePeoples(data?.users);
+    setBidData(data?.bids);
+  };
+
   useEffect(() => {
-    setLivePeoples(exampleDataPeople);
-    setIsLive(false);
-    setBidWinner({
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      name: 'User Test',
-      price: 12312331,
-      isMine: true,
-    });
-    setBidData(exampleBidData);
-    setHigestBidPrice(123123);
+    socket.on('auction/SET_LIVE_DATA', setLiveData);
+
+    return () => {
+      socket.off('auction/SET_LIVE_DATA', setLiveData);
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    // setLivePeoples(exampleDataPeople);
+    setIsLive(true);
+    // setBidWinner({
+    //   profilePicture:
+    //     'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
+    //   name: 'User Test',
+    //   price: 12312331,
+    //   isMine: true,
+    // });
+    // setBidData(exampleBidData);
+    // setHigestBidPrice(123123);
   }, []);
 
   return (
@@ -233,6 +247,8 @@ const LiveBidPage = () => {
   );
 };
 
-LiveBidPage.proptTypes = {};
+LiveBidPage.propTypes = {
+  socket: PropTypes.object,
+};
 
 export default LiveBidPage;

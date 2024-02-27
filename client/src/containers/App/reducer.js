@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-import { SET_LOCAL, SET_THEME, SET_POPUP, SET_LOADING } from '@containers/App/constants';
+import { SET_LOCAL, SET_THEME, SET_POPUP, SET_LOADING, SET_SOCKET } from '@containers/App/constants';
 
 export const initialState = {
   locale: 'id',
@@ -11,6 +11,7 @@ export const initialState = {
     message: '',
   },
   loading: false,
+  socket: null,
 };
 
 export const storedKey = ['locale', 'theme'];
@@ -29,6 +30,9 @@ const appReducer = (state = initialState, action) =>
         break;
       case SET_LOADING:
         draft.loading = action.loading;
+        break;
+      case SET_SOCKET:
+        draft.socket = action.socket;
         break;
     }
   });

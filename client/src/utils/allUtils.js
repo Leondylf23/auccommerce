@@ -3,6 +3,7 @@ import encodeUtf8 from 'crypto-js/enc-utf8';
 import { useIntl as reactUseIntl } from 'react-intl';
 
 const encryptSecret = 'xS2atT7h810yD';
+const timeZoneOffset = new Date().getTimezoneOffset() * 60000;
 
 export const encryptDataAES = (data) => AES.encrypt(data, encryptSecret).toString();
 export const decryptDataAES = (data) => (data ? AES.decrypt(data, encryptSecret).toString(encodeUtf8) : null);
@@ -20,7 +21,7 @@ export const numberWithPeriods = (value) => (value ? value.toString().replace(/\
  */
 export const formatDateOnly = (value) =>
   value
-    ? new Date(value).toLocaleDateString('en-GB', {
+    ? new Date(new Date(value) - timeZoneOffset).toLocaleDateString('en-GB', {
         day: 'numeric',
         month: 'short',
         year: 'numeric',
@@ -31,7 +32,7 @@ export const formatDateOnly = (value) =>
  * @param {Number} isShowSeconds Whether to show seconds or not. Default value is false.
  */
 export const formatTimeOnly = (value, isShowSeconds = false) =>
-  value ? new Date(value).toISOString().slice(11, isShowSeconds ? 19 : 16) : null;
+  value ? new Date(new Date(value) - timeZoneOffset).toISOString().slice(11, isShowSeconds ? 19 : 16) : null;
 /**
  * @param {Number} value Value must be number in ms
  */

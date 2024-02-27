@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.JSON
       },
       itemStartBidPrice: {
-        type: Sequelize.DECIMAL(11,2)
+        type: Sequelize.DECIMAL(20,2)
       },
       itemDeadlineBid: {
         type: Sequelize.DATE

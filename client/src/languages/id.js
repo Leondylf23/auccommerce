@@ -35,6 +35,8 @@ export default {
   save: 'Simpan',
   delete: 'Hapus',
   add: 'Tambah',
+  all: 'Semua',
+  lang: 'id',
 
   login_title: 'Masuk',
   login_title_forgot: 'Lupa Kata Sandi',
@@ -135,6 +137,8 @@ export default {
   auction_form_general_itm_bid_ddl: 'Tenggang Waktu Lelang',
   auction_form_general_itm_bid_strt: 'Lelang Start Date',
   auction_form_general_itm_desc: 'Deskripsi',
+  auction_form_general_itm_ctg: 'Kategori',
+  auction_form_general_itm_ctg_op: '- Pilih -',
   auction_form_spec: 'Spesifikasi Fisik Barang',
   auction_form_spec_length: 'Panjang Barang (Centimeter)',
   auction_form_spec_width: 'Lebar Barang (Centimeter)',
@@ -151,7 +155,10 @@ export default {
   auction_form_general_start_bid_date_err: 'Tanggal mulai lelang harus lebih 10 menit dari sekarang!',
   auction_form_general_end_bid_date_err: 'Tanggal tenggang lelang harus lebih 10 menit dari tanggal mulai lelang!',
   auction_form_general_desc_err: 'Deskripsi harus setidaknya memiliki 10 karakter!',
+  auction_form_general_ctg_err: 'Harus pilih kategori!',
   auction_form_general_img_err: 'Setidaknya memiliki 1 gambar!',
+  auction_form_item_spec_err_nan: 'Spesifikasi barang harus angka!',
+  auction_form_item_spec_err_below_zero: 'Angka spesifikasi barang harus lebih dari 1!',
   auction_form_success_save: 'Data lelang berhasil disimpan!',
 
   profile_title: 'Profile Anda',

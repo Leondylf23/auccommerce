@@ -8,8 +8,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { produce } from 'immer';
 import uuid from 'react-uuid';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import { showPopup } from '@containers/App/actions';
+import { selectCategory } from '@pages/Home/selectors';
+import { getCategory } from '@pages/Home/actions';
 import { selectAuctionDetailData } from './selectors';
 import { getAuctionDetailData, saveAuctionData } from './actions';
 
@@ -17,6 +20,7 @@ import classes from './style.module.scss';
 
 const itemGeneralDataDefault = {
   itemName: '',
+  categoryId: -1,
   startBid: 0,
   startBidDate: '',
   deadlineBid: '',
@@ -29,7 +33,7 @@ const itemSpecificationDefault = {
   weight: 1,
 };
 
-const AuctionForm = ({ detailData }) => {
+const AuctionForm = ({ detailData, categories }) => {
   const { id } = useParams();
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -43,6 +47,7 @@ const AuctionForm = ({ detailData }) => {
   const [errImgMsg, setErrImgMsg] = useState([]);
   const [errTimoutId, setErrTimeoutId] = useState(null);
   const [isLive, setIsLive] = useState(false);
+  const [isLoadingCategory, setIsLoadingCategory] = useState(false);
 
   const addImageData = (e) => {
     const { files } = e.target;
@@ -157,8 +162,30 @@ const AuctionForm = ({ detailData }) => {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_desc_err' })));
       return;
     }
+    if (itemGeneralData?.categoryId === -1) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_ctg_err' })));
+      return;
+    }
     if (itemImages?.length < 1) {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_img_err' })));
+      return;
+    }
+    if (
+      isNaN(itemSpecificationData?.length) ||
+      isNaN(itemSpecificationData?.width) ||
+      isNaN(itemSpecificationData?.height) ||
+      isNaN(itemSpecificationData?.weight)
+    ) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_item_spec_err_nan' })));
+      return;
+    }
+    if (
+      itemSpecificationData?.length < 1 ||
+      itemSpecificationData?.width < 1 ||
+      itemSpecificationData?.height < 1 ||
+      itemSpecificationData?.weight < 1
+    ) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_item_spec_err_below_zero' })));
       return;
     }
 
@@ -200,6 +227,17 @@ const AuctionForm = ({ detailData }) => {
     }
   }, [detailData]);
   useEffect(() => {
+    setIsLoadingCategory(true);
+    dispatch(
+      getCategory(
+        () => {
+          setIsLoadingCategory(false);
+        },
+        () => {
+          navigate('/my-auction');
+        }
+      )
+    );
     if (id) {
       dispatch(getAuctionDetailData({ id }));
     }
@@ -207,9 +245,14 @@ const AuctionForm = ({ detailData }) => {
 
   return (
     <div className={classes.mainContainer}>
-      <h1 className={classes.pageTitle}>
-        {id ? <FormattedMessage id="auction_form_title_edit" /> : <FormattedMessage id="auction_form_title_new" />}
-      </h1>
+      <div className={classes.header}>
+        <button type="button" className={classes.button} onClick={() => navigate('/my-auction')}>
+          <ArrowBackIosNewIcon className={classes.icon} />
+        </button>
+        <h1 className={classes.pageTitle}>
+          {id ? <FormattedMessage id="auction_form_title_edit" /> : <FormattedMessage id="auction_form_title_new" />}
+        </h1>
+      </div>
       <div className={classes.inputFormContainer}>
         <h3 className={classes.inputFormTitle}>
           <FormattedMessage id="auction_form_general" />
@@ -298,6 +341,43 @@ const AuctionForm = ({ detailData }) => {
         </div>
         <div className={classes.dividerContainer}>
           <div className={classes.inputContainer}>
+            <label htmlFor="itemCategory" className={classes.label}>
+              <FormattedMessage id="auction_form_general_itm_ctg" />
+            </label>
+            {isLoadingCategory ? (
+              <div className={classes.loadingContainer}>
+                <p className={classes.text}>
+                  <FormattedMessage id="loading" />
+                </p>
+              </div>
+            ) : (
+              <select
+                id="itemCategory"
+                className={classes.input}
+                value={itemGeneralData?.categoryId}
+                onChange={(e) =>
+                  setItemGeneralData(
+                    produce((draft) => {
+                      draft.categoryId = e.target.value;
+                    })
+                  )
+                }
+                disabled={isLive}
+              >
+                <option value={-1}>
+                  <FormattedMessage id="auction_form_general_itm_ctg_op" />
+                </option>
+                {categories?.map((category) => (
+                  <option value={category?.id} key={category?.id}>
+                    {intl.formatMessage({ id: 'lang' }) === 'id' ? category?.nameId : category?.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        </div>
+        <div className={classes.dividerContainer}>
+          <div className={classes.inputContainer}>
             <label htmlFor="itemDesc" className={classes.label}>
               <FormattedMessage id="auction_form_general_itm_desc" />
             </label>
@@ -330,7 +410,7 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemlen"
-              min={1}
+              min={0}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.length}
@@ -344,7 +424,7 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemWidth"
-              min={1}
+              min={0}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.width}
@@ -360,7 +440,7 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemHeight"
-              min={1}
+              min={0}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.height}
@@ -374,7 +454,7 @@ const AuctionForm = ({ detailData }) => {
             </label>
             <input
               id="itemWeight"
-              min={1}
+              min={0}
               type="number"
               className={classes.input}
               value={itemSpecificationData?.weight}
@@ -424,7 +504,13 @@ const AuctionForm = ({ detailData }) => {
                       data-active={previewImage?.id === image?.id}
                     />
                   </div>
-                  <button type="button" className={classes.button} data-type="red" onClick={() => deleteImage(index)}>
+                  <button
+                    type="button"
+                    className={classes.button}
+                    data-type="red"
+                    onClick={() => deleteImage(index)}
+                    disabled={isLive}
+                  >
                     <DeleteIcon className={classes.icon} />
                   </button>
                 </div>
@@ -465,10 +551,12 @@ const AuctionForm = ({ detailData }) => {
 
 AuctionForm.propTypes = {
   detailData: PropTypes.object,
+  categories: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
   detailData: selectAuctionDetailData,
+  categories: selectCategory,
 });
 
 export default connect(mapStateToProps)(AuctionForm);

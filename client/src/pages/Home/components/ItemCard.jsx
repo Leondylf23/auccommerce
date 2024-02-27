@@ -16,18 +16,29 @@ const ItemCard = ({ data, isFull }) => {
       data-type={isFull && 'full'}
       onClick={() => navigate(`/item/${data?.id}`)}
     >
-      <img className={classes.image} src={data?.itemPicture} alt="Url Broken" />
+      <img className={classes.image} src={data?.itemImage} alt="Url Broken" />
       <p className={classes.itemName}>{data?.itemName}</p>
-      <p className={classes.itemPrice}>Rp. {numberWithPeriods(data?.startingBid)}</p>
+      <p className={classes.itemPrice}>Rp. {numberWithPeriods(data?.price)}</p>
       <div className={classes.midTextContainer}>
-        <GavelIcon className={classes.icon} />
-        <p className={classes.endsOnText}>
-          <FormattedMessage id="home_item_card_ends_on" />
-        </p>
+        {data?.isLiveNow ? (
+          <>
+            <GavelIcon className={classes.icon} />
+            <p className={classes.endsOnText}>
+              <FormattedMessage id="home_item_card_ends_on" />
+            </p>
+          </>
+        ) : (
+          <>
+            <GavelIcon className={classes.icon} />
+            <p className={classes.endsOnText}>
+              <FormattedMessage id="home_item_card_starts" />
+            </p>
+          </>
+        )}
       </div>
       <div className={classes.auctionTimeContainer}>
-        <p className={classes.dateContainer}>{formatDateOnly(data?.endBid)}</p>
-        <p className={classes.timeContainer}>{formatTimeOnly(data?.endBid)}</p>
+        <p className={classes.dateContainer}>{formatDateOnly(data?.isLiveNow ? data?.endsOn : data?.startDate)}</p>
+        <p className={classes.timeContainer}>{formatTimeOnly(data?.isLiveNow ? data?.endsOn : data?.startDate)}</p>
       </div>
     </div>
   );

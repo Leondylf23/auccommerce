@@ -60,7 +60,7 @@ const Navbar = ({ locale, isUserLogined, userData, isUserLoginedTest }) => {
     if (userData) {
       const user = getUserDataDecrypt(userData);
       setProfileImg(user?.profileImage);
-      setIsBusiness(user?.role === 'business');
+      setIsBusiness(user?.role === 'seller');
     }
   }, [userData]);
 

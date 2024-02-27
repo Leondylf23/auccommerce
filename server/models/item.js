@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     itemDeadlineBid: DataTypes.DATE,
     itemStartBidDate: DataTypes.DATE,
     status: DataTypes.ENUM('DEACTIVATED','ACTIVED','LIVE'),
+    category: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
