@@ -104,6 +104,7 @@ export default {
   item_detail_bid_place_validation_title: 'Bid price too low!',
   item_detail_bid_place_validation_msg: 'Price must be greater than the highest bid!',
   item_detail_bid_live_closed: 'Live auction has been ended.',
+  item_detail_bid_live_add_template: 'Add from highest bid:',
 
   my_bids_tab_1_title: 'Successfull Bids',
   my_bids_tab_2_title: 'Bid History',

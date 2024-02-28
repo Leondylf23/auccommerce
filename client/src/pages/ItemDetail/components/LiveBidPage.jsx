@@ -4,118 +4,39 @@ import { useDispatch } from 'react-redux';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import TimerIcon from '@mui/icons-material/Timer';
 
-import { numberWithPeriods } from '@utils/allUtils';
+import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
 import PopupWindow from '@components/PopupWindow/Dialog';
-import { showPopup } from '@containers/App/actions';
+import { setLoading, showPopup } from '@containers/App/actions';
 import LivePeoplesDisplay from './LivePeoplesDisplay';
 import LiveEndedPopUp from './LiveEndedPopup';
 
 import classes from '../style.module.scss';
 
-const LiveBidPage = ({ socket, id, startingPrice }) => {
+const LiveBidPage = ({ socket, id, timer, token }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const exampleDataPeople = [
-    {
-      id: 'dwadw',
-      image: 'https://d2kwwar9pcd0an.cloudfront.net/6b9a7820fd8161e906f76e45aa152f00.jpeg',
-    },
-    {
-      id: 'dwadwa',
-      image: 'https://d2kwwar9pcd0an.cloudfront.net/5c6e598bdd7799c2cdef4120c752dce3.jpeg',
-    },
-    {
-      id: 'dwadw1',
-      image: 'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-no%20effects.png',
-    },
-    {
-      id: 'dwad',
-      image: 'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-no%20effects.png',
-    },
-    {
-      id: '123adw1',
-      image:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-alex_rainer-jVjlBQg-Gj8-unsplash.jpg',
-    },
-    {
-      id: 'dasd22',
-      image:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-    },
-  ];
-  const exampleBidData = [
-    {
-      id: 'adwa',
-      name: 'User Name',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: true,
-      bidPrice: 1209381231,
-    },
-    {
-      id: 'adwa',
-      name: 'User Name',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: true,
-      bidPrice: 120938,
-    },
-    {
-      id: 'adwa',
-      name: 'User Name',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: false,
-      bidPrice: 120938,
-    },
-    {
-      id: 'adwa',
-      name: 'User Namedawd awd awdawdawd  awd awd a adwawawda wdaw dawawdaw',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: false,
-      bidPrice: 120938,
-    },
-    {
-      id: 'adwa',
-      name: 'User Namedawd awd awdawdawd  awd awd a adwawawda wdaw dawawdaw',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: false,
-      bidPrice: 120938,
-    },
-    {
-      id: 'adwa',
-      name: 'User Namedawd awd awdawdawd  awd awd a adwawawda wdaw dawawdaw',
-      profilePicture:
-        'https://krustorage.blob.core.windows.net/kru-public-master-blob/post-0-attatchments-IMG_20230905_135946.jpg',
-      isMine: false,
-      bidPrice: 120938,
-    },
-  ];
 
   const [higestBidPrice, setHigestBidPrice] = useState(0);
   const [livePeoples, setLivePeoples] = useState([]);
   const [isLive, setIsLive] = useState(true);
   const [bidData, setBidData] = useState([]);
-  const [bidPriceInput, setBidPriceInput] = useState(1);
+  const [bidPriceInput, setBidPriceInput] = useState(0);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [bidWinner, setBidWinner] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isAbleBid, setIsAbleBid] = useState(false);
 
   const onChangeBidPriceInput = (data) => {
-    if (data < 1 || Number.isNaN(data)) return;
-    if (data.toString()[0] === '0') return;
-
     setBidPriceInput(data);
   };
 
   const submitBid = (e) => {
     e.preventDefault();
 
-    if (bidPriceInput < higestBidPrice) {
+    if (bidPriceInput <= higestBidPrice) {
       dispatch(
         showPopup(
           intl.formatMessage({ id: 'item_detail_bid_place_validation_title' }),
@@ -128,14 +49,21 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
     setIsShowConfirm(true);
   };
 
+  const addBid = (price) => {
+    setBidPriceInput(higestBidPrice + price);
+  };
+
   const sendBidData = () => {
-    setBidPriceInput(1);
-    setIsShowConfirm(false);
+    socket.emit('auction/PLACE_BID', { id, token, bid: bidPriceInput });
+    dispatch(setLoading(true));
   };
 
   const setLiveData = (data) => {
     setLivePeoples(data?.users);
     setBidData(data?.bids);
+    setHigestBidPrice(data?.highestBid);
+    setUserId(data?.userId);
+    setIsAbleBid(data?.isAbleBid);
     setIsLive(true);
   };
 
@@ -143,13 +71,28 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
     setLivePeoples(data?.users);
   };
 
+  const bidPlaced = () => {
+    setBidPriceInput(1);
+    setIsShowConfirm(false);
+    dispatch(setLoading(false));
+  };
+
+  const updateBidData = (data) => {
+    setBidData(data?.bids);
+    setHigestBidPrice(data?.highestBid);
+  };
+
   useEffect(() => {
     socket.on('auction/SET_LIVE_DATA', setLiveData);
     socket.on('auction/UPDATE_LIVE_USERS', updateLiveUsers);
+    socket.on('auction/PLACE_BID_SUCCESS', bidPlaced);
+    socket.on('auction/UPDATE_BID_DATA', updateBidData);
 
     return () => {
       socket.off('auction/SET_LIVE_DATA', setLiveData);
       socket.off('auction/UPDATE_LIVE_USERS', updateLiveUsers);
+      socket.off('auction/PLACE_BID_SUCCESS', bidPlaced);
+      socket.off('auction/UPDATE_BID_DATA', updateBidData);
     };
   }, [socket]);
 
@@ -164,8 +107,11 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
     // });
     // setBidData(exampleBidData);
     // setHigestBidPrice(123123);
-    setHigestBidPrice(startingPrice);
-    socket.emit('auction/GET_LIVE_DATA', { id });
+    socket.emit('auction/GET_LIVE_DATA', { id, token });
+
+    return () => {
+      socket.emit('auction/LEAVE_LIVE', { id, token });
+    };
   }, []);
 
   return (
@@ -196,21 +142,33 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
         </div>
         <LivePeoplesDisplay peoples={livePeoples} />
       </div>
+      <div className={classes.midContainer}>
+        <div className={classes.leftContainer}>
+          <TimerIcon className={classes.icon} />
+          <p className={classes.timer}>{timerDisplay(timer)}</p>
+        </div>
+        <div className={classes.rightContainer}>
+          <p className={classes.label}>
+            <FormattedMessage id="item_detail_highest_prc" />
+          </p>
+          <p className={classes.price}>Rp. {numberWithPeriods(higestBidPrice)}</p>
+        </div>
+      </div>
       <div className={classes.auctionListDatasContainer}>
         {bidData?.map((bid, index) => (
-          <div key={bid?.id} className={classes.bidData} data-ismine={bid?.isMine} data-isfirst={index === 0}>
-            <Avatar className={classes.avatar} src={bid?.profilePicture} alt={bid?.profilePicture} />
-            <p className={classes.userNameText}>{bid?.name}</p>
+          <div key={bid?.bidId} className={classes.bidData} data-ismine={bid?.id === userId} data-isfirst={index === 0}>
+            <Avatar className={classes.avatar} src={bid?.image} alt={bid?.profilePicture} />
+            <p className={classes.userNameText}>{bid?.fullname}</p>
             <p className={classes.bidPrice}>
               <FormattedMessage id="item_detail_bid_has_placed_bid" />{' '}
-              <p className={classes.price}>Rp. {numberWithPeriods(bid?.bidPrice)}</p>
+              <p className={classes.price}>Rp. {numberWithPeriods(bid?.bid)}</p>
             </p>
           </div>
         ))}
       </div>
       {isLive && !bidWinner ? (
         <form className={classes.placeBidContainer} onSubmit={submitBid}>
-          <label htmlFor="bidPriceInput">
+          <label htmlFor="bidPriceInput" className={classes.label}>
             <FormattedMessage id="item_detail_bid_your_bid_label" />
           </label>
           <div className={classes.inputContainer}>
@@ -222,10 +180,30 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
               value={bidPriceInput}
               onChange={(e) => onChangeBidPriceInput(e.target.value)}
               className={classes.input}
+              disabled={!isAbleBid}
             />
-            <button className={classes.button} type="submit">
+            <button className={classes.button} type="submit" disabled={!isAbleBid}>
               <FormattedMessage id="item_detail_bid_place_btn" />
             </button>
+          </div>
+          <div className={classes.addButtons}>
+            <p className={classes.label}>
+              <FormattedMessage id="item_detail_bid_live_add_template" />
+            </p>
+            <div className={classes.buttons}>
+              <button type="button" className={classes.button} onClick={() => addBid(100000)} disabled={!isAbleBid}>
+                Rp. 100.000
+              </button>
+              <button type="button" className={classes.button} onClick={() => addBid(500000)} disabled={!isAbleBid}>
+                Rp. 500.000
+              </button>
+              <button type="button" className={classes.button} onClick={() => addBid(1000000)} disabled={!isAbleBid}>
+                Rp. 1.000.000
+              </button>
+              <button type="button" className={classes.button} onClick={() => addBid(5000000)} disabled={!isAbleBid}>
+                Rp. 5.000.000
+              </button>
+            </div>
           </div>
         </form>
       ) : (
@@ -258,7 +236,8 @@ const LiveBidPage = ({ socket, id, startingPrice }) => {
 LiveBidPage.propTypes = {
   socket: PropTypes.object,
   id: PropTypes.number,
-  startingPrice: PropTypes.number,
+  timer: PropTypes.number,
+  token: PropTypes.string,
 };
 
 export default LiveBidPage;

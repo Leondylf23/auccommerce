@@ -6,9 +6,10 @@ import TimerIcon from '@mui/icons-material/Timer';
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { getUserDataDecrypt, numberWithPeriods, timerDisplay } from '@utils/allUtils';
+import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
 import { selectLogin, selectToken, selectUserData } from '@containers/Client/selectors';
 import { selectSocket } from '@containers/App/selectors';
+import { setLoading, showPopup } from '@containers/App/actions';
 import ImageCarousel from './components/ImageCarousel';
 import LivePeoplesDisplay from './components/LivePeoplesDisplay';
 import { selectItemDetail } from './selectors';
@@ -36,7 +37,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
 
   const backBtnOnClick = () => {
     if (userIsJoin) {
-      socket.emit('auction/LEAVE_LIVE', { id, token });
+      dispatch(getItemDetail({ id }));
       setUserIsJoin(false);
     } else {
       navigate('/');
@@ -48,7 +49,12 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   };
 
   const errSocketMsg = (err) => {
-    console.log(err);
+    dispatch(setLoading(false));
+    dispatch(showPopup());
+  };
+
+  const kickedUser = () => {
+    setUserIsJoin(false);
   };
 
   useEffect(() => {
@@ -77,10 +83,12 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
     if (socket) {
       socket.on('auction/JOINED_LIVE', joinedLive);
       socket.on('auction/ERROR', errSocketMsg);
+      socket.on('auction/KICK_USER', kickedUser);
 
       return () => {
         socket.off('auction/JOINED_LIVE', joinedLive);
-        socket.on('auction/ERROR', errSocketMsg);
+        socket.off('auction/ERROR', errSocketMsg);
+        socket.off('auction/KICK_USER', kickedUser);
       };
     }
   }, [socket]);
@@ -98,7 +106,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
         </div>
         <div className={classes.rightSide}>
           {userIsJoin ? (
-            <LiveBidPage id={id} socket={socket} startingPrice={itemDetailData?.price} />
+            <LiveBidPage id={id} socket={socket} timer={timer} token={token} />
           ) : (
             <>
               <h1 className={classes.itemName}>{itemDetailData?.itemName}</h1>

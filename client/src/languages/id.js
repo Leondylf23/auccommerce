@@ -106,6 +106,7 @@ export default {
   item_detail_bid_place_validation_title: 'Penawaran terlalu rendah!',
   item_detail_bid_place_validation_msg: 'Harga harus melebihi dari penawaran yang tertinggi!',
   item_detail_bid_live_closed: 'Siaran lelang telah berakhir.',
+  item_detail_bid_live_add_template: 'Tambah dari penawaran tertinggi:',
 
   my_bids_tab_1_title: 'Penawaran Berhasil',
   my_bids_tab_2_title: 'Riwayat Penawaran',

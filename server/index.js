@@ -15,6 +15,7 @@ const { socketEventListener } = require("./server/socket");
 // Import routes
 const AuthUser = require("./server/api/authUser");
 const Auctions = require("./server/api/auctions");
+const { redisConnect } = require("./server/services/redis");
 
 // Middleware
 app.use(cors());
@@ -112,6 +113,7 @@ const io = new Server(server, {
 });
 
 socketEventListener(io);
+redisConnect();
 
 server.listen(Port, () => {
   console.log(["Info"], `Socket and Server open on port: ${Port}`);

@@ -6,6 +6,7 @@ const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
 const cloudinary = require("../services/cloudinary");
 const { decryptData, encryptData } = require("./utilsHelper");
+const { setKeyJSONValue, getKeyJSONValue } = require("../services/redis");
 
 // PRIVATE FUNCTIONS
 const __formatDateNonISO = (date) =>
@@ -104,12 +105,22 @@ const getMyAuctionDetailData = async (dataObject, userId) => {
 
 const getCategories = async () => {
   try {
-    const data = await db.category.findAll({
-      attributes: ["id", "name", "nameId", "pictureUrl"],
-      where: { isActive: true },
-    });
+    let data = null;
+    const redisData = await getKeyJSONValue(`CATEGORIES`);
 
-    return Promise.resolve(data?.map((category) => category?.dataValues));
+    if (redisData) {
+      data = redisData;
+    } else {
+      const dbData = await db.category.findAll({
+        attributes: ["id", "name", "nameId", "pictureUrl"],
+        where: { isActive: true },
+      });
+
+      data = dbData?.map(dataEl => dataEl?.dataValues);
+      await setKeyJSONValue(`CATEGORIES`, data, 24 * 60 * 60);
+    }
+
+    return Promise.resolve(data);
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));
   }
@@ -117,29 +128,40 @@ const getCategories = async () => {
 
 const getLatestAuctionsData = async () => {
   try {
-    const data = await db.item.findAll({
-      attributes: [
-        "id",
-        "itemName",
-        "itemPictures",
-        ["itemDeadlineBid", "endsOn"],
-        ["itemStartBidDate", "startDate"],
-        ["itemStartBidPrice", "price"],
-        "status",
-      ],
-      where: {
-        isActive: true,
-      },
-      order: [["id", "DESC"]],
-      limit: 15,
-    });
+    let data = null;
+
+    const redisData = await getKeyJSONValue(`LATEST-ITEMS`);
+
+    if (redisData) {
+      data = redisData;
+    } else {
+      const dbData = await db.item.findAll({
+        attributes: [
+          "id",
+          "itemName",
+          "itemPictures",
+          ["itemDeadlineBid", "endsOn"],
+          ["itemStartBidDate", "startDate"],
+          ["itemStartBidPrice", "price"],
+          "status",
+        ],
+        where: {
+          isActive: true,
+        },
+        order: [["id", "DESC"]],
+        limit: 15,
+      });
+
+      data = dbData?.map(dataEl => dataEl?.dataValues);
+      await setKeyJSONValue(`LATEST-ITEMS`, data, 120);
+    }
 
     const remappedData = data?.map((element) => ({
-      ...element?.dataValues,
-      itemImage: element?.dataValues?.itemPictures[0],
-      isLiveNow: element?.dataValues?.status === "LIVE",
+      ...element,
+      itemImage: element?.itemPictures[0],
+      isLiveNow: element?.status === "LIVE",
       itemPictures: undefined,
-      status: undefined
+      status: undefined,
     }));
 
     return Promise.resolve(remappedData);
@@ -196,7 +218,7 @@ const getFiveMinAuctionsData = async () => {
       itemImage: element?.dataValues?.itemPictures[0],
       isLiveNow: element?.dataValues?.status === "LIVE",
       itemPictures: undefined,
-      status: undefined
+      status: undefined,
     }));
 
     return Promise.resolve(remappedData);
@@ -248,7 +270,7 @@ const getAllAuctions = async (dataObject) => {
       itemImage: element?.dataValues?.itemPictures[0],
       isLiveNow: element?.dataValues?.status === "LIVE",
       itemPictures: undefined,
-      status: undefined
+      status: undefined,
     }));
 
     return Promise.resolve({
@@ -264,37 +286,59 @@ const getAuctionDetail = async (dataObject) => {
   const { id } = dataObject;
 
   try {
-    const data = await db.item.findOne({
-      attributes: [
-        "itemName",
-        ["itemPictures", "itemImages"],
-        "itemDescription",
-        "itemDeadlineBid",
-        "itemStartBidDate",
-        ["itemStartBidPrice", "startingPrice"],
-        "status",
-      ],
-      where: {
-        id,
-        isActive: true,
-      },
-    });
+    let data
+    const redisData = await getKeyJSONValue(`ITEM-DETAIL-${id}`);
+
+    if (!redisData) {
+      const dbData = await db.item.findOne({
+        attributes: [
+          "itemName",
+          ["itemPictures", "itemImages"],
+          "itemDescription",
+          "itemDeadlineBid",
+          "itemStartBidDate",
+          ["itemStartBidPrice", "startingPrice"],
+          "status",
+        ],
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+
+      if (!dbData) throw Boom.notFound('Data not found');
+      
+      data = dbData.dataValues;
+    } else {
+      data = redisData;
+    }
 
     const timeNow = new Date().getTime();
-    const countStart = Math.ceil((new Date(data?.dataValues?.itemStartBidDate).getTime() - timeNow) / 1000);
-    const countEnd = Math.ceil((new Date(data?.dataValues?.itemDeadlineBid).getTime() - timeNow) / 1000);
+    const countStart = Math.ceil(
+      (new Date(data?.itemStartBidDate).getTime() - timeNow) / 1000
+    );
+    const countEnd = Math.ceil(
+      (new Date(data?.itemDeadlineBid).getTime() - timeNow) / 1000
+    );
 
-    return Promise.resolve({
-      ...data?.dataValues,
-      highestBid: 0,
-      isLiveNow: data?.dataValues?.status === "LIVE",
+    const liveDataRedis = await getKeyJSONValue(`LIVEBID-${id}`);
+
+    await setKeyJSONValue(`ITEM-DETAIL-${id}`, data, 120);
+
+    const mappedData = {
+      ...data,
+      startingPrice: Math.round(data.startingPrice),
+      highestBid: liveDataRedis ? liveDataRedis?.highestBid : data?.startingPrice,
+      isLiveNow: data?.status === "LIVE",
       startingTimer: countStart,
       timeRemaining: countEnd,
-      livePeoples: [],
+      livePeoples: liveDataRedis ? liveDataRedis?.users : [],
       status: undefined,
       itemDeadlineBid: undefined,
       itemStartBidDate: undefined,
-    });
+    };
+
+    return Promise.resolve(mappedData);
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));
   }
@@ -406,8 +450,6 @@ const deleteAuctionItemData = async (dataObject, userId) => {
       where: { id, isActive: true, userId },
     });
     if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
-
-   
 
     const updatedData = await itemData.update({
       isActive: false,

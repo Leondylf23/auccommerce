@@ -11,12 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.item, {
+        foreignKey: "itemId",
+        onDelete: "CASCADE"
+      });
+
+      this.belongsTo(models.user, {
+        foreignKey: "userId",
+        onDelete: "CASCADE"
+      });
     }
   }
   bid.init({
     userId: DataTypes.INTEGER,
     itemId: DataTypes.INTEGER,
     bidPlacePrice: DataTypes.DECIMAL,
+    status: DataTypes.ENUM('PLACED', 'WAITING','FAILED','WAIT_PAYMENT', 'WAIT_CONFIRM', 'PROCESSING', 'SHIPPING', 'COMPLETED'),
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,

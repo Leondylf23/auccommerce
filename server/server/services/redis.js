@@ -4,13 +4,23 @@ const client = createClient();
 
 client.on("error", (err) => console.log(["Error"], "Redis Client Error", err));
 
+const redisConnect = async () => {
+  await client.connect();
+  console.log(["info"], "Redis Connected");
+};
+
+/**
+ * @param {string} key Key of the redis value
+ * @param {string} value Value of the redis in string format
+ * @param {number} expired Expiration time for the value
+ * @returns {object | null} Return error message if any errors
+ */
 const setKeyValue = async (key, value, expired) => {
   let errMsg = null;
 
-  await client.connect();
   try {
     if (expired) {
-      await client.set(key, value, "EX", expired);
+      await client.set(key, value, { EX: expired });
     } else {
       await client.set(key, value);
     }
@@ -18,34 +28,40 @@ const setKeyValue = async (key, value, expired) => {
     errMsg = error;
   }
 
-  await client.disconnect();
   return errMsg;
 };
 
+/**
+ * @param {string} key Key of the redis value
+ * @returns {object | Array} Redis value as object or array
+ */
 const getKeyValue = async (key) => {
   let errMsg = null;
   let value = null;
 
-  await client.connect();
   try {
     value = await client.get(key);
   } catch (error) {
     errMsg = error;
   }
 
-  await client.disconnect();
   if (errMsg) throw errMsg;
 
   return value;
 };
 
+/**
+ * @param {string} key Key of the redis value
+ * @param {string} value Value of the redis in JSON format
+ * @param {number} expired Expiration time for the value
+ * @returns {object | null} Return error message if any errors
+ */
 const setKeyJSONValue = async (key, value, expired) => {
   let errMsg = null;
 
-  await client.connect();
   try {
     if (expired) {
-      await client.set(key, JSON.stringify(value), "EX", expired);
+      await client.set(key, JSON.stringify(value), { EX: expired });
     } else {
       await client.set(key, JSON.stringify(value));
     }
@@ -53,28 +69,30 @@ const setKeyJSONValue = async (key, value, expired) => {
     errMsg = error;
   }
 
-  await client.disconnect();
   return errMsg;
 };
 
+/**
+ * @param {string} key Key of the redis value
+ * @returns {object | Array} Redis value as object or array
+ */
 const getKeyJSONValue = async (key) => {
   let errMsg = null;
   let value = null;
 
-  await client.connect();
   try {
     value = await client.get(key);
   } catch (error) {
     errMsg = error;
   }
 
-  await client.disconnect();
   if (errMsg) throw errMsg;
 
   return JSON.parse(value);
 };
 
 module.exports = {
+  redisConnect,
   setKeyValue,
   getKeyValue,
   setKeyJSONValue,

@@ -196,7 +196,7 @@
 
     .avatarsContainer {
         @include directionX;
-        
+
         .avatar {
             @include containerCenter;
 
@@ -254,6 +254,36 @@
                 font-weight: 700;
                 font-size: 1rem;
                 margin-left: 0.5rem;
+            }
+        }
+    }
+
+    .midContainer {
+        @include directionX;
+
+        .leftContainer {
+            @include directionY;
+
+            align-items: center;
+            ;
+            width: 50%;
+            flex-shrink: 1;
+        }
+
+        .rightContainer {
+            @include directionY;
+
+            align-items: center;
+            ;
+            width: 50%;
+            flex-shrink: 1;
+
+            .label {
+                font-size: 0.8rem;
+            }
+
+            .price {
+                font-weight: 600;
             }
         }
     }
@@ -333,6 +363,12 @@
 
         width: 100%;
 
+        .message {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        
         .inputContainer {
             @include directionX;
 
@@ -349,6 +385,25 @@
             }
         }
 
+        .addButtons {
+            @include directionY;
+
+            width: 100%;
+            margin-top: 0.5rem;
+
+            .buttons {
+                @include directionX;
+
+                gap: 0.25rem;
+                overflow-x: auto;
+
+                .button {
+                    @include button;
+
+                    flex-shrink: 0;
+                }
+            }
+        }
     }
 }
 
