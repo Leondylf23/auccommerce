@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.bid, {
+        foreignKey: "bidId",
+        onDelete: "CASCADE"
+      });
     }
   }
   transaction.init({
@@ -26,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     shippingId: DataTypes.STRING,
     paymentId: DataTypes.STRING,
     paymentJson: DataTypes.JSON,
+    paymentDeadline: DataTypes.DATE,
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,

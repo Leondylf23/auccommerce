@@ -28,6 +28,24 @@ const StatusCard = ({ status = '' }) => {
       case 'LIVE':
         setStatusData({ label: intl.formatMessage({ id: 'status_live' }), color: 'yellow' });
         break;
+      case 'PLACED':
+        setStatusData({ label: intl.formatMessage({ id: 'status_placed' }), color: 'sky' });
+        break;
+      case 'WAIT_PAYMENT':
+        setStatusData({ label: intl.formatMessage({ id: 'status_wait_pay' }), color: 'yellow' });
+        break;
+      case 'WAIT_CONFIRM':
+        setStatusData({ label: intl.formatMessage({ id: 'status_confirm' }), color: 'yellow' });
+        break;
+      case 'PROCESSING':
+        setStatusData({ label: intl.formatMessage({ id: 'status_processing' }), color: 'blue' });
+        break;
+      case 'SHIPPING':
+        setStatusData({ label: intl.formatMessage({ id: 'status_shipping' }), color: 'blue' });
+        break;
+      case 'COMPLETED':
+        setStatusData({ label: intl.formatMessage({ id: 'status_completed' }), color: 'green' });
+        break;
       default:
         setStatusData({ label: 'Unknown', color: '' });
         break;

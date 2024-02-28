@@ -12,10 +12,13 @@ const Port = process.env.NODEJS_PORT || 8080;
 // Import socket.io
 const { socketEventListener } = require("./server/socket");
 
+// Initialize Redis Connection
+const { redisConnect } = require("./server/services/redis");
+
 // Import routes
 const AuthUser = require("./server/api/authUser");
 const Auctions = require("./server/api/auctions");
-const { redisConnect } = require("./server/services/redis");
+const MyBids = require("./server/api/myBids");
 
 // Middleware
 app.use(cors());
@@ -80,16 +83,13 @@ app.use((req, res, next) => {
 // Route middlewares
 app.use("/api/auth", AuthUser);
 app.use("/api/auction", Auctions);
+app.use("/api/my-bids", MyBids);
 
 // Sys ping api
 app.get("/sys/ping", (req, res) => {
   req.startTime = process.hrtime();
   res.send("ok");
 });
-
-// app.listen(Port, () => {
-//   console.log(['Info'], `Server started on port ${Port}`);
-// });
 
 const server = http.createServer(app);
 const frontendOrigins = ["http://localhost:5050"];
@@ -112,6 +112,7 @@ const io = new Server(server, {
   },
 });
 
+// Initialize startup functions
 socketEventListener(io);
 redisConnect();
 

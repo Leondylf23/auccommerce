@@ -15,13 +15,20 @@ export default {
   nav_myauction: 'Lelang Saya',
   nav_logout: 'Keluar',
 
-  empty_data: 'Kosong',
   status_waiting: 'Menunggu',
   status_failed: 'Gagal',
   status_success: 'Terpesan',
   status_actived: 'Aktif',
   status_deactived: 'Nonaktif',
   status_live: 'Sedang Siar',
+  status_placed: 'Ditawar',
+  status_wait_pay: 'Pembayaran',
+  status_confirm: 'Konfirmasi',
+  status_processing: 'Diproses',
+  status_shipping: 'Dikirim',
+  status_completed: 'Selesai',
+
+  empty_data: 'Kosong',
   back: 'Kembali',
   loading: 'Memuat...',
   load_more: 'Memuat Lebih',
@@ -37,6 +44,7 @@ export default {
   add: 'Tambah',
   all: 'Semua',
   lang: 'id',
+  pay: 'Bayar',
 
   login_title: 'Masuk',
   login_title_forgot: 'Lupa Kata Sandi',
@@ -112,6 +120,10 @@ export default {
   my_bids_tab_2_title: 'Riwayat Penawaran',
   my_bids_pay_btn: 'Bayar',
   my_bids_card_bid_date: 'Tanggal Penawaran:',
+
+  my_bids_detail_winner_msg: 'Anda adalah pemenang lelang.',
+  my_bids_detail_pay_until: 'Bayar sampai',
+  my_bids_detail_status: 'Status Lelang',
 
   payment_step_1_h1: 'Alamat Penawaran',
   payment_step_1_h2: 'Daftar Alamat',

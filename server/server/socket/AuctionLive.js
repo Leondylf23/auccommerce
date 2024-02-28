@@ -24,22 +24,27 @@ const __resetUserLiveSession = async (io) => {
   }
 };
 const __getBidData = async (itemId) => {
-  await db.sequelize.transaction(async () => {
-    const createdBid = await db.bid.fetchAll({
-      attributes: ["bidPlacePrice"],
-      includes: [
-        {
-          association: "user",
-          required: true,
-          attributes: ["fullname", ["pictureUrl", "image"]],
-        },
-      ],
-      where: { id: itemId },
-      
-    });
-
-    if (!createdBid?.id) throw new Error("Bid data was not created!");
+  const bidsData = await db.bid.fetchAll({
+    attributes: ["id", "bidPlacePrice"],
+    include: [
+      {
+        association: "user",
+        required: true,
+        attributes: ["fullname", ["pictureUrl", "image"], "role"],
+      },
+    ],
+    where: { id: itemId },
+    
   });
+
+  return bidsData.map(bidData => ({
+    bidId: bidData?.dataValues?.id,
+    bid: bidData?.dataValues?.bidPlacePrice,
+    id: bidData?.dataValues?.userId,
+    image: bidData?.users?.dataValues?.image,
+    role: bidData?.users?.dataValues?.role,
+    fullname: bidData?.users?.dataValues?.fullname,
+  }));
 };
 const __addBidDataInDb = async (userId, itemId, bidPlacePrice) => {
   await db.sequelize.transaction(async () => {
@@ -141,17 +146,19 @@ const AucommerceLiveBid = (io, socket) => {
         if (redisData) {
           liveData = { ...redisData, users: [newUserJoin] };
         } else {
+          const dbData = await __getBidData(id);
+
           liveData = {
             id,
             users: [newUserJoin],
-            bids: [],
+            bids: dbData,
             highestBid: itemDetailData?.startingPrice,
           };
         }
 
         tempLiveData.push(liveData);
 
-        const errAddLiveData = await setKeyJSONValue(`LIVEBID-${id}`, liveData);
+        const errAddLiveData = await setKeyJSONValue(`LIVEBID-${id}`, liveData, 1 * 24 * 60 * 60);
         if (errAddLiveData) throw errAddLiveData;
       }
 

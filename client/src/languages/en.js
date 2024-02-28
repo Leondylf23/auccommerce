@@ -15,13 +15,20 @@ export default {
   nav_myauction: 'My Auctions',
   nav_logout: 'Logout',
 
-  empty_data: 'Empty',
   status_waiting: 'Waiting',
   status_failed: 'Failed',
   status_success: 'Success',
   status_actived: 'Actived',
   status_deactived: 'Deactivated',
   status_live: 'Live',
+  status_placed: 'Placed',
+  status_wait_pay: 'Waiting Payment',
+  status_confirm: 'Confirmation',
+  status_processing: 'Processing',
+  status_shipping: 'Shipping',
+  status_completed: 'Completed',
+
+  empty_data: 'Empty',
   back: 'Back',
   loading: 'Loading...',
   load_more: 'Load More',
@@ -37,6 +44,7 @@ export default {
   add: 'Add',
   all: 'All',
   lang: 'en',
+  pay: 'Pay',
 
   login_title: 'Login',
   login_title_forgot: 'Forgot Password',
@@ -110,6 +118,10 @@ export default {
   my_bids_tab_2_title: 'Bid History',
   my_bids_pay_btn: 'Pay',
   my_bids_card_bid_date: 'Bid Date:',
+
+  my_bids_detail_winner_msg: 'You are the auction winner.',
+  my_bids_detail_pay_until: 'Pay until',
+  my_bids_detail_status: 'Bid Status',
 
   payment_step_1_h1: 'Shipping Address',
   payment_step_1_h2: 'Address List',

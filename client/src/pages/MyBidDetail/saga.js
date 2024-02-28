@@ -1,5 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { setLoading, showPopup } from '@containers/App/actions';
+import { getMyBidDetailApi } from '@domain/api';
 import { setBidDetail } from './actions';
 import { GET_BID_DETAIL } from './constants';
 
@@ -7,7 +8,7 @@ function* doGetBidDetail({ formData }) {
   yield put(setLoading(true));
 
   try {
-    // yield call();
+    const res = yield call(getMyBidDetailApi, formData);
     const exampleData = {
       itemName: 'item test data',
       itemImages: [
@@ -36,7 +37,7 @@ function* doGetBidDetail({ formData }) {
       },
     };
 
-    yield put(setBidDetail(exampleData));
+    yield put(setBidDetail(res?.data));
   } catch (error) {
     yield put(showPopup());
   }

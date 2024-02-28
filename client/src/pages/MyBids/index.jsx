@@ -15,7 +15,7 @@ const MyBids = ({ bidsData }) => {
   const dispatch = useDispatch();
 
   const [tabIndex, setTabIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState('aa');
+  const [nextIndex, setNextIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const changeTab = (index) => {
@@ -25,10 +25,11 @@ const MyBids = ({ bidsData }) => {
   const fetchData = (isReset) => {
     dispatch(
       getMyBids(
-        { filter: tabIndex === 0 ? 'successful' : 'history' },
+        { filter: tabIndex === 0 ? 'successful' : 'history', nextId: nextIndex },
         isReset,
-        () => {
+        (nextIdData) => {
           setIsLoading(false);
+          setNextIndex(nextIdData);
         },
         (err) => {
           setIsLoading(false);
@@ -59,7 +60,7 @@ const MyBids = ({ bidsData }) => {
         {bidsData?.length > 0 ? (
           <div className={classes.listBidItems}>
             {bidsData?.map((bid) => (
-              <BidCard data={bid} key={bid?.id} isShowStatus={tabIndex === 0} />
+              <BidCard data={bid} key={bid?.id} isShowStatus />
             ))}
           </div>
         ) : (

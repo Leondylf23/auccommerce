@@ -104,6 +104,17 @@
                         margin-left: 1rem;
                     }
                 }
+
+                .bidStatus {
+                    @include directionX;
+
+                    width: 100%;
+                    align-items: center;
+
+                    .text {
+                        margin-right: 1rem;
+                    }
+                }
             }
 
             .itemDesc {

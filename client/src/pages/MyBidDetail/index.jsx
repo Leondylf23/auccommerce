@@ -19,7 +19,7 @@ const MyBidDetail = ({ bidDetailData }) => {
   const { id } = useParams();
 
   const backBtnOnClick = () => {
-    navigate('/mybids');
+    navigate('/my-bids');
   };
 
   useEffect(() => {
@@ -55,18 +55,45 @@ const MyBidDetail = ({ bidDetailData }) => {
             </div>
           </div>
           <div className={classes.winnerContainer}>
-            <p className={classes.title}>You are the the auction bid winner.</p>
-            <p className={classes.price}>Rp. {numberWithPeriods(bidDetailData?.winnerBid?.paymentPrice)}</p>
-            <div className={classes.paymentStatusContainer}>
-              <p className={classes.text}>
-                Pay until:
-                <p>{formatDateTimeSlashes(bidDetailData?.winnerBid?.payUntil)}</p>
-              </p>
-              <StatusCard status={bidDetailData?.winnerBid?.status} />
-              <button type="button" className={classes.button} onClick={() => navigate(`./payment`)}>
-                Pay
-              </button>
-            </div>
+            <p className={classes.title}>
+              <FormattedMessage id="my_bids_detail_winner_msg" />
+            </p>
+            <p className={classes.price}>Rp. {numberWithPeriods(bidDetailData?.highestBid)}</p>
+            {bidDetailData?.isWinner ? (
+              <div className={classes.paymentStatusContainer}>
+                {bidDetailData?.transactionData ? (
+                  <p className={classes.text}>
+                    <FormattedMessage id="my_bids_detail_pay_until" />:
+                    <p>{formatDateTimeSlashes(bidDetailData?.transactionData?.payUntil)}</p>
+                  </p>
+                ) : (
+                  <p className={classes.text}>
+                    <FormattedMessage id="my_bids_detail_status" />:
+                  </p>
+                )}
+                <StatusCard status={bidDetailData?.status} />
+                <button
+                  type="button"
+                  className={classes.button}
+                  onClick={() =>
+                    navigate(
+                      bidDetailData?.transactionData
+                        ? `./transaction/${bidDetailData?.transactionData?.transactionId}`
+                        : `./payment`
+                    )
+                  }
+                >
+                  <FormattedMessage id="pay" />
+                </button>
+              </div>
+            ) : (
+              <div className={classes.bidStatus}>
+                <p className={classes.text}>
+                  <FormattedMessage id="my_bids_detail_status" />:
+                </p>
+                <StatusCard status={bidDetailData?.status} />
+              </div>
+            )}
           </div>
           <p className={classes.itemDesc}>{bidDetailData?.itemDescription}</p>
         </div>

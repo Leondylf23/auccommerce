@@ -11,6 +11,7 @@ const urls = {
   resetpassword: 'auth/reset-password',
   changepassword: 'auth/change-password',
   auction: 'auction/auctions',
+  myBids: 'my-bids',
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -86,3 +87,7 @@ export const saveEditAuctionDataApi = (formData) =>
   );
 
 export const deleteAuctionDataApi = (formData) => callAPI(`${urls.auction}/delete`, 'delete', {}, {}, formData);
+
+// MyBids
+export const getMyBidsApi = (formData) => callAPI(`${urls.myBids}`, 'get', {}, formData);
+export const getMyBidDetailApi = (formData) => callAPI(`${urls.myBids}/detail`, 'get', {}, formData);
