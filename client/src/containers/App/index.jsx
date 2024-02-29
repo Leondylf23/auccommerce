@@ -3,20 +3,24 @@ import { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useIntl } from 'react-intl';
 import { io } from 'socket.io-client';
 
 import config from '@config/index';
-import { hidePopup, setSocket } from '@containers/App/actions';
+import { getUserDataInit, hidePopup, setSocket, showPopup } from '@containers/App/actions';
 import { selectTheme, selectPopup, selectLoading } from '@containers/App/selectors';
 
 import Loader from '@components/Loader';
 import ClientRoutes from '@components/ClientRoutes';
 import PopupMessage from '@components/PopupMessage/Dialog';
+import { selectLogin } from '@containers/Client/selectors';
+import { formatDateTimeSlashes } from '@utils/allUtils';
 
 const socket = io(config.socket);
 
-const App = ({ theme, popup, loading }) => {
+const App = ({ theme, popup, loading, isLogin }) => {
   const dispatch = useDispatch();
+  const intl = useIntl();
   const isDark = theme === 'dark';
   const muiTheme = createTheme({
     palette: {
@@ -37,6 +41,22 @@ const App = ({ theme, popup, loading }) => {
   }, [theme]);
 
   useEffect(() => {
+    if (isLogin)
+      dispatch(
+        getUserDataInit((banTimer) => {
+          dispatch(
+            showPopup(
+              intl.formatMessage({ id: 'app_banned_title' }),
+              `${intl.formatMessage({ id: 'app_banned_msg' })} ${formatDateTimeSlashes(banTimer)}. ${intl.formatMessage(
+                {
+                  id: 'app_banned_msg2',
+                }
+              )}`
+            )
+          );
+        })
+      );
+
     dispatch(setSocket(socket));
   }, []);
 
@@ -65,12 +85,14 @@ App.propTypes = {
     message: PropTypes.string,
   }),
   loading: PropTypes.bool,
+  isLogin: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   theme: selectTheme,
   popup: selectPopup,
   loading: selectLoading,
+  isLogin: selectLogin,
 });
 
 export default connect(mapStateToProps)(App);

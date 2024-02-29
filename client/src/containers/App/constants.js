@@ -6,5 +6,6 @@ export const SET_LOADING = 'App/SET_LOADING';
 export const SEND_REGISTER_DATA = 'App/SEND_REGISTER_DATA';
 export const SEND_LOGIN_DATA = 'App/SEND_LOGIN_DATA';
 export const SEND_FORGOT_PASSWORD = 'App/SEND_FORGOT_PASSWORD';
+export const GET_USER_DATA_INIT = 'App/GET_USER_DATA_INIT';
 
 export const SET_SOCKET = 'App/SET_SOCKET';

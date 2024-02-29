@@ -1,13 +1,13 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import TimerIcon from '@mui/icons-material/Timer';
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
-import { selectLogin, selectToken, selectUserData } from '@containers/Client/selectors';
+import { selectLogin, selectToken } from '@containers/Client/selectors';
 import { selectSocket } from '@containers/App/selectors';
 import { setLoading, showPopup } from '@containers/App/actions';
 import ImageCarousel from './components/ImageCarousel';
@@ -18,10 +18,13 @@ import { getItemDetail } from './actions';
 
 import classes from './style.module.scss';
 
-const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
+const ItemDetail = ({ isLogin, token, itemDetailData, socket }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const intl = useIntl();
   const { id } = useParams();
+
+  const [query] = useSearchParams();
 
   const [isLive, setIsLive] = useState(false);
   const [userIsJoin, setUserIsJoin] = useState(false);
@@ -29,7 +32,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
 
   const userJoinLive = () => {
     if (isLogin) {
-      socket.emit('auction/JOIN_LIVE', { id, token, userData });
+      socket.emit('auction/JOIN_LIVE', { id, token });
     } else {
       navigate(`/login`);
     }
@@ -40,7 +43,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
       dispatch(getItemDetail({ id }));
       setUserIsJoin(false);
     } else {
-      navigate('/');
+      navigate(query.get('backurl') || '/');
     }
   };
 
@@ -57,6 +60,17 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
     setUserIsJoin(false);
   };
 
+  const showBannedPopup = ({ dateTimeBan }) => {
+    dispatch(
+      showPopup(
+        intl.formatMessage({ id: 'app_banned_title' }),
+        `${intl.formatMessage({ id: 'app_banned_msg' })} ${dateTimeBan}. ${intl.formatMessage({
+          id: 'app_banned_msg2',
+        })}`
+      )
+    );
+  };
+
   useEffect(() => {
     dispatch(getItemDetail({ id }));
 
@@ -64,8 +78,9 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
       setTimer((prevVal) => {
         if (prevVal < 1) {
           dispatch(getItemDetail({ id }));
+          clearInterval(intervalId);
         }
-        return prevVal >= 1 ? prevVal - 1 : 0;
+        return prevVal > 0 ? prevVal - 1 : 0;
       });
     }, 1000);
 
@@ -75,7 +90,7 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
   }, []);
 
   useEffect(() => {
-    setTimer(itemDetailData?.isLiveNow ? itemDetailData?.timeRemaining : itemDetailData?.startingTimer || 0);
+    setTimer((itemDetailData?.isLiveNow ? itemDetailData?.timeRemaining : itemDetailData?.startingTimer) || 0);
     setIsLive(itemDetailData?.isLiveNow);
   }, [itemDetailData]);
 
@@ -84,11 +99,13 @@ const ItemDetail = ({ isLogin, token, userData, itemDetailData, socket }) => {
       socket.on('auction/JOINED_LIVE', joinedLive);
       socket.on('auction/ERROR', errSocketMsg);
       socket.on('auction/KICK_USER', kickedUser);
+      socket.on('auction/BANNED', showBannedPopup);
 
       return () => {
         socket.off('auction/JOINED_LIVE', joinedLive);
         socket.off('auction/ERROR', errSocketMsg);
         socket.off('auction/KICK_USER', kickedUser);
+        socket.off('auction/BANNED', showBannedPopup);
       };
     }
   }, [socket]);
@@ -161,7 +178,6 @@ ItemDetail.propTypes = {
   itemDetailData: PropTypes.object,
   token: PropTypes.string,
   isLogin: PropTypes.bool,
-  userData: PropTypes.string,
   socket: PropTypes.object,
 };
 
@@ -169,7 +185,6 @@ const mapStateToProps = createStructuredSelector({
   itemDetailData: selectItemDetail,
   token: selectToken,
   isLogin: selectLogin,
-  userData: selectUserData,
   socket: selectSocket,
 });
 

@@ -7,6 +7,9 @@ export default {
   app_popup_error_title: 'Terjadi kesalahan!',
   app_popup_error_message: 'Maaf, telah terjadi kesalahan. Silakan coba beberapa saat lagi',
   app_popup_close_button_label: 'Tutup',
+  app_banned_title: 'Akun Anda Terbanned',
+  app_banned_msg: 'Mohon maaf, Akun Anda terbanned hingga tanggal ',
+  app_banned_msg2: 'Anda tidak dapat menggunakan fitur lelang di aplikasi ini.',
 
   nav_login: 'Masuk',
   nav_register: 'Daftar',
@@ -113,8 +116,13 @@ export default {
   item_detail_bid_confirmation: 'Apakan Anda yakin ingin menempatkan tawaran Anda?',
   item_detail_bid_place_validation_title: 'Penawaran terlalu rendah!',
   item_detail_bid_place_validation_msg: 'Harga harus melebihi dari penawaran yang tertinggi!',
+  item_detail_bid_place_cooldown_title: 'Cooldown!',
+  item_detail_bid_place_cooldown_msg: 'Harus tunggu cooldown setelah penempatan tarawan terakhir!',
+  item_detail_bid_place_cooldown_msg_seconds: 'detik!',
   item_detail_bid_live_closed: 'Siaran lelang telah berakhir.',
+  item_detail_bid_live_spectator: 'Anda dalam mode spektator.',
   item_detail_bid_live_add_template: 'Tambah dari penawaran tertinggi:',
+  item_detail_bid_live_my_bid: 'Ke Penawaran Saya',
 
   my_bids_tab_1_title: 'Penawaran Berhasil',
   my_bids_tab_2_title: 'Riwayat Penawaran',
@@ -141,6 +149,7 @@ export default {
 
   my_auctions_title: 'Lelang Saya',
   my_auctions_new: 'Buat',
+  my_auctions_view: 'Lihat Halaman',
 
   auction_form_title_new: 'Buat Lelang Baru',
   auction_form_title_edit: 'Detail Lelang',
@@ -148,7 +157,7 @@ export default {
   auction_form_general_itm_name: 'Nama Barang',
   auction_form_general_itm_strt_bid: 'Harga Lelang Awal (Rp.)',
   auction_form_general_itm_bid_ddl: 'Tenggang Waktu Lelang',
-  auction_form_general_itm_bid_strt: 'Lelang Start Date',
+  auction_form_general_itm_bid_strt: 'Tanggal Mulai Lelang',
   auction_form_general_itm_desc: 'Deskripsi',
   auction_form_general_itm_ctg: 'Kategori',
   auction_form_general_itm_ctg_op: '- Pilih -',

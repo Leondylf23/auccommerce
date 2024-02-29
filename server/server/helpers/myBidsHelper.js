@@ -78,9 +78,7 @@ const getMyBidDetailData = async (dataObject, userId) => {
         "status",
         [
           db.sequelize.literal(
-            `(SELECT JSON_OBJECT('price', bidPlacePrice, 'userId', userid) FROM bids WHERE id = ${Number.parseInt(
-              id
-            )} ORDER BY bidPlacePrice DESC LIMIT 1)`
+            `(SELECT JSON_OBJECT('price', hgBids.bidPlacePrice, 'userId', hgBids.userid) FROM bids AS hgBids WHERE hgBids.itemId = bid.itemId ORDER BY bidPlacePrice DESC LIMIT 1)`
           ),
           "highestBid",
         ],
@@ -137,127 +135,6 @@ const getMyBidDetailData = async (dataObject, userId) => {
       isLiveNow: data?.item?.dataValues?.status === "LIVE",
       item: undefined,
       transactions: undefined,
-    });
-  } catch (err) {
-    return Promise.reject(GeneralHelper.errorResponse(err));
-  }
-};
-
-const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
-  const { itemGeneralData, itemSpecificationData } = dataObject;
-
-  try {
-    if (!(imageFiles?.length > 0))
-      throw Boom.badRequest("At least have 1 image!");
-
-    const imageResults = [];
-
-    for (let index = 0; index < imageFiles.length; index++) {
-      const image = imageFiles[index];
-
-      const imageResult = await cloudinary.uploadToCloudinary(image, "image");
-      if (!imageResult) throw Boom.internal("Cloudinary image upload failed");
-
-      imageResults.push(imageResult?.url);
-    }
-
-    const createdData = await db.item.create({
-      userId,
-      itemName: JSON.parse(itemGeneralData)?.itemName,
-      itemPictures: imageResults,
-      itemDescription: JSON.parse(itemGeneralData)?.description,
-      itemPhysicalSpec: JSON.parse(itemSpecificationData),
-      itemStartBidPrice: JSON.parse(itemGeneralData)?.startBid,
-      itemStartBidDate: JSON.parse(itemGeneralData)?.startBidDate,
-      itemDeadlineBid: JSON.parse(itemGeneralData)?.deadlineBid,
-      status: "ACTIVED",
-      category: JSON.parse(itemGeneralData)?.categoryId,
-    });
-
-    if (!createdData) throw Boom.internal("Auction item is not created!");
-
-    return Promise.resolve({
-      createdId: createdData?.id,
-    });
-  } catch (err) {
-    return Promise.reject(GeneralHelper.errorResponse(err));
-  }
-};
-
-const editAuctionItem = async (dataObject, imageFiles, userId) => {
-  const { id, itemGeneralData, itemSpecificationData, imageArray } = dataObject;
-
-  try {
-    const itemData = await db.item.findOne({
-      where: { id, isActive: true, userId },
-    });
-    if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
-
-    const imageResults = [];
-    if (imageFiles?.length > 0) {
-      for (let index = 0; index < imageFiles.length; index++) {
-        const image = imageFiles[index];
-
-        const imageResult = await cloudinary.uploadToCloudinary(image, "image");
-        if (!imageResult) throw Boom.internal("Cloudinary image upload failed");
-
-        imageResults.push(imageResult?.url);
-      }
-    }
-
-    let existingImgs = [];
-    try {
-      existingImgs = JSON.parse(imageArray);
-    } catch (error) {
-      existingImgs = [];
-    }
-
-    const imagesData = [...existingImgs, ...imageResults];
-
-    const updatedData = await itemData.update({
-      itemName: JSON.parse(itemGeneralData)?.itemName,
-      itemPictures: imagesData,
-      itemDescription: JSON.parse(itemGeneralData)?.description,
-      itemPhysicalSpec: JSON.parse(itemSpecificationData),
-      itemStartBidPrice: JSON.parse(itemGeneralData)?.startBid,
-      itemStartBidDate: JSON.parse(itemGeneralData)?.startBidDate,
-      itemDeadlineBid: JSON.parse(itemGeneralData)?.deadlineBid,
-      status: "ACTIVED",
-      category: JSON.parse(itemGeneralData)?.categoryId,
-    });
-
-    if (!updatedData) throw Boom.internal("Auction item is not updated!");
-
-    return Promise.resolve({
-      updatedData: {
-        itemGeneralData: JSON.parse(itemGeneralData),
-        itemSpecificationData: JSON.parse(itemSpecificationData),
-        itemImages: imagesData,
-        isLive: false,
-      },
-    });
-  } catch (err) {
-    return Promise.reject(GeneralHelper.errorResponse(err));
-  }
-};
-
-const deleteAuctionItemData = async (dataObject, userId) => {
-  const { id } = dataObject;
-
-  try {
-    const itemData = await db.item.findOne({
-      where: { id, isActive: true, userId },
-    });
-    if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
-
-    const updatedData = await itemData.update({
-      isActive: false,
-    });
-
-    if (!updatedData) throw Boom.internal("Auction item is not deleted!");
-
-    return Promise.resolve({
-      deletedId: id,
     });
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));

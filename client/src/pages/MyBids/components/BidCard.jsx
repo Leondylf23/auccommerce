@@ -7,11 +7,11 @@ import StatusCard from '@components/StatusCard/Card';
 
 import classes from '../style.module.scss';
 
-const BidCard = ({ data, isShowStatus }) => {
+const BidCard = ({ data, isShowStatus, tabIndex }) => {
   const navigate = useNavigate();
 
   const detailBtn = () => {
-    navigate(`./${data?.id}`);
+    navigate(`./${data?.id}`, { state: { tabIndex } });
   };
 
   return (
@@ -41,6 +41,7 @@ const BidCard = ({ data, isShowStatus }) => {
 BidCard.propTypes = {
   data: PropTypes.object,
   isShowStatus: PropTypes.bool,
+  tabIndex: PropTypes.number,
 };
 
 export default BidCard;

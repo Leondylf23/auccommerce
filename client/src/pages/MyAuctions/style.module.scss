@@ -4,6 +4,7 @@
   .pageTitle {
     margin-bottom: 0.25rem;
   }
+
   .createNewBtnContainer {
     @include directionX;
 
@@ -11,19 +12,21 @@
     margin-bottom: 1rem;
 
     .button {
-        @include button;
-        @include directionX;
+      @include button;
+      @include directionX;
 
-        align-items: center;
+      align-items: center;
 
-        .icon {
-            font-size: 1rem;
-        }
-        .text {
-            margin-left: 0.25rem;
-        }
+      .icon {
+        font-size: 1rem;
+      }
+
+      .text {
+        margin-left: 0.25rem;
+      }
     }
-}
+  }
+
   .auctionContainer {
     @include directionY;
 
@@ -39,13 +42,16 @@
       @include apply-at-sm-size {
         @include grid(2, 0.5rem);
       }
+
       @include apply-at-md-size {
         @include grid(2, 1rem);
       }
+
       @include apply-at-lg-size {
         @include grid(3, 1rem);
       }
     }
+
     .loadingContainer {
       @include containerCenter;
 
@@ -57,6 +63,7 @@
         font-size: 1.2rem;
       }
     }
+
     .emptyContainer {
       @include containerCenter;
 
@@ -67,6 +74,7 @@
         font-size: 1.2rem;
       }
     }
+
     .buttonContainer {
       @include containerCenter;
 
@@ -88,36 +96,51 @@
   width: 100%;
   flex-shrink: 0;
   flex-grow: 0;
-  cursor: pointer;
   background-color: var(--color-bg);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
 
-  .image {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    margin-bottom: 0.6rem;
-    border-radius: 10px;
-    aspect-ratio: 1.6/1;
+  .innerContainer {
+    @include directionY;
+
+    cursor: pointer;
+
+    .image {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      margin-bottom: 0.6rem;
+      border-radius: 10px;
+      aspect-ratio: 1.6/1;
+    }
+
+    .itemName {
+      font-weight: 700;
+      font-size: 1.2rem;
+      width: 100%;
+      flex-grow: 0;
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .price {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .endsOn {
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+    }
   }
-  .itemName {
-    font-weight: 700;
-    font-size: 1.2rem;
-    width: 100%;
-    flex-grow: 0;
-    text-wrap: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+  .button {
+    @include button;
+
+    margin-top: 0.25rem;
   }
-  .price {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  .endsOn {
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-  }
+
   .itemCreatedDate {
     font-size: 0.75rem;
     margin-top: 0.25rem;

@@ -12,7 +12,7 @@ const fileName = "server/api/authUser.js";
 const getUserProfileData = async (request, reply) => {
   try {
     const userData = GeneralHelper.getUserData(request);
-    const response = await AuthUserHelper.getUserProfile(userData.userId);
+    const response = await AuthUserHelper.getUserProfile(userData.userId, true);
 
     return reply.send({
       message: "success",
@@ -20,6 +20,23 @@ const getUserProfileData = async (request, reply) => {
     });
   } catch (err) {
     console.log([fileName, "Get User Profile API", "ERROR"], {
+      info: `${err}`,
+    });
+    return reply.send(GeneralHelper.errorResponse(err));
+  }
+};
+
+const getUserFrontendData = async (request, reply) => {
+  try {
+    const userData = GeneralHelper.getUserData(request);
+    const response = await AuthUserHelper.getUserProfile(userData.userId, false);
+
+    return reply.send({
+      message: "success",
+      data: response,
+    });
+  } catch (err) {
+    console.log([fileName, "Get User Frontend Data API", "ERROR"], {
       info: `${err}`,
     });
     return reply.send(GeneralHelper.errorResponse(err));
@@ -235,6 +252,7 @@ Router.post("/reset-password", resetPassword);
 
 // Authenticated Only Routes
 Router.get("/profile", AuthMiddleware.validateToken, getUserProfileData);
+Router.get("/init-profile", AuthMiddleware.validateToken, getUserFrontendData);
 Router.get(
   "/profile/addresses",
   AuthMiddleware.validateToken,

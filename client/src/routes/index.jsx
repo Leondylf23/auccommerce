@@ -60,7 +60,7 @@ const routes = [
     protected: true,
     component: MyBids,
     layout: MainLayout,
-    role: '*',
+    role: 'buyer',
   },
   {
     path: '/my-bids/:id',
@@ -68,7 +68,7 @@ const routes = [
     protected: true,
     component: MyBidDetail,
     layout: MainLayout,
-    role: '*',
+    role: 'buyer',
   },
   {
     path: '/my-bids/:id/payment',
@@ -76,7 +76,7 @@ const routes = [
     protected: true,
     component: Payment,
     layout: MainLayout,
-    role: '*',
+    role: 'buyer',
   },
   {
     path: '/create-auction',
@@ -84,7 +84,7 @@ const routes = [
     protected: false,
     component: AuctionForm,
     layout: MainLayout,
-    role: '*',
+    role: 'seller',
   },
   {
     path: '/edit-auction/:id',
@@ -92,7 +92,7 @@ const routes = [
     protected: false,
     component: AuctionForm,
     layout: MainLayout,
-    role: '*',
+    role: 'seller',
   },
   {
     path: '/my-auction',
@@ -100,7 +100,7 @@ const routes = [
     protected: false,
     component: MyAuctions,
     layout: MainLayout,
-    role: '*',
+    role: 'seller',
   },
   { path: '*', name: 'Not Found', component: NotFound, layout: MainLayout, protected: false, role: '*' },
 ];

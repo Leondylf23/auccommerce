@@ -7,6 +7,7 @@ import {
   SEND_LOGIN_DATA,
   SEND_FORGOT_PASSWORD,
   SET_SOCKET,
+  GET_USER_DATA_INIT,
 } from '@containers/App/constants';
 
 export const setLocale = (locale) => ({
@@ -61,6 +62,11 @@ export const sendForgotPassword = (formData, cb, cbErr) => ({
   formData,
   cb,
   cbErr,
+});
+
+export const getUserDataInit = (cbBanPopup) => ({
+  type: GET_USER_DATA_INIT,
+  cbBanPopup,
 });
 
 export const setSocket = (socket) => ({

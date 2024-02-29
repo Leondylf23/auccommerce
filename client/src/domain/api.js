@@ -8,6 +8,7 @@ const urls = {
   login: 'auth/login',
   register: 'auth/register',
   profile: 'auth/profile',
+  initProfile: 'auth/init-profile',
   resetpassword: 'auth/reset-password',
   changepassword: 'auth/change-password',
   auction: 'auction/auctions',
@@ -41,6 +42,7 @@ export const login = (formData) => callAPI(urls.login, 'post', {}, {}, formData)
 export const register = (formData) => callAPI(urls.register, 'post', {}, {}, formData);
 
 // User
+export const getInitUserData = () => callAPI(`${urls.initProfile}`, 'get');
 export const getUserProfileData = () => callAPI(urls.profile, 'get');
 export const getUserAddressData = () => callAPI(`${urls.profile}/addresses`, 'get');
 export const saveProfileDataApi = (formData) =>

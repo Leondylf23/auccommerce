@@ -7,6 +7,9 @@ export default {
   app_popup_error_title: 'Something went wrong!',
   app_popup_error_message: 'Sorry, an error has occurred. Please try again later',
   app_popup_close_button_label: 'Close',
+  app_banned_title: 'You Account Has Been Banned',
+  app_banned_msg: 'Sorry, your account has been banned until ',
+  app_banned_msg2: 'You cannot use any auctions features in this app.',
 
   nav_login: 'Login',
   nav_register: 'Register',
@@ -111,8 +114,13 @@ export default {
   item_detail_bid_confirmation: 'Are you sure want to place your bid?',
   item_detail_bid_place_validation_title: 'Bid price too low!',
   item_detail_bid_place_validation_msg: 'Price must be greater than the highest bid!',
+  item_detail_bid_place_cooldown_title: 'Cooldown!',
+  item_detail_bid_place_cooldown_msg: 'Must wait cooldown after latest placing bid!',
+  item_detail_bid_place_cooldown_msg_seconds: 'seconds!',
   item_detail_bid_live_closed: 'Live auction has been ended.',
+  item_detail_bid_live_spectator: 'You are in spectator mode.',
   item_detail_bid_live_add_template: 'Add from highest bid:',
+  item_detail_bid_live_my_bid: 'To My Bids',
 
   my_bids_tab_1_title: 'Successfull Bids',
   my_bids_tab_2_title: 'Bid History',
@@ -139,6 +147,7 @@ export default {
 
   my_auctions_title: 'My Auctions',
   my_auctions_new: 'Create',
+  my_auctions_view: 'View Page',
 
   auction_form_title_new: 'Create New Auction',
   auction_form_title_edit: 'Auction Detail',

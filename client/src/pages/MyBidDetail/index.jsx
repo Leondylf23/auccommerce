@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { formatDateTimeSlashes, numberWithPeriods } from '@utils/allUtils';
@@ -17,9 +17,10 @@ const MyBidDetail = ({ bidDetailData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
 
   const backBtnOnClick = () => {
-    navigate('/my-bids');
+    navigate('/my-bids', location?.state?.tabIndex && { state: { tabIndex: location.state.tabIndex } });
   };
 
   useEffect(() => {

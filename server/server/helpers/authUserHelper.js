@@ -7,6 +7,7 @@ const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
 const { encryptData, generateRandomString } = require("./utilsHelper");
 const cloudinary = require("../services/cloudinary");
+const { getKeyJSONValue, setKeyJSONValue, getKeyValue } = require("../services/redis");
 
 const passwordSaltRound = bcrypt.genSaltSync(12);
 const signatureSecretKey = process.env.SIGN_SECRET_KEY || "pgJApn9pJ8";
@@ -37,7 +38,7 @@ const loginAuthentication = async (dataObject) => {
     if (!isValid) throw Boom.unauthorized("Wrong email or password!");
 
     const fullname = data?.dataValues?.fullname;
-    const profileImage = data?.dataValues?.profileImage;
+    const profileImage = data?.dataValues?.pictureUrl;
     const role = data?.dataValues?.role;
     const userId = data?.dataValues?.id;
     const constructData = { userId, role };
@@ -89,33 +90,65 @@ const registerUser = async (dataObject) => {
   }
 };
 
-const getUserProfile = async (userId) => {
+const getUserProfile = async (userId, isProfilePage) => {
   try {
-    const data = await db.user.findOne({
-      attributes: [
-        "email",
-        "fullname",
-        "pictureUrl",
-        "dob",
-        "role",
-        "createdAt",
-      ],
-      where: { id: userId },
-    });
+    let data = null;
+    const redisData = await getKeyJSONValue(`USER-DATA-${userId}`);
+
+    if (redisData) {
+      data = redisData;
+    } else {
+      const dbData = await db.user.findOne({
+        attributes: [
+          "email",
+          "fullname",
+          "pictureUrl",
+          "dob",
+          "role",
+          "createdAt",
+        ],
+        where: { id: userId },
+      });
+
+      data = dbData?.dataValues;
+    }
 
     if (_.isEmpty(data))
       throw Boom.badData("Profile data not found, maybe bad session data!");
 
-    const dataValue = data?.dataValues;
-    const filteredData = {
-      ...dataValue,
-      createdAt: new Date(dataValue?.createdAt)
-        ?.toISOString()
-        .slice(0, 10)
-        .replace("-", "/")
-        .replace("-", "/"),
-      dob: new Date(dataValue?.dob)?.toISOString().slice(0, 10),
+    const err = await setKeyJSONValue(
+      `USER-DATA-${userId}`,
+      data,
+      24 * 60 * 60
+    );
+    if (err) throw Boom.internal("Error set redis data!");
+
+    let banTimer = null;
+    const getBanData = await getKeyValue(`USER-BAN-${userId}`);
+    if (getBanData) {
+      banTimer = new Date(getBanData).toISOString();
+    }
+
+    const frontEndUserData = {
+      fullname: data?.fullname,
+      profileImage: data?.pictureUrl,
+      role: data?.role,
     };
+    const encryptedUserData = encryptData(JSON.stringify(frontEndUserData));
+    const filteredData = isProfilePage
+      ? {
+          ...data,
+          createdAt: new Date(data?.createdAt)
+            ?.toISOString()
+            .slice(0, 10)
+            .replace("-", "/")
+            .replace("-", "/"),
+          dob: new Date(data?.dob)?.toISOString().slice(0, 10),
+        }
+      : {
+          updateData: encryptedUserData,
+          banTimer,
+        };
 
     return Promise.resolve(filteredData);
   } catch (err) {
@@ -213,6 +246,18 @@ const updateProfile = async (dataObject, imageFile, userId) => {
       ...(imageResult && { pictureUrl: imageResult?.url }),
     });
     if (_.isEmpty(checkUpdate)) throw Boom.internal("Profile not updated!");
+
+    let redisData = await getKeyJSONValue(`USER-DATA-${userId}`);
+    if (redisData) {
+      redisData = {
+        ...redisData,
+        fullname,
+        dob,
+        ...(imageResult && { pictureUrl: imageResult?.url }),
+      };
+
+      await setKeyJSONValue(`USER-DATA-${userId}`, redisData, 24 * 60 * 60);
+    }
 
     return Promise.resolve({
       message: "Profile updated!",

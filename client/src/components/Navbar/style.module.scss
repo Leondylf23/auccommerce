@@ -7,6 +7,7 @@
   top: 0;
   width: 100%;
   z-index: 40;
+
   .contentWrapper {
     @include directionX;
 
@@ -26,6 +27,7 @@
         height: 1.5rem;
         margin-right: 0.5rem;
       }
+
       .title {
         font-weight: 700;
       }
@@ -35,9 +37,26 @@
       @include directionX;
 
       .profile {
+        @include directionX;
+
         margin-right: 0.5rem;
-        cursor: pointer;
+        align-items: center;
+
+        .userFullname {
+          display: none;
+          margin-right: 1rem;
+          font-weight: 600;
+
+          @include apply-at-sm-size {
+            display: block;
+          }
+        }
+
+        .avatar {
+          cursor: pointer;
+        }
       }
+
       .userButtons {
         @include directionX;
 
@@ -47,16 +66,19 @@
         .login {
           @include button;
         }
+
         .register {
           @include button;
         }
       }
+
       .theme {
         @include directionX;
         align-items: center;
         margin-right: 0.5rem;
         cursor: pointer;
       }
+
       .toggle {
         @include directionX;
         align-items: center;

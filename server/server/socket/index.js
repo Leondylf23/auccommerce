@@ -5,11 +5,10 @@ const socketEventListener = (io) => {
   io.on("connection", (socket) => {
     console.log(["info"], `Connection from id ${socket.id}`);
 
+    // Define Events
     AuctionLive(io, socket);
   });
 };
-
-// Define Events
 
 module.exports = {
   socketEventListener,

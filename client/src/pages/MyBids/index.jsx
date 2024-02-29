@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 
 import { selectMyBidsList } from './selectors';
 import EmptyContainer from './components/EmptyContainer';
@@ -13,12 +14,14 @@ import classes from './style.module.scss';
 
 const MyBids = ({ bidsData }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(location.state?.tabIndex || 0);
   const [nextIndex, setNextIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const changeTab = (index) => {
+    setNextIndex(null);
     setTabIndex(index);
   };
 
@@ -60,7 +63,7 @@ const MyBids = ({ bidsData }) => {
         {bidsData?.length > 0 ? (
           <div className={classes.listBidItems}>
             {bidsData?.map((bid) => (
-              <BidCard data={bid} key={bid?.id} isShowStatus />
+              <BidCard data={bid} key={bid?.id} isShowStatus tabIndex={tabIndex} />
             ))}
           </div>
         ) : (

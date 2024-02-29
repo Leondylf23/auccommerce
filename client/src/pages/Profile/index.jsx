@@ -4,6 +4,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
+import { produce } from 'immer';
 
 import { showPopup } from '@containers/App/actions';
 import { selectUserData } from '@containers/Client/selectors';
@@ -11,10 +12,9 @@ import { setUserData } from '@containers/Client/actions';
 import { decryptDataAES, encryptDataAES } from '@utils/allUtils';
 import { getProfileData, saveNewPassword, saveProfileData } from './actions';
 import { selectProfileData } from './selectors';
-import { produce } from 'immer';
+import AddressesComponenet from './components/Addresses';
 
 import classes from './style.module.scss';
-import AddressesComponenet from './components/Addresses';
 
 const userDataDefault = {
   fullname: '',
@@ -68,13 +68,13 @@ const ProfilePage = ({ profileData, userDataSelect }) => {
 
     dispatch(
       saveProfileData(form, (imageUrl) => {
+        const user = JSON.parse(decryptDataAES(userDataSelect));
         if (imageUrl) {
-          const user = JSON.parse(decryptDataAES(userDataSelect));
           user.profileImage = imageUrl;
-
-          const updatedUser = encryptDataAES(JSON.stringify(user));
-          dispatch(setUserData(updatedUser));
         }
+        user.fullname = userDataInternal?.fullname;
+        const updatedUser = encryptDataAES(JSON.stringify(user));
+        dispatch(setUserData(updatedUser));
 
         setProfileImg(null);
         dispatch(

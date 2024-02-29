@@ -24,6 +24,7 @@ const Navbar = ({ locale, isUserLogined, userData, isUserLoginedTest }) => {
   const [menuPosition, setMenuPosition] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [profileImg, setProfileImg] = useState(null);
+  const [fullname, setFullname] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
 
   const open = Boolean(menuPosition);
@@ -61,6 +62,7 @@ const Navbar = ({ locale, isUserLogined, userData, isUserLoginedTest }) => {
       const user = getUserDataDecrypt(userData);
       setProfileImg(user?.profileImage);
       setIsBusiness(user?.role === 'seller');
+      setFullname(user?.fullname);
     }
   }, [userData]);
 
@@ -73,6 +75,7 @@ const Navbar = ({ locale, isUserLogined, userData, isUserLoginedTest }) => {
         <div className={classes.toolbar}>
           {isUserLogined || isUserLoginedTest ? (
             <div className={classes.profile} data-testid="nav-profile-btn">
+              <p className={classes.userFullname}>{fullname}</p>
               <div onClick={openCloseProfileMenu}>
                 <Avatar className={classes.avatar} src={profileImg} />
               </div>

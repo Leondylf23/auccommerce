@@ -9,8 +9,11 @@ const { decryptData, encryptData } = require("./utilsHelper");
 const { setKeyJSONValue, getKeyJSONValue } = require("../services/redis");
 
 // PRIVATE FUNCTIONS
-const __formatDateNonISO = (date) =>
-  new Date(date).toISOString().replace("T", " ").slice(0, 19);
+const __formatDateNonISO = (date, isShowSeconds) =>
+  new Date(date)
+    .toISOString()
+    .replace("T", " ")
+    .slice(0, isShowSeconds ? 19 : 16);
 
 // AUCTION HELPERS FUNCTIONS
 const getMyAuctionsData = async (dataObject, userId) => {
@@ -90,8 +93,8 @@ const getMyAuctionDetailData = async (dataObject, userId) => {
         ...data?.dataValues,
         itemPictures: undefined,
         itemPhysicalSpec: undefined,
-        deadlineBid: __formatDateNonISO(data?.dataValues?.deadlineBid),
-        startBidDate: __formatDateNonISO(data?.dataValues?.startBidDate),
+        deadlineBid: __formatDateNonISO(data?.dataValues?.deadlineBid, false),
+        startBidDate: __formatDateNonISO(data?.dataValues?.startBidDate, false),
         status: undefined,
       },
       itemSpecificationData: data?.dataValues.itemPhysicalSpec,
@@ -116,7 +119,7 @@ const getCategories = async () => {
         where: { isActive: true },
       });
 
-      data = dbData?.map(dataEl => dataEl?.dataValues);
+      data = dbData?.map((dataEl) => dataEl?.dataValues);
       await setKeyJSONValue(`CATEGORIES`, data, 24 * 60 * 60);
     }
 
@@ -148,11 +151,11 @@ const getLatestAuctionsData = async () => {
         where: {
           isActive: true,
         },
-        order: [["id", "DESC"]],
+        order: [["updatedAt", "DESC"]],
         limit: 15,
       });
 
-      data = dbData?.map(dataEl => dataEl?.dataValues);
+      data = dbData?.map((dataEl) => dataEl?.dataValues);
       await setKeyJSONValue(`LATEST-ITEMS`, data, 120);
     }
 
@@ -286,7 +289,7 @@ const getAuctionDetail = async (dataObject) => {
   const { id } = dataObject;
 
   try {
-    let data
+    let data;
     const redisData = await getKeyJSONValue(`ITEM-DETAIL-${id}`);
 
     if (!redisData) {
@@ -299,6 +302,14 @@ const getAuctionDetail = async (dataObject) => {
           "itemStartBidDate",
           ["itemStartBidPrice", "startingPrice"],
           "status",
+          [
+            db.sequelize.literal(
+              `(SELECT JSON_OBJECT('price', bidPlacePrice, 'userId', userid) FROM bids WHERE itemId = ${Number.parseInt(
+                id
+              )} ORDER BY bidPlacePrice DESC LIMIT 1)`
+            ),
+            "highestBid",
+          ],
         ],
         where: {
           id,
@@ -306,14 +317,16 @@ const getAuctionDetail = async (dataObject) => {
         },
       });
 
-      if (!dbData) throw Boom.notFound('Data not found');
-      
+      if (!dbData) throw Boom.notFound("Data not found");
+
       data = dbData.dataValues;
     } else {
       data = redisData;
     }
 
-    const timeNow = new Date().getTime();
+    const dateNow = new Date();
+
+    const timeNow = new Date(dateNow).getTime();
     const countStart = Math.ceil(
       (new Date(data?.itemStartBidDate).getTime() - timeNow) / 1000
     );
@@ -328,10 +341,13 @@ const getAuctionDetail = async (dataObject) => {
     const mappedData = {
       ...data,
       startingPrice: Math.round(data.startingPrice),
-      highestBid: liveDataRedis ? liveDataRedis?.highestBid : data?.startingPrice,
-      isLiveNow: data?.status === "LIVE",
+      highestBid: liveDataRedis
+        ? liveDataRedis?.highestBid
+        : data?.startingPrice,
+      isLiveNow: countStart < 0,
       startingTimer: countStart,
-      timeRemaining: countEnd,
+      timeRemaining: countEnd < 0 ? 0 : countEnd,
+      itemDeadlineDate: data?.itemDeadlineBid,
       livePeoples: liveDataRedis ? liveDataRedis?.users : [],
       status: undefined,
       itemDeadlineBid: undefined,
