@@ -21,13 +21,30 @@ const liveRedisTTL = 2 * 60 * 60;
 
 // PRIVATE FUNCTION
 const __verifiedUser = (token) => jwt.verify(token, signatureSecretKey);
+
 const __getItemDetail = async (id) => AuctionHelper.getAuctionDetail({ id });
+
+const __getUserJoinedData = (id) => {
+  const findJoinedUsers = joinedUser.findIndex(
+    (joinData) => joinData?.id === id
+  );
+  if (findJoinedUsers !== -1)
+    return { userData: joinedUser[findJoinedUsers], index: findJoinedUsers };
+};
+
+const __getLiveData = (id) => {
+  const liveDataIndex = tempLiveData.findIndex((data) => data?.id === id);
+  if (liveDataIndex !== -1)
+    return { liveData: tempLiveData[liveDataIndex], index: liveDataIndex };
+};
+
 const __resetUserLiveSession = async (io) => {
   if (isFirstRun) {
     io.emit("auction/KICK_USER");
     isFirstRun = false;
   }
 };
+
 const __getBidData = async (itemId) => {
   const bidsData = await db.bid.findAll({
     attributes: ["id", "bidPlacePrice", "userId"],
@@ -50,6 +67,7 @@ const __getBidData = async (itemId) => {
     fullname: bidData?.user?.dataValues?.fullname,
   }));
 };
+
 const __addBidDataInDb = async (userId, itemId, bidPlacePrice) => {
   await db.sequelize.transaction(async () => {
     const createdBid = await db.bid.create({
@@ -62,6 +80,7 @@ const __addBidDataInDb = async (userId, itemId, bidPlacePrice) => {
     if (!createdBid?.id) throw new Error("Bid data was not created!");
   });
 };
+
 const __updateBidWinner = async (itemId) => {
   let tryCount = 5;
 
@@ -98,6 +117,7 @@ const __updateBidWinner = async (itemId) => {
   };
   updateDataFunc();
 };
+
 const __setBidComplete = async (io, id) => {
   io.to(id).emit("auction/LIVE_ENDED");
 
@@ -114,144 +134,177 @@ const __setBidComplete = async (io, id) => {
 const AucommerceLiveBid = (io, socket) => {
   __resetUserLiveSession(io);
 
-  const leave = async ({ id, token }) => {
+  const leave = async () => {
     try {
-      const user = __verifiedUser(token);
-
-      const findUserIndex = joinedUser.findIndex(
-        (dataUser) =>
-          dataUser?.userId === user.userId && dataUser?.id === socket.id
+      const getUserData = __getUserJoinedData(
+        socket?.id
       );
-      if (findUserIndex !== -1) joinedUser.splice(findUserIndex, 1);
+      if (!getUserData) {
+        console.log(
+          ["Warn"],
+          `Joined data not found from socket id ${socket?.id}!`
+        );
+        return;
+      }
+      const userData = getUserData?.userData;
+      const userDataIndex = getUserData?.index;
+      const joinedItemId = userData?.itemId;
+      
+      joinedUser.splice(userDataIndex, 1);
 
-      const liveDataIndex = tempLiveData.findIndex((data) => data?.id === id);
-      if (liveDataIndex === -1)
-        throw new Error(`Live with id ${id} data not found for leaving!`);
+      const getLiveData = __getLiveData(joinedItemId);
+      if (!getLiveData) {
+        console.log(
+          ["Warn"],
+          `Live with id ${joinedItemId} data not found for leaving from socket id ${socket?.id}!`
+        );
+        return;
+      }
 
+      const liveDataIndex = getLiveData?.index;
       tempLiveData[liveDataIndex] = {
         ...tempLiveData[liveDataIndex],
         users: tempLiveData[liveDataIndex].users.filter(
-          (userEl) => userEl?.id !== user?.userId
+          (userEl) => userEl?.socketId !== socket?.id
         ),
       };
 
-      io.to(id).emit("auction/UPDATE_LIVE_USERS", {
-        users: tempLiveData[liveDataIndex].users,
+      io.to(joinedItemId).emit("auction/UPDATE_LIVE_USERS", {
+        users: tempLiveData[liveDataIndex]?.users?.map((userDisp) => ({
+          image: userDisp?.image,
+          fullname: userDisp?.fullname,
+        })),
       });
 
+      socket.leave(joinedItemId);
+
       await setKeyJSONValue(
-        `LIVEBID-${id}`,
+        `LIVEBID-${joinedItemId}`,
         tempLiveData[liveDataIndex],
         liveRedisTTL
       );
     } catch (error) {
-      console.log(["Warn"], error.message);
+      console.log(["Error"], error.message);
     }
-
-    socket.leave(id);
   };
 
   const join = async ({ id, token }) => {
     try {
       const user = __verifiedUser(token);
 
-      const getUserData = await AuthHelper.getUserProfile(user?.userId, false);
-      if (getUserData?.banTimer) {
-        socket.emit("auction/BANNED", { dateTimeBan: getUserData?.banTimer });
+      const getUserDataDb = await AuthHelper.getUserProfile(
+        user?.userId,
+        false
+      );
+      const userDataDecrypted = JSON.parse(
+        decryptData(getUserDataDb?.updateData)
+      );
+      if (getUserDataDb?.banTimer) {
+        socket.emit("auction/BANNED", { dateTimeBan: getUserDataDb?.banTimer });
         return;
       }
 
-      const liveDataIndex = tempLiveData.findIndex((data) => data.id === id);
-      const userDataDecrypted = JSON.parse(
-        decryptData(getUserData?.updateData)
-      );
       const itemDetailData = await __getItemDetail(id);
-      let liveUsers = [];
-
       if (itemDetailData.startingTimer > 0)
         throw new Error("Item is not ready to live!");
-
-      const findUserIndex = joinedUser.findIndex(
-        (dataUser) => dataUser?.userId === user.userId
-      );
-      if (findUserIndex !== -1) {
-        io.to(joinedUser[findUserIndex]?.id).emit("auction/KICK_USER");
-        await leave({ id, token });
-      }
 
       joinedUser.push({
         id: socket?.id,
         userId: user?.userId,
+        image: userDataDecrypted?.profileImage,
+        fullname: userDataDecrypted?.fullname,
         itemId: id,
-        token,
       });
+
+      const findExistingUser = joinedUser?.findIndex(
+        (joinedUserData) =>
+          joinedUserData?.userId === user?.userId &&
+          joinedUserData?.id !== socket?.id
+      );
+      if (findExistingUser !== -1) {
+        io.to(joinedUser[findExistingUser]?.id).emit("auction/KICK_USER");
+      }
 
       const newUserJoin = {
         id: user?.userId,
+        socketId: socket?.id,
         image: userDataDecrypted?.profileImage,
-        role: userDataDecrypted?.role,
         fullname: userDataDecrypted?.fullname,
       };
 
-      if (liveDataIndex !== -1) {
-        const tempData = tempLiveData[liveDataIndex];
+      const getLiveData = __getLiveData(id);
+      if (getLiveData) {
+        // Data is fetched before
+        const liveData = getLiveData?.liveData;
+        const liveDataIndex = getLiveData?.index;
 
-        tempData.users = [...tempData.users, newUserJoin];
-        liveUsers = tempData.users;
+        const liveUsersData = liveData?.users;
+
+        tempLiveData[liveDataIndex].users = [...liveUsersData, newUserJoin];
 
         const err = await setKeyJSONValue(
           `LIVEBID-${id}`,
-          tempData,
+          tempLiveData[liveDataIndex],
           liveRedisTTL
         );
         if (err) throw err;
+
+        io.to(id).emit("auction/UPDATE_LIVE_USERS", {
+          users: tempLiveData[liveDataIndex]?.users?.map((userDisp) => ({
+            image: userDisp?.image,
+            fullname: userDisp?.fullname,
+          })),
+        });
       } else {
-        let liveData = null;
+        // Data is first time fetched
+        let newLiveData = null;
 
         const redisData = await getKeyJSONValue(`LIVEBID-${id}`);
         if (redisData) {
-          liveData = { ...redisData, users: [newUserJoin] };
+          newLiveData = { ...redisData, users: [newUserJoin] };
         } else {
           const dbData = await __getBidData(id);
 
-          liveData = {
+          newLiveData = {
             id,
             users: [newUserJoin],
             bids: dbData,
-            highestBid: itemDetailData?.startingPrice,
+            highestBid: dbData[0]
+              ? dbData[0]?.bid
+              : itemDetailData?.startingPrice,
             timerDeadline: itemDetailData?.timeRemaining,
             topUser: dbData[0],
           };
         }
 
-        tempLiveData.push(liveData);
+        tempLiveData.push(newLiveData);
 
         const errAddLiveData = await setKeyJSONValue(
           `LIVEBID-${id}`,
-          liveData,
+          newLiveData,
           liveRedisTTL
         );
         if (errAddLiveData) throw errAddLiveData;
-      }
 
-      if (itemDetailData?.timeRemaining > 0) {
-        const findTimer = timer.find((timerData) => timerData?.id === id);
-        if (!findTimer) {
-          timer.push({
-            id,
-            timerId: setTimeout(() => {
-              __setBidComplete(io, id);
-              const findTimerIdx = timer.findIndex(
-                (timerData) => timerData?.id === id
-              );
-              timer.splice(findTimerIdx, 1);
-            }, (itemDetailData?.timeRemaining || 1) * 1000),
-          });
+        if (itemDetailData?.timeRemaining > 0) {
+          const findTimer = timer.find((timerData) => timerData?.id === id);
+          if (!findTimer) {
+            timer.push({
+              id,
+              timerId: setTimeout(() => {
+                __setBidComplete(io, id);
+
+                const findTimerIdx = timer.findIndex(
+                  (timerData) => timerData?.id === id
+                );
+                timer.splice(findTimerIdx, 1);
+              }, (itemDetailData?.timeRemaining || 1) * 1000),
+            });
+          }
         }
       }
 
       socket.join(id);
-      io.to(id).emit("auction/UPDATE_LIVE_USERS", { users: liveUsers });
       socket.emit("auction/JOINED_LIVE");
     } catch (error) {
       console.log(["Error"], error.message);
@@ -263,19 +316,23 @@ const AucommerceLiveBid = (io, socket) => {
     }
   };
 
-  const getLiveData = async ({ id, token }) => {
+  const getLiveDataClient = async () => {
     try {
-      const user = __verifiedUser(token);
-      const liveData = tempLiveData.find((data) => data.id === id);
+      const user = __getUserJoinedData(socket?.id);
+      if (!user)
+        throw new Error(`Joined data not found from socket id ${socket?.id}!`);
+      const userData = user?.userData;
 
-      if (!liveData) throw new Error("Couldn't find live data!");
+      const getLiveData = __getLiveData(userData?.itemId);
+      if (!getLiveData?.liveData) throw new Error("Couldn't find live data!");
 
+      const liveData = getLiveData?.liveData;
       socket.emit("auction/SET_LIVE_DATA", {
         users: liveData?.users,
         bids: liveData?.bids,
         highestBid: liveData?.highestBid,
-        userId: user?.userId,
-        isAbleBid: user?.role === "buyer",
+        userId: userData?.userId,
+        isAbleBid: userData?.role === "buyer",
         isLive: liveData?.timerDeadline > 0,
         topUser: liveData?.topUser,
       });
@@ -286,60 +343,80 @@ const AucommerceLiveBid = (io, socket) => {
     }
   };
 
-  const placeBid = async ({ id, token, bid }) => {
+  const placeBid = async ({ bid }) => {
     try {
+      // Race condition & spam handler
       const setCooldown = 3;
-      const findCooldownNow = cooldown.findIndex((data) => data === id);
+
+      const getUserData = __getUserJoinedData(socket?.id);
+      if (!getUserData)
+        throw new Error(`Joined data not found from socket id ${socket?.id}!`);
+
+      const userData = getUserData?.userData;
+      const userJoinItemId = userData?.itemId;
+
+      if (userData?.role !== "buyer")
+        throw new Error("Seller role cannot bid!");
+
+      const findCooldownNow = cooldown.findIndex(
+        (data) => data === userJoinItemId
+      );
       if (findCooldownNow !== -1) {
         socket.emit("auction/COOLDOWN", { cooldownSeconds: setCooldown });
         return;
       }
+      cooldown.push(userJoinItemId);
 
-      const user = __verifiedUser(token);
-      if (!(user?.role === "buyer")) throw new Error("Seller role cannot bid!");
+      setTimeout(() => {
+        const findCooldown = cooldown.findIndex(
+          (data) => data === userJoinItemId
+        );
+        if (findCooldown !== -1) cooldown.splice(findCooldown, 1);
+      }, setCooldown * 1000);
 
-      const liveDataIndex = tempLiveData.findIndex((data) => data.id === id);
-      if (liveDataIndex === -1) throw new Error("Couldn't find data!");
+      const getLiveData = __getLiveData(userJoinItemId);
+      if (getLiveData)
+        throw new Error(`Couldn't find data from item id ${userJoinItemId}!`);
+      const liveData = getLiveData?.liveData;
 
-      if (tempLiveData[liveDataIndex]?.timerDeadline < 1) {
+      if (liveData?.timerDeadline < 1) {
         socket.emit("auction/LIVE_ENDED");
         return;
       }
 
-      const users = tempLiveData[liveDataIndex]?.users;
-      const userData = users.find((userLive) => userLive.id === user?.userId);
-      if (!userData) throw new Error("Couldn't find user data!");
-
-      if (tempLiveData[liveDataIndex].highestBid >= bid)
+      if (liveData.highestBid >= bid)
         throw new Error("Bid is lower than highest bid!");
 
-      await __addBidDataInDb(user?.userId, id, bid);
+      await __addBidDataInDb(userData?.userId, userJoinItemId, bid);
 
-      const newBidData = { ...userData, bid, bidId: uuid(), role: undefined };
+      
+      const newBidData = {
+        id: userData?.userId,
+        image: userData?.image,
+        fullname: userData?.fullname,
+        bid,
+        bidId: uuid()
+      };
+
+      const liveDataIndex = getLiveData?.index;
       tempLiveData[liveDataIndex] = {
         ...tempLiveData[liveDataIndex],
         bids: [newBidData, ...tempLiveData[liveDataIndex].bids],
         highestBid: bid,
-        topUser: { ...userData, bid, role: undefined },
+        topUser: newBidData,
       };
 
-      cooldown.push(id);
-      setTimeout(() => {
-        const findCooldown = cooldown.findIndex((data) => data === id);
-        if (findCooldown !== -1) cooldown.splice(findCooldown, 1);
-      }, setCooldown * 1000);
-
       await setKeyJSONValue(
-        `LIVEBID-${id}`,
+        `LIVEBID-${userJoinItemId}`,
         tempLiveData[liveDataIndex],
         liveRedisTTL
       );
 
       socket.emit("auction/PLACE_BID_SUCCESS");
-      io.to(id).emit("auction/UPDATE_BID_DATA", {
+      io.to(userJoinItemId).emit("auction/UPDATE_BID_DATA", {
         bids: tempLiveData[liveDataIndex]?.bids,
         highestBid: tempLiveData[liveDataIndex]?.highestBid,
-        topUser: { ...userData, bid, role: undefined },
+        topUser: newBidData,
       });
     } catch (error) {
       console.log(["Error"], error.message);
@@ -353,17 +430,14 @@ const AucommerceLiveBid = (io, socket) => {
 
   // DEFINE EVENTS
   socket.on("auction/JOIN_LIVE", join);
-  socket.on("auction/GET_LIVE_DATA", getLiveData);
+  socket.on("auction/GET_LIVE_DATA", getLiveDataClient);
   socket.on("auction/PLACE_BID", placeBid);
   socket.on("auction/LEAVE_LIVE", leave);
 
   socket.on("disconnect", () => {
     console.log(["info"], `Socket id ${socket?.id} is disconnected`);
 
-    const findUser = joinedUser.find((user) => user.id === socket.id);
-    if (findUser) {
-      leave({ id: findUser?.itemId, token: findUser?.token });
-    }
+    leave();
   });
 };
 

@@ -15,6 +15,9 @@ const { socketEventListener } = require("./server/socket");
 // Initialize Redis Connection
 const { redisConnect } = require("./server/services/redis");
 
+// Initialize Watchdog Functions
+const InitTimers = require("./server/timers");
+
 // Import routes
 const AuthUser = require("./server/api/authUser");
 const Auctions = require("./server/api/auctions");
@@ -92,7 +95,7 @@ app.get("/sys/ping", (req, res) => {
 });
 
 const server = http.createServer(app);
-const frontendOrigins = ["http://localhost:5050"];
+const frontendOrigins = ["http://localhost:5050", "http://192.168.0.10:5050"];
 
 console.log(
   ["Info"],
@@ -115,6 +118,8 @@ const io = new Server(server, {
 // Initialize startup functions
 socketEventListener(io);
 redisConnect();
+InitTimers();
+
 
 server.listen(Port, () => {
   console.log(["Info"], `Socket and Server open on port: ${Port}`);

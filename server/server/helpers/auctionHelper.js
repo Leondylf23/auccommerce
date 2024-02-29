@@ -1,24 +1,40 @@
 const _ = require("lodash");
 const Boom = require("boom");
 const { lte, gte, like } = require("sequelize/lib/operators");
+const EventEmitter = require("events");
 
 const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
 const cloudinary = require("../services/cloudinary");
 const { decryptData, encryptData } = require("./utilsHelper");
-const { setKeyJSONValue, getKeyJSONValue } = require("../services/redis");
+const {
+  setKeyJSONValue,
+  getKeyJSONValue,
+  deleteKeyJSONValue,
+} = require("../services/redis");
+
+const event = new EventEmitter();
 
 // PRIVATE FUNCTIONS
-const __formatDateNonISO = (date, isShowSeconds) =>
-  new Date(date)
+const __formatDateNonISO = (date, isShowSeconds) => {
+  const data = new Date(date);
+  data.setHours(
+    data.getHours() + 7,
+    data.getMinutes(),
+    data.getSeconds(),
+    data.getMilliseconds()
+  );
+
+  return new Date(data)
     .toISOString()
     .replace("T", " ")
     .slice(0, isShowSeconds ? 19 : 16);
+};
 
 // AUCTION HELPERS FUNCTIONS
 const getMyAuctionsData = async (dataObject, userId) => {
   const { nextId } = dataObject;
-
+  event.emit("test", "test data");
   try {
     let nextIdData = null;
 
@@ -369,6 +385,7 @@ const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
 
     const imageResults = [];
 
+    // eslint-disable-next-line no-plusplus
     for (let index = 0; index < imageFiles.length; index++) {
       const image = imageFiles[index];
 
@@ -393,6 +410,12 @@ const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
 
     if (!createdData) throw Boom.internal("Auction item is not created!");
 
+    event.emit("ItemStatus/SET_NEW_TASK", {
+      dataId: createdData?.id,
+      dateActivate: JSON.parse(itemGeneralData)?.startBidDate,
+      dataValue: { status: "LIVE" },
+    });
+
     return Promise.resolve({
       createdId: createdData?.id,
     });
@@ -412,6 +435,7 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
 
     const imageResults = [];
     if (imageFiles?.length > 0) {
+      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < imageFiles.length; index++) {
         const image = imageFiles[index];
 
@@ -444,6 +468,14 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
     });
 
     if (!updatedData) throw Boom.internal("Auction item is not updated!");
+
+    await deleteKeyJSONValue(`ITEM-DETAIL-${id}`);
+    event.emit("ItemStatus/STOP_TASK_BY_DATA_ID", { dataId: itemData?.id })
+    event.emit("ItemStatus/SET_NEW_TASK", {
+      dataId: itemData?.id,
+      dateActivate: JSON.parse(itemGeneralData)?.startBidDate,
+      dataValue: { status: "LIVE" },
+    });
 
     return Promise.resolve({
       updatedData: {

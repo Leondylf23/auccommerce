@@ -4,9 +4,7 @@ const { lte, not } = require("sequelize/lib/operators");
 
 const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
-const cloudinary = require("../services/cloudinary");
 const { decryptData, encryptData } = require("./utilsHelper");
-const { setKeyJSONValue, getKeyJSONValue } = require("../services/redis");
 
 // PRIVATE FUNCTIONS
 const __formatDateNonISO = (date) =>
