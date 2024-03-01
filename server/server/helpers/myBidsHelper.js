@@ -1,5 +1,3 @@
-const _ = require("lodash");
-const Boom = require("boom");
 const { lte, not } = require("sequelize/lib/operators");
 
 const db = require("../../models");
@@ -7,8 +5,6 @@ const GeneralHelper = require("./generalHelper");
 const { decryptData, encryptData } = require("./utilsHelper");
 
 // PRIVATE FUNCTIONS
-const __formatDateNonISO = (date) =>
-  new Date(date).toISOString().replace("T", " ").slice(0, 19);
 
 // AUCTION HELPERS FUNCTIONS
 const getMyBidsData = async (dataObject, userId) => {

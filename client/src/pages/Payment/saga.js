@@ -1,6 +1,13 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { setLoading, showPopup } from '@containers/App/actions';
-import { setBidDetailData, setPaymentMethods, setShippingProviderData, setShippingProviders, setUserAddresses } from './actions';
+import { getUserAddressData } from '@domain/api';
+import {
+  setBidDetailData,
+  setPaymentMethods,
+  setShippingProviderData,
+  setShippingProviders,
+  setUserAddresses,
+} from './actions';
 import {
   GET_BID_DETAIL_DATA,
   GET_PAYMENT_METHODS,
@@ -28,7 +35,7 @@ function* doGetUserAddresses() {
   yield put(setLoading(true));
 
   try {
-    // yield call();
+    const res = yield call(getUserAddressData);
     const exampleData = [
       {
         id: 1,
@@ -46,7 +53,7 @@ function* doGetUserAddresses() {
         address: 'jln. jalan jalna aja',
       },
     ];
-    yield put(setUserAddresses(exampleData));
+    yield put(setUserAddresses(res?.data));
   } catch (error) {
     yield put(showPopup());
   }

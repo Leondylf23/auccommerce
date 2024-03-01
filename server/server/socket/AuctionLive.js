@@ -211,6 +211,7 @@ const AucommerceLiveBid = (io, socket) => {
       joinedUser.push({
         id: socket?.id,
         userId: user?.userId,
+        role: userDataDecrypted?.role,
         image: userDataDecrypted?.profileImage,
         fullname: userDataDecrypted?.fullname,
         itemId: id,
@@ -375,7 +376,7 @@ const AucommerceLiveBid = (io, socket) => {
       }, setCooldown * 1000);
 
       const getLiveData = __getLiveData(userJoinItemId);
-      if (getLiveData)
+      if (!getLiveData)
         throw new Error(`Couldn't find data from item id ${userJoinItemId}!`);
       const liveData = getLiveData?.liveData;
 

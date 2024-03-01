@@ -13,6 +13,7 @@ const urls = {
   changepassword: 'auth/change-password',
   auction: 'auction/auctions',
   myBids: 'my-bids',
+  paymentForm: 'payment-form',
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -93,3 +94,12 @@ export const deleteAuctionDataApi = (formData) => callAPI(`${urls.auction}/delet
 // MyBids
 export const getMyBidsApi = (formData) => callAPI(`${urls.myBids}`, 'get', {}, formData);
 export const getMyBidDetailApi = (formData) => callAPI(`${urls.myBids}/detail`, 'get', {}, formData);
+
+// PaymentForm
+export const getCheckFormApi = (formData) => callAPI(`${urls.paymentForm}/check-data`, 'get', {}, formData);
+export const getFormDataInfoApi = (formData) => callAPI(`${urls.paymentForm}/get-form-data`, 'get', {}, formData);
+
+export const appendNewFormDataApi = (formData) =>
+  callAPI(`${urls.paymentForm}/create-new-form`, 'post', {}, {}, formData);
+export const appendFormDataApi = (formData) => callAPI(`${urls.paymentForm}/append-form`, 'post', {}, {}, formData);
+export const completeFormDataApi = (formData) => callAPI(`${urls.paymentForm}/complete-form`, 'post', {}, {}, formData);

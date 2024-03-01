@@ -19,15 +19,16 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
 
   const [selectedAddress, setSelectedAddress] = useState(-1);
   const [isOpenLocationInput, setIsOpenLocationInput] = useState(false);
-  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState(null);
 
   const closeLocationForm = (isRefresh) => {
+    if (isRefresh) dispatch(getUserAddresses());
     setIsOpenLocationInput(false);
-    setEditId(null);
+    setEditData(null);
   };
 
-  const openEditAddress = (id) => {
-    setEditId(id);
+  const openEditAddress = (data) => {
+    setEditData(data);
     setIsOpenLocationInput(true);
   };
 
@@ -49,7 +50,7 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
         <FormattedMessage id="payment_step_1_h2" />
       </h3>
       <PopupWindow onClose={() => closeLocationForm(false)} open={isOpenLocationInput}>
-        <LocationInputForm id={editId} onClose={closeLocationForm} />
+        <LocationInputForm id={editData?.id} onClose={closeLocationForm} locationData={editData} />
       </PopupWindow>
       {addressList?.length > 0 ? (
         <div className={classes.addressListContainer}>
@@ -62,7 +63,7 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
                 <p className={classes.addressLabel}>{address?.label}</p>
                 <p className={classes.addressText}>{address?.address}</p>
               </div>
-              <button type="button" className={classes.editBtn} onClick={() => openEditAddress(address?.id)}>
+              <button type="button" className={classes.editBtn} onClick={() => openEditAddress(address)}>
                 <EditIcon />
               </button>
             </div>

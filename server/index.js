@@ -22,6 +22,7 @@ const InitTimers = require("./server/timers");
 const AuthUser = require("./server/api/authUser");
 const Auctions = require("./server/api/auctions");
 const MyBids = require("./server/api/myBids");
+const Payment = require("./server/api/payment");
 
 // Middleware
 app.use(cors());
@@ -87,6 +88,7 @@ app.use((req, res, next) => {
 app.use("/api/auth", AuthUser);
 app.use("/api/auction", Auctions);
 app.use("/api/my-bids", MyBids);
+app.use("/api/payment-form", Payment);
 
 // Sys ping api
 app.get("/sys/ping", (req, res) => {
