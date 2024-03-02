@@ -166,7 +166,6 @@ function* doCompleteFormData({ formData, cb }) {
 export default function* paymentPageSaga() {
   yield takeLatest(GET_USER_ADDRESSES, doGetUserAddresses);
   yield takeLatest(GET_SHIPPING_PROVIDERS, doGetShippingProviders);
-
   yield takeLatest(GET_PAYMENT_METHODS, doGetPaymentMethods);
 
   yield takeLatest(GET_CHECK_FROM_PAYMENT, doCheckFormData);

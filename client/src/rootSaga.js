@@ -10,6 +10,7 @@ import paymentPageSaga from '@pages/Payment/saga';
 import myAuctionsSaga from '@pages/MyAuctions/saga';
 import clientSaga from '@containers/Client/saga';
 import auctionFormSaga from '@pages/AuctionForm/saga';
+import ordersSaga from '@pages/Orders/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     paymentPageSaga(),
     myAuctionsSaga(),
     auctionFormSaga(),
+    ordersSaga(),
   ]);
 }

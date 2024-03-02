@@ -10,8 +10,8 @@ const paymentMethods = [
   {
     id: 1,
     category: "e_money",
-    methodName: "ShopeePay",
-    logo: "https://d3fkkqa7lc3d5k.cloudfront.net/PRF-1-file_datas-IMG_2204.jpeg",
+    methodName: "Shopee Pay",
+    logo: "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709399554/shopee_okdxgt.svg",
     paymentMetadata: {
       ewallet: {
         channelProperties: {
@@ -27,7 +27,7 @@ const paymentMethods = [
     id: 2,
     category: "e_money",
     methodName: "OVO",
-    logo: "https://d3fkkqa7lc3d5k.cloudfront.net/PRF-1-file_datas-IMG_2204.jpeg",
+    logo: "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709399298/ovo_w5iani.png",
     paymentMetadata: {
       ewallet: {
         channelProperties: {
@@ -43,7 +43,7 @@ const paymentMethods = [
     id: 3,
     category: "e_money",
     methodName: "Gopay",
-    logo: "https://d3fkkqa7lc3d5k.cloudfront.net/PRF-1-file_datas-IMG_2204.jpeg",
+    logo: "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709399298/gopay_lzlehh.svg",
     paymentMetadata: {
       ewallet: {
         channelProperties: {
@@ -59,7 +59,7 @@ const paymentMethods = [
     id: 4,
     category: "e_money",
     methodName: "Dana",
-    logo: "https://d3fkkqa7lc3d5k.cloudfront.net/PRF-1-file_datas-IMG_2204.jpeg",
+    logo: "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709399298/dana_wz8nra.svg",
     paymentMetadata: {
       ewallet: {
         channelProperties: {

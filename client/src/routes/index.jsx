@@ -12,6 +12,7 @@ import Payment from '@pages/Payment';
 import MyBidDetail from '@pages/MyBidDetail';
 import AuctionForm from '@pages/AuctionForm';
 import MyAuctions from '@pages/MyAuctions';
+import Orders from '@pages/Orders';
 
 const routes = [
   {
@@ -81,7 +82,7 @@ const routes = [
   {
     path: '/create-auction',
     name: 'Create Aution',
-    protected: false,
+    protected: true,
     component: AuctionForm,
     layout: MainLayout,
     role: 'seller',
@@ -89,7 +90,7 @@ const routes = [
   {
     path: '/edit-auction/:id',
     name: 'Edit Aution',
-    protected: false,
+    protected: true,
     component: AuctionForm,
     layout: MainLayout,
     role: 'seller',
@@ -97,8 +98,16 @@ const routes = [
   {
     path: '/my-auction',
     name: 'My Aution',
-    protected: false,
+    protected: true,
     component: MyAuctions,
+    layout: MainLayout,
+    role: 'seller',
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    protected: true,
+    component: Orders,
     layout: MainLayout,
     role: 'seller',
   },

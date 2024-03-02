@@ -1,7 +1,6 @@
 import {
   APPEND_PAYMENT_FORM,
   COMPLETE_PAYMENT_FORM,
-  GET_BID_DETAIL_DATA,
   GET_CHECK_FROM_PAYMENT,
   GET_FORM_DATA,
   GET_FORM_SUMMARY,
@@ -9,7 +8,6 @@ import {
   GET_SHIPPING_PROVIDERS,
   GET_SHIPPING_PROVIDER_DATA,
   GET_USER_ADDRESSES,
-  SET_BID_DETAIL_DATA,
   SET_IS_ANY_CHANGES,
   SET_PAYMENT_DATA,
   SET_PAYMENT_METHODS,
@@ -19,17 +17,6 @@ import {
   SET_TOKEN_DATA,
   SET_USER_ADDRESSES,
 } from './constants';
-
-export const getBidDetailData = (formData, cb) => ({
-  type: GET_BID_DETAIL_DATA,
-  formData,
-  cb,
-});
-
-export const setBidDetailData = (data) => ({
-  type: SET_BID_DETAIL_DATA,
-  data,
-});
 
 export const setPaymentData = (data) => ({
   type: SET_PAYMENT_DATA,

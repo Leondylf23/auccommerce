@@ -131,16 +131,22 @@
 
                     .transactionTitle {
                         text-align: start;
-                        margin-bottom: 1rem;
+                        margin-bottom: 0.5rem;
                     }
                     .transactionCodeText {
                         font-weight: 600;
-                        margin-bottom: 0.5rem;
                     }
                     .detailData {
                         @include directionY;
 
                         width: 100%;
+
+                        .detailTitle {
+                            font-weight: 700;
+                            width: 100%;
+                            border-bottom: 1px solid #000;
+                            margin-top: 0.5rem;
+                        }
 
                         .detailContainer {
                             @include directionX;

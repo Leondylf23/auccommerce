@@ -94,7 +94,13 @@ const getMyBidDetailData = async (dataObject, userId) => {
         {
           association: "transactions",
           required: false,
-          attributes: ["transactionCode", "paymentDeadline", "paymentRedirUrl"],
+          attributes: [
+            "totalPayment",
+            "transactionCode",
+            "paymentDeadline",
+            "paymentRedirUrl",
+            "paymentDatas",
+          ],
         },
       ],
       where: {
@@ -114,7 +120,8 @@ const getMyBidDetailData = async (dataObject, userId) => {
     );
     const deadlineDateISO = deadlineDate.toISOString();
 
-    const transactionDetailData = data?.transactions[0]?.dataValues?.paymentData;
+    const transactionDetailData =
+      data?.transactions[0]?.dataValues?.paymentDatas;
 
     return Promise.resolve({
       ...data?.dataValues,
@@ -123,15 +130,31 @@ const getMyBidDetailData = async (dataObject, userId) => {
       bidDeadline: deadlineDateISO,
       highestBid: data?.dataValues?.highestBid?.price,
       isWinner: data?.dataValues?.status !== "PLACED",
-      transactionData: {
-        payUntil: data?.transactions[0]?.dataValues?.paymentDeadline,
-        transactionCode: data?.transactions[0]?.dataValues?.transactionCode,
-        redirUrl: data?.transactions[0]?.dataValues?.paymentRedirUrl,
-        detail: {
-          paymentMethod: getPaymentMethodDataById(transactionDetailData?.step3?.paymentMethodInfo?.name),
-          
-        }
-      },
+      ...(data?.transactions.length > 0 && {
+        transactionData: {
+          payUntil: data?.transactions[0]?.dataValues?.paymentDeadline,
+          transactionCode: data?.transactions[0]?.dataValues?.transactionCode,
+          redirUrl: data?.transactions[0]?.dataValues?.paymentRedirUrl,
+          detail: {
+            prices: {
+              total: transactionDetailData?.totalPrice,
+              bidPrice: transactionDetailData?.bidPrice,
+              shippingPrice:
+                transactionDetailData?.step2?.providerInfo?.estPrice,
+              adminPrice: transactionDetailData?.adminPrice,
+              paymentMethod:
+                transactionDetailData?.step3?.paymentMethodInfo?.name,
+            },
+            shipment: {
+              provider: transactionDetailData?.step2?.providerInfo?.name,
+              address:
+                transactionDetailData?.step1?.addressInformation?.address,
+              pic: transactionDetailData?.step1?.addressInformation?.pic,
+              phone: transactionDetailData?.step1?.addressInformation?.phone,
+            },
+          },
+        },
+      }),
       isLiveNow: data?.item?.dataValues?.status === "LIVE",
       item: undefined,
       transactions: undefined,

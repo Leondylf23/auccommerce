@@ -14,6 +14,7 @@ const urls = {
   auction: 'auction/auctions',
   myBids: 'my-bids',
   paymentForm: 'payment-form',
+  transaction: 'transaction',
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -106,3 +107,7 @@ export const getFormSummaryApi = (formData) => callAPI(`${urls.paymentForm}/get-
 
 export const appendFormDataApi = (formData) => callAPI(`${urls.paymentForm}/append-form`, 'post', {}, {}, formData);
 export const completeFormDataApi = (formData) => callAPI(`${urls.paymentForm}/complete-form`, 'post', {}, {}, formData);
+
+// Orders
+export const getOrdersApi = (formData) => callAPI(`${urls.transaction}/get-orders`, 'get', {}, formData);
+export const getOrderDetailApi = (formData) => callAPI(`${urls.transaction}/get-orders/detail`, 'get', {}, formData);

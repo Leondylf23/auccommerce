@@ -102,21 +102,73 @@ const MyBidDetail = ({ bidDetailData }) => {
                     </h3>
                     <p className={classes.transactionCodeText}>{bidDetailData?.transactionData?.transactionCode}</p>
                     <div className={classes.detailData}>
+                      <p className={classes.detailTitle}>
+                        <FormattedMessage id="my_bids_detail_prices" />
+                      </p>
                       <div className={classes.detailContainer}>
-                        <p className={classes.label}>Total Payment:</p>
-                        <p className={classes.data}>Alamat aja</p>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_bid" />:
+                        </p>
+                        <p className={classes.data}>
+                          Rp. {numberWithPeriods(bidDetailData?.transactionData?.detail?.prices?.bidPrice)}
+                        </p>
                       </div>
                       <div className={classes.detailContainer}>
-                        <p className={classes.label}>Shipment Cost:</p>
-                        <p className={classes.data}>Alamat aja</p>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_ship" />:
+                        </p>
+                        <p className={classes.data}>
+                          Rp. {numberWithPeriods(bidDetailData?.transactionData?.detail?.prices?.shippingPrice)}
+                        </p>
                       </div>
                       <div className={classes.detailContainer}>
-                        <p className={classes.label}>Admin Cost:</p>
-                        <p className={classes.data}>Alamat aja</p>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_admin" />:
+                        </p>
+                        <p className={classes.data}>
+                          Rp. {numberWithPeriods(bidDetailData?.transactionData?.detail?.prices?.adminPrice)}
+                        </p>
                       </div>
                       <div className={classes.detailContainer}>
-                        <p className={classes.label}>Payment Method:</p>
-                        <p className={classes.data}>Alamat aja</p>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_total" />:
+                        </p>
+                        <p className={classes.data}>
+                          Rp. {numberWithPeriods(bidDetailData?.transactionData?.detail?.prices?.total)}
+                        </p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_payment_method" />:
+                        </p>
+                        <p className={classes.data}>{bidDetailData?.transactionData?.detail?.prices?.paymentMethod}</p>
+                      </div>
+                      <p className={classes.detailTitle}>
+                        <FormattedMessage id="my_bids_detail_shipment_title" />
+                      </p>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_shipment_prv" />:
+                        </p>
+                        <p className={classes.data}>{bidDetailData?.transactionData?.detail?.shipment?.provider}</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_address" />:
+                        </p>
+                        <p className={classes.data}>{bidDetailData?.transactionData?.detail?.shipment?.address}</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_phone" />:
+                        </p>
+                        <p className={classes.data}>{bidDetailData?.transactionData?.detail?.shipment?.phone}</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>
+                          <FormattedMessage id="my_bids_detail_reciever" />:
+                        </p>
+                        <p className={classes.data}>{bidDetailData?.transactionData?.detail?.shipment?.pic}</p>
                       </div>
                     </div>
                   </div>

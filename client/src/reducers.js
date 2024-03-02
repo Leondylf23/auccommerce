@@ -13,6 +13,7 @@ import bidDetailReducer from '@pages/MyBidDetail/reducer';
 import myAuctionsReducer from '@pages/MyAuctions/reducer';
 import auctionFormReducer from '@pages/AuctionForm/reducer';
 import { mapWithPersistor } from './persistence';
+import ordersReducer from '@pages/Orders/reducer';
 
 const storedReducers = {
   app: { reducer: appReducer, whitelist: storedAppState },
@@ -29,6 +30,7 @@ const temporaryReducers = {
   bidDetail: bidDetailReducer,
   myAuctions: myAuctionsReducer,
   auctionForm: auctionFormReducer,
+  orders: ordersReducer,
 };
 
 const createReducer = () => {

@@ -36,7 +36,7 @@ const Payment = ({ token, stepData, stepPaymentData, isAnyChanges }) => {
   const changePageStep = (data) => {
     if (data > 4) return;
 
-    if (data < 3) setIsEnableNext(false);
+    if (data < 4) setIsEnableNext(false);
 
     switch (data) {
       case 1:

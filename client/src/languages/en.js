@@ -16,6 +16,7 @@ export default {
   nav_profile: 'Profile',
   nav_mybids: 'My Bids',
   nav_myauction: 'My Auctions',
+  nav_orders: 'Orders',
   nav_logout: 'Logout',
 
   status_waiting: 'Waiting',
@@ -49,6 +50,7 @@ export default {
   lang: 'en',
   pay: 'Pay',
   detail: 'Detail',
+  confirm: 'Confirm',
 
   login_title: 'Login',
   login_title_forgot: 'Forgot Password',
@@ -131,8 +133,18 @@ export default {
   my_bids_detail_winner_msg: 'You are the auction winner.',
   my_bids_detail_pay_until: 'Pay until',
   my_bids_detail_status: 'Bid Status',
-
   my_bids_detail_transaction_title: 'Transaction Data',
+  my_bids_detail_prices: 'Prices',
+  my_bids_detail_bid: 'Bid',
+  my_bids_detail_ship: 'Shipment Cost',
+  my_bids_detail_admin: 'Admin Charge',
+  my_bids_detail_total: 'Total Payment',
+  my_bids_detail_payment_method: 'Payment Method',
+  my_bids_detail_shipment_title: 'Shipment',
+  my_bids_detail_shipment_prv: 'Provider',
+  my_bids_detail_address: 'Address',
+  my_bids_detail_phone: 'Phone',
+  my_bids_detail_reciever: 'Reciever',
 
   payment_step_1_h1: 'Shipping Address',
   payment_step_1_h2: 'Address List',
@@ -223,4 +235,7 @@ export default {
   address_popup_reciever_len_err: 'Reciever must be at least 3 characters!',
   address_popup_postal_len_err: 'Postal Code must be 5 characters!',
   address_popup_note_len_err: 'Note must be at least 10 characters!',
+
+  orders_page_title: 'Orders',
+  orders_detail_title: 'Order Detail',
 };

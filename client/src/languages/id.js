@@ -16,6 +16,7 @@ export default {
   nav_profile: 'Profil',
   nav_mybids: 'Penawaran Saya',
   nav_myauction: 'Lelang Saya',
+  nav_orders: 'Pesanan',
   nav_logout: 'Keluar',
 
   status_waiting: 'Menunggu',
@@ -49,6 +50,7 @@ export default {
   lang: 'id',
   pay: 'Bayar',
   detail: 'Detail',
+  confirm: 'Konfirm',
 
   login_title: 'Masuk',
   login_title_forgot: 'Lupa Kata Sandi',
@@ -133,8 +135,18 @@ export default {
   my_bids_detail_winner_msg: 'Anda adalah pemenang lelang.',
   my_bids_detail_pay_until: 'Bayar sampai',
   my_bids_detail_status: 'Status Lelang',
-
   my_bids_detail_transaction_title: 'Data Transaksi',
+  my_bids_detail_prices: 'Harga',
+  my_bids_detail_bid: 'Penawaran',
+  my_bids_detail_ship: 'Biaya Pengiriman',
+  my_bids_detail_admin: 'Biaya Admin',
+  my_bids_detail_total: 'Total Pembayaran',
+  my_bids_detail_payment_method: 'Metode Pembayaran',
+  my_bids_detail_shipment_title: 'Pengiriman',
+  my_bids_detail_shipment_prv: 'Jasa Kurir',
+  my_bids_detail_address: 'Alamat',
+  my_bids_detail_phone: 'Telepon',
+  my_bids_detail_reciever: 'Penerima',
 
   payment_step_1_h1: 'Alamat Penawaran',
   payment_step_1_h2: 'Daftar Alamat',

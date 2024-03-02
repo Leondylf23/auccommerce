@@ -33,7 +33,10 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu, isBusiness }) =>
         onClose();
         break;
       case 3:
-        // navigate("/newjourney");
+        navigate('/orders');
+        onClose();
+        break;
+      case 4:
         dispatch(setLogin(false));
         dispatch(setUserData(null));
         dispatch(setToken(null));
@@ -68,15 +71,23 @@ const DropDownMenu = ({ isOpen, anchorEl, onClose, labeledMenu, isBusiness }) =>
             </Typography>
           </MenuItem>
         ) : (
-          <MenuItem onClick={() => menuItemAction(2)}>
-            <InventoryIcon className={classes.icon} data-type="myauctions" />
-            <Typography variant="body2">
-              <FormattedMessage id="nav_myauction" />
-            </Typography>
-          </MenuItem>
+          <>
+            <MenuItem onClick={() => menuItemAction(2)}>
+              <InventoryIcon className={classes.icon} data-type="myauctions" />
+              <Typography variant="body2">
+                <FormattedMessage id="nav_myauction" />
+              </Typography>
+            </MenuItem>
+            <MenuItem onClick={() => menuItemAction(3)}>
+              <BallotIcon className={classes.icon} data-type="mybids" />
+              <Typography variant="body2">
+                <FormattedMessage id="nav_orders" />
+              </Typography>
+            </MenuItem>
+          </>
         )}
         <div className={classes.divider} />
-        <MenuItem onClick={() => menuItemAction(3)}>
+        <MenuItem onClick={() => menuItemAction(4)}>
           <LogoutIcon className={classes.icon} data-type="logout" />
           <Typography variant="body2">
             <FormattedMessage id="nav_logout" />

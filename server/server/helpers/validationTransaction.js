@@ -22,7 +22,18 @@ const transactionCodeValidation = (data) => {
   }
 };
 
+const getOrdersValidation = (data) => {
+    const schema = Joi.object({
+      nextId: Joi.string().optional(),
+    });
+  
+    if (schema.validate(data).error) {
+      throw Boom.badRequest(schema.validate(data).error);
+    }
+  };
+
 module.exports = {
   idValidation,
   transactionCodeValidation,
+  getOrdersValidation
 };

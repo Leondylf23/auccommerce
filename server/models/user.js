@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.bid, {
         foreignKey: "userId",
       });
+
+      this.hasMany(models.transaction, {
+        foreignKey: "userId",
+      });
     }
   }
   user.init(

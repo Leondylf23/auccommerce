@@ -15,6 +15,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "bidId",
         onDelete: "CASCADE"
       });
+
+      this.belongsTo(models.item, {
+        foreignKey: "itemId",
+        onDelete: "CASCADE"
+      });
+
+      this.belongsTo(models.user, {
+        foreignKey: "userId",
+        onDelete: "CASCADE"
+      });
     }
   }
   transaction.init({

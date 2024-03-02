@@ -468,6 +468,13 @@ const completeFormData = async (dataObject, userId) => {
       getDateNow.getMilliseconds()
     );
     const dateNow = new Date(getDateNow).toISOString().slice(0, 10);
+    getDateNow.setHours(
+      getDateNow.getHours() + 2,
+      getDateNow.getMinutes(),
+      getDateNow.getSeconds(),
+      getDateNow.getMilliseconds()
+    );
+    const paymentDeadline = new Date(getDateNow).toISOString();
     const transactionId = `TRX/${dateNow}/${generateRandomString(5)}`;
     const adminPrice = 10000;
     const totalPrice =
@@ -538,6 +545,8 @@ const completeFormData = async (dataObject, userId) => {
         paymentId: resXenditApi?.id,
         paymentJson: resXenditApi,
         paymentRedirUrl: xenditRedirectUrl,
+        paymentDatas: {...redisData, adminPrice, totalPrice},
+        paymentDeadline,
       });
       if (!createPayment) throw Boom.internal("Create payment failed!");
 

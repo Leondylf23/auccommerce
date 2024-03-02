@@ -1,6 +1,5 @@
 import { produce } from 'immer';
 import {
-  SET_BID_DETAIL_DATA,
   SET_IS_ANY_CHANGES,
   SET_PAYMENT_DATA,
   SET_PAYMENT_METHODS,
@@ -12,7 +11,6 @@ import {
 } from './constants';
 
 export const initialState = {
-  bidDetailData: [],
   paymentData: null,
   addressList: [],
   shippingProviders: [],
@@ -29,9 +27,6 @@ export const storedKey = ['paymentToken'];
 const paymentPageReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case SET_BID_DETAIL_DATA:
-        draft.bidDetailData = action.data;
-        break;
       case SET_PAYMENT_DATA:
         draft.paymentData = action.data;
         break;
