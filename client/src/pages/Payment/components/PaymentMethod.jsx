@@ -4,27 +4,46 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { selectPaymentData, selectPaymentMethods } from '../selectors';
-import { getPaymentMethods } from '../actions';
+import { selectPaymentMethods, selectPaymentToken, selectStepData } from '../selectors';
+import { getFormData, getPaymentMethods, setIsAnyChanges, setPaymentData } from '../actions';
 
 import classes from '../style.module.scss';
 
-const PaymentMethodComponent = ({ draftData, paymentMethods }) => {
+const PaymentMethodComponent = ({ paymentMethods, setIsAbleNext, stepData, token, bidId }) => {
   const dispatch = useDispatch();
 
   const [selectedMethod, setSelectedPayment] = useState(-1);
 
-  const selectMethod = (id) => {
+  const selectMethod = (id, isInitData) => {
+    if (!isInitData) dispatch(setIsAnyChanges(true));
+
     if (selectedMethod === id) {
       setSelectedPayment(null);
+      setIsAbleNext(false);
     } else {
       setSelectedPayment(id);
+      setIsAbleNext(true);
     }
   };
 
   useEffect(() => {
-    dispatch(getPaymentMethods());
+    dispatch(getPaymentMethods({ token }));
   }, []);
+
+  useEffect(() => {
+    if (stepData > 3) {
+      dispatch(
+        getFormData({ token, step: 3, bidId }, (data, err) => {
+          if (!err) selectMethod(data?.paymentMethodId, true);
+        })
+      );
+    }
+  }, [paymentMethods]);
+
+  useEffect(() => {
+    const findData = paymentMethods.find((method) => method?.id === selectedMethod);
+    dispatch(setPaymentData({ paymentMethodId: selectedMethod, paymentMethodInfo: findData }));
+  }, [selectedMethod]);
 
   return (
     <div className={classes.innerContainer}>
@@ -49,13 +68,17 @@ const PaymentMethodComponent = ({ draftData, paymentMethods }) => {
 };
 
 PaymentMethodComponent.propTypes = {
-  draftData: PropTypes.object,
   paymentMethods: PropTypes.array,
+  setIsAbleNext: PropTypes.func,
+  stepData: PropTypes.number,
+  token: PropTypes.string,
+  bidId: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({
-  draftData: selectPaymentData,
   paymentMethods: selectPaymentMethods,
+  stepData: selectStepData,
+  token: selectPaymentToken,
 });
 
 export default connect(mapStateToProps)(PaymentMethodComponent);

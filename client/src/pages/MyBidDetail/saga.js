@@ -9,6 +9,8 @@ function* doGetBidDetail({ formData }) {
 
   try {
     const res = yield call(getMyBidDetailApi, formData);
+    // TODO: add transaction data for indication usr is paid
+    //
     // const exampleData = {
     //   itemName: 'item test data',
     //   itemImages: [

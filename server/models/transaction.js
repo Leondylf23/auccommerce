@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   transaction.init({
     userId: DataTypes.INTEGER,
+    sellerUserId: DataTypes.INTEGER,
     itemId: DataTypes.INTEGER,
     bidId: DataTypes.INTEGER,
     addressId: DataTypes.INTEGER,
@@ -26,11 +27,11 @@ module.exports = (sequelize, DataTypes) => {
     totalPayment: DataTypes.DECIMAL,
     bidPrice: DataTypes.DECIMAL,
     shippingPrice: DataTypes.DECIMAL,
-    shippingjson: DataTypes.JSON,
-    shippingId: DataTypes.STRING,
     paymentId: DataTypes.STRING,
     paymentJson: DataTypes.JSON,
     paymentDeadline: DataTypes.DATE,
+    paymentRedirUrl: DataTypes.TEXT,
+    paymentDatas: DataTypes.JSON,
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,

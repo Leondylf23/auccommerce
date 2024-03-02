@@ -9,3 +9,7 @@ export const selectUserAddresses = createSelector(selectPaymentPageData, (state)
 export const selectShippingProviders = createSelector(selectPaymentPageData, (state) => state.shippingProviders);
 export const selectProviderData = createSelector(selectPaymentPageData, (state) => state.providerData);
 export const selectPaymentMethods = createSelector(selectPaymentPageData, (state) => state.paymentMethods);
+
+export const selectPaymentToken = createSelector(selectPaymentPageData, (state) => state.paymentToken);
+export const selectStepData = createSelector(selectPaymentPageData, (state) => state.nextStep);
+export const selectIsAnyChanges = createSelector(selectPaymentPageData, (state) => state.isAnyChanges);

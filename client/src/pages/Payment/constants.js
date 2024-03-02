@@ -15,9 +15,14 @@ export const SET_SHIPPING_PROVIDER_DATA = 'PaymentPage/SET_SHIPPING_PROVIDER_DAT
 export const GET_PAYMENT_METHODS = 'PaymentPage/GET_PAYMENT_METHODS';
 export const SET_PAYMENT_METHODS = 'PaymentPage/SET_PAYMENT_METHODS';
 
+export const SET_IS_ANY_CHANGES = 'PaymentPage/SET_IS_ANY_CHANGES';
+
 export const GET_CHECK_FROM_PAYMENT = 'PaymentPage/GET_CHECK_FROM_PAYMENT';
 export const GET_FORM_DATA = 'PaymentPage/GET_FORM_DATA';
+export const GET_FORM_SUMMARY = 'PaymentPage/GET_FORM_SUMMARY';
 
-export const APPEND_NEW_PAYMENT_FORM = 'PaymentPage/APPEND_NEW_PAYMENT_FORM';
+export const SET_STEP_DATA = 'PaymentPage/SET_STEP_DATA';
+export const SET_TOKEN_DATA = 'PaymentPage/SET_TOKEN_DATA';
+
 export const APPEND_PAYMENT_FORM = 'PaymentPage/APPEND_PAYMENT_FORM';
 export const COMPLETE_PAYMENT_FORM = 'PaymentPage/COMPLETE_PAYMENT_FORM';

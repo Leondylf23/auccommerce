@@ -3,6 +3,7 @@ const { lte, not } = require("sequelize/lib/operators");
 const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
 const { decryptData, encryptData } = require("./utilsHelper");
+const { getPaymentMethodDataById } = require("../services/xendit");
 
 // PRIVATE FUNCTIONS
 
@@ -90,11 +91,10 @@ const getMyBidDetailData = async (dataObject, userId) => {
             "status",
           ],
         },
-
         {
           association: "transactions",
           required: false,
-          attributes: ["paymentDeadline"],
+          attributes: ["transactionCode", "paymentDeadline", "paymentRedirUrl"],
         },
       ],
       where: {
@@ -114,17 +114,23 @@ const getMyBidDetailData = async (dataObject, userId) => {
     );
     const deadlineDateISO = deadlineDate.toISOString();
 
+    const transactionDetailData = data?.transactions[0]?.dataValues?.paymentData;
+
     return Promise.resolve({
       ...data?.dataValues,
       ...data?.item?.dataValues,
-      ...data?.transaction?.dataValues,
       status: data?.dataValues?.status,
       bidDeadline: deadlineDateISO,
       highestBid: data?.dataValues?.highestBid?.price,
       isWinner: data?.dataValues?.status !== "PLACED",
       transactionData: {
-        payUntil: "2024-03-01 00:00:00",
-        transactionId: 1,
+        payUntil: data?.transactions[0]?.dataValues?.paymentDeadline,
+        transactionCode: data?.transactions[0]?.dataValues?.transactionCode,
+        redirUrl: data?.transactions[0]?.dataValues?.paymentRedirUrl,
+        detail: {
+          paymentMethod: getPaymentMethodDataById(transactionDetailData?.step3?.paymentMethodInfo?.name),
+          
+        }
       },
       isLiveNow: data?.item?.dataValues?.status === "LIVE",
       item: undefined,

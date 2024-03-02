@@ -20,7 +20,7 @@ const MyBidDetail = ({ bidDetailData }) => {
   const location = useLocation();
 
   const backBtnOnClick = () => {
-    navigate('/my-bids', location?.state?.tabIndex && { state: { tabIndex: location.state.tabIndex } });
+    navigate('/my-bids');
   };
 
   useEffect(() => {
@@ -38,6 +38,13 @@ const MyBidDetail = ({ bidDetailData }) => {
             </button>
           </div>
           {bidDetailData?.itemImages && <ImageCarousel imageDatas={bidDetailData?.itemImages} />}
+          <button
+            type="button"
+            className={classes.detailBtn}
+            onClick={() => navigate(`/item/${bidDetailData?.itemId}?backurl=/my-bids/${id}`)}
+          >
+            <FormattedMessage id="detail" />
+          </button>
         </div>
         <div className={classes.rightSide}>
           <h1 className={classes.itemName}>{bidDetailData?.itemName}</h1>
@@ -63,7 +70,7 @@ const MyBidDetail = ({ bidDetailData }) => {
                 </p>
                 <p className={classes.price}>Rp. {numberWithPeriods(bidDetailData?.highestBid)}</p>
                 <div className={classes.paymentStatusContainer}>
-                  {bidDetailData?.transactionData ? (
+                  {bidDetailData?.transactionData && bidDetailData?.status === 'WAIT_PAYMENT' ? (
                     <p className={classes.text}>
                       <FormattedMessage id="my_bids_detail_pay_until" />:
                       <p>{formatDateTimeSlashes(bidDetailData?.transactionData?.payUntil)}</p>
@@ -74,20 +81,46 @@ const MyBidDetail = ({ bidDetailData }) => {
                     </p>
                   )}
                   <StatusCard status={bidDetailData?.status} />
-                  <button
-                    type="button"
-                    className={classes.button}
-                    onClick={() =>
-                      navigate(
-                        bidDetailData?.transactionData
-                          ? `./transaction/${bidDetailData?.transactionData?.transactionId}`
-                          : `./payment`
-                      )
-                    }
-                  >
-                    <FormattedMessage id="pay" />
-                  </button>
+                  {(bidDetailData?.status === 'WAIT_PAYMENT' || bidDetailData?.status === 'WAITING') && (
+                    <button
+                      type="button"
+                      className={classes.button}
+                      onClick={() =>
+                        bidDetailData?.transactionData?.transactionCode
+                          ? (window.location.href = bidDetailData?.transactionData?.redirUrl)
+                          : navigate(`./payment`)
+                      }
+                    >
+                      <FormattedMessage id="pay" />
+                    </button>
+                  )}
                 </div>
+                {bidDetailData?.transactionData && (
+                  <div className={classes.transactionDetailContainer}>
+                    <h3 className={classes.transactionTitle}>
+                      <FormattedMessage id="my_bids_detail_transaction_title" />
+                    </h3>
+                    <p className={classes.transactionCodeText}>{bidDetailData?.transactionData?.transactionCode}</p>
+                    <div className={classes.detailData}>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>Total Payment:</p>
+                        <p className={classes.data}>Alamat aja</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>Shipment Cost:</p>
+                        <p className={classes.data}>Alamat aja</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>Admin Cost:</p>
+                        <p className={classes.data}>Alamat aja</p>
+                      </div>
+                      <div className={classes.detailContainer}>
+                        <p className={classes.label}>Payment Method:</p>
+                        <p className={classes.data}>Alamat aja</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <div className={classes.bidStatus}>
@@ -98,7 +131,6 @@ const MyBidDetail = ({ bidDetailData }) => {
               </div>
             )}
           </div>
-          <p className={classes.itemDesc}>{bidDetailData?.itemDescription}</p>
         </div>
       </div>
     </div>

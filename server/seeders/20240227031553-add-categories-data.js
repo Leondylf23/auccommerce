@@ -15,14 +15,6 @@ module.exports = {
         updatedAt: now,
       },
       {
-        name: "Vehicles",
-        nameId: "Kendaraan",
-        pictureUrl:
-          "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005040/static_resources/qusdbsrck3aehfqa46if.png",
-        createdAt: now,
-        updatedAt: now,
-      },
-      {
         name: "Jewerly",
         nameId: "Perhiasan",
         pictureUrl:

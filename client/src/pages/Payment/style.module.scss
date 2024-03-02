@@ -175,8 +175,19 @@
             margin-bottom: 1rem;
         }
 
+        .infoContainer {
+            @include directionY;
+
+            margin-bottom: 0.5rem;
+        }
+
         .labelEst {
             font-weight: 500;
+            text-align: end;
+        }
+
+        .time {
+            font-weight: 600;
             text-align: end;
         }
 
@@ -241,6 +252,8 @@
                 height: 40px;
                 flex-shrink: 0;
                 margin-right: 0.5rem;
+                object-fit: cover;
+                object-position: center;
 
                 @include apply-at-sm-size {
                     width: 80px;
@@ -296,6 +309,32 @@
                 font-size: 1.2rem;
                 font-weight: 700;
                 flex-shrink: 0;
+            }
+        }
+    }
+    .paymentMethodContainer {
+        @include directionY;
+        width: 100%;
+        margin-bottom: 1rem;
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .paymentMethodDataContainer {
+            @include directionX;
+
+            align-items: center;
+            justify-content: end;
+
+            .logo {
+                width: 100px;
+                aspect-ratio: 2/1;
+                margin-right: 1rem;
+            }
+            .name {
+                font-weight: 700;
+                font-size: 1.2rem;
             }
         }
     }

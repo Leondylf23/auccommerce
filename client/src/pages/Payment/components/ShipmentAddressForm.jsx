@@ -9,15 +9,15 @@ import { FormattedMessage } from 'react-intl';
 
 import PopupWindow from '@components/PopupWindow/Dialog';
 import LocationInputForm from '@components/LocationInputForm';
+import { selectPaymentToken, selectStepData, selectUserAddresses } from '../selectors';
+import { getFormData, getUserAddresses, setIsAnyChanges, setPaymentData } from '../actions';
 
 import classes from '../style.module.scss';
-import { selectUserAddresses } from '../selectors';
-import { getUserAddresses } from '../actions';
 
-const ShippmentAddressFormComponent = ({ addressList }) => {
+const ShippmentAddressFormComponent = ({ addressList, setIsAbleNext, token, stepData, bidId }) => {
   const dispatch = useDispatch();
 
-  const [selectedAddress, setSelectedAddress] = useState(-1);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [isOpenLocationInput, setIsOpenLocationInput] = useState(false);
   const [editData, setEditData] = useState(null);
 
@@ -32,17 +32,36 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
     setIsOpenLocationInput(true);
   };
 
-  const selectAddress = (id) => {
+  const selectAddress = (id, isInitData) => {
+    if (!isInitData) dispatch(setIsAnyChanges(true));
+
     if (selectedAddress === id) {
       setSelectedAddress(null);
+      setIsAbleNext(false);
     } else {
       setSelectedAddress(id);
+      setIsAbleNext(true);
     }
   };
 
   useEffect(() => {
-    dispatch(getUserAddresses());
+    dispatch(
+      getUserAddresses((error) => {
+        if (stepData > 1 && !error) {
+          dispatch(
+            getFormData({ token, step: 1, bidId }, (data, err) => {
+              if (!err) selectAddress(data?.selectedAddressId, true);
+            })
+          );
+        }
+      })
+    );
   }, []);
+
+  useEffect(() => {
+    const findData = addressList.find((address) => address?.id === selectedAddress);
+    dispatch(setPaymentData({ selectedAddressId: selectedAddress, addressInformation: findData }));
+  }, [selectedAddress]);
 
   return (
     <div className={classes.innerContainer}>
@@ -71,7 +90,9 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
         </div>
       ) : (
         <div className={classes.emptyContainer}>
-          <p className={classes.text}>Kosong</p>
+          <p className={classes.text}>
+            <FormattedMessage id="empty" />
+          </p>
         </div>
       )}
       <div className={classes.addAddressContainer}>
@@ -85,10 +106,16 @@ const ShippmentAddressFormComponent = ({ addressList }) => {
 
 ShippmentAddressFormComponent.propTypes = {
   addressList: PropTypes.array,
+  setIsAbleNext: PropTypes.func,
+  token: PropTypes.string,
+  stepData: PropTypes.number,
+  bidId: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({
   addressList: selectUserAddresses,
+  token: selectPaymentToken,
+  stepData: selectStepData,
 });
 
 export default connect(mapStateToProps)(ShippmentAddressFormComponent);

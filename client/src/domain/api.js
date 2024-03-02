@@ -98,8 +98,11 @@ export const getMyBidDetailApi = (formData) => callAPI(`${urls.myBids}/detail`, 
 // PaymentForm
 export const getCheckFormApi = (formData) => callAPI(`${urls.paymentForm}/check-data`, 'get', {}, formData);
 export const getFormDataInfoApi = (formData) => callAPI(`${urls.paymentForm}/get-form-data`, 'get', {}, formData);
+export const getShipProvidersApi = (formData) =>
+  callAPI(`${urls.paymentForm}/get-shipment-providers`, 'get', {}, formData);
+export const getPaymentMethodsApi = (formData) =>
+  callAPI(`${urls.paymentForm}/get-payment-methods`, 'get', {}, formData);
+export const getFormSummaryApi = (formData) => callAPI(`${urls.paymentForm}/get-form-summary`, 'get', {}, formData);
 
-export const appendNewFormDataApi = (formData) =>
-  callAPI(`${urls.paymentForm}/create-new-form`, 'post', {}, {}, formData);
 export const appendFormDataApi = (formData) => callAPI(`${urls.paymentForm}/append-form`, 'post', {}, {}, formData);
 export const completeFormDataApi = (formData) => callAPI(`${urls.paymentForm}/complete-form`, 'post', {}, {}, formData);

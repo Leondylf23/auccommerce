@@ -145,7 +145,7 @@ const AuctionForm = ({ detailData, categories }) => {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_itm_nm_err' })));
       return;
     }
-    if (itemGeneralData?.startBid < 5000 || itemGeneralData?.startBid > 50000000000) {
+    if (itemGeneralData?.startBid < 5000 || itemGeneralData?.startBid > 15000000) {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_start_bid_err' })));
       return;
     }
@@ -185,9 +185,15 @@ const AuctionForm = ({ detailData, categories }) => {
       itemSpecificationData?.length < 1 ||
       itemSpecificationData?.width < 1 ||
       itemSpecificationData?.height < 1 ||
-      itemSpecificationData?.weight < 1
+      itemSpecificationData?.length > 500 ||
+      itemSpecificationData?.width > 500 ||
+      itemSpecificationData?.height > 500
     ) {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_item_spec_err_below_zero' })));
+      return;
+    }
+    if (itemSpecificationData?.weight < 1 || itemSpecificationData?.weight > 500000) {
+      dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_item_spec_err_weight_below_zero' })));
       return;
     }
 

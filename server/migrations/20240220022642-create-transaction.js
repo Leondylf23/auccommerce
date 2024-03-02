@@ -61,12 +61,6 @@ module.exports = {
       shippingPrice: {
         type: Sequelize.DECIMAL(20,2)
       },
-      shippingjson: {
-        type: Sequelize.JSON
-      },
-      shippingId: {
-        type: Sequelize.STRING
-      },
       paymentId: {
         type: Sequelize.STRING
       },

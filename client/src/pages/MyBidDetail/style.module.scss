@@ -27,6 +27,12 @@
                 }
             }
 
+            .detailBtn {
+                @include button;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
             @include apply-at-sm-size {
                 width: 45%;
             }
@@ -113,6 +119,45 @@
 
                     .text {
                         margin-right: 1rem;
+                    }
+                }
+
+                .transactionDetailContainer {
+                    @include directionY;
+
+                    width: 100%;
+                    margin-top: 1rem;
+                    align-items: start;
+
+                    .transactionTitle {
+                        text-align: start;
+                        margin-bottom: 1rem;
+                    }
+                    .transactionCodeText {
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+                    }
+                    .detailData {
+                        @include directionY;
+
+                        width: 100%;
+
+                        .detailContainer {
+                            @include directionX;
+
+                            width: 100%;
+                            align-items: start;
+                            gap: 0.25rem;
+
+                            .label {
+                                width: 45%;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            }
+                            .data {
+                                width: 55%;
+                            }
+                        }
                     }
                 }
             }

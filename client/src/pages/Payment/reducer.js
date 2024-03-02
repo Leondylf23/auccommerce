@@ -1,10 +1,13 @@
 import { produce } from 'immer';
 import {
   SET_BID_DETAIL_DATA,
+  SET_IS_ANY_CHANGES,
   SET_PAYMENT_DATA,
   SET_PAYMENT_METHODS,
   SET_SHIPPING_PROVIDERS,
   SET_SHIPPING_PROVIDER_DATA,
+  SET_STEP_DATA,
+  SET_TOKEN_DATA,
   SET_USER_ADDRESSES,
 } from './constants';
 
@@ -15,9 +18,13 @@ export const initialState = {
   shippingProviders: [],
   paymentMethods: [],
   providerData: null,
+
+  paymentToken: null,
+  isAnyChanges: false,
+  nextStep: 0,
 };
 
-export const storedKey = ['paymentData'];
+export const storedKey = ['paymentToken'];
 
 const paymentPageReducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -39,6 +46,17 @@ const paymentPageReducer = (state = initialState, action) =>
         break;
       case SET_PAYMENT_METHODS:
         draft.paymentMethods = action.data;
+        break;
+
+      case SET_IS_ANY_CHANGES:
+        draft.isAnyChanges = action.data;
+        break;
+
+      case SET_TOKEN_DATA:
+        draft.paymentToken = action.data;
+        break;
+      case SET_STEP_DATA:
+        draft.nextStep = action.data;
         break;
     }
   });
