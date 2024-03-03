@@ -1,3 +1,5 @@
+const _ = require("lodash");
+const Boom = require("boom");
 const { lte, not } = require("sequelize/lib/operators");
 
 const db = require("../../models");
@@ -111,6 +113,8 @@ const getMyBidDetailData = async (dataObject, userId) => {
       order: [["id", "DESC"]],
       limit: 10,
     });
+
+    if (_.isEmpty(data)) throw Boom.notFound("Data not found");
 
     const deadlineDate = new Date(data?.dataValues?.createdAt);
     deadlineDate.setHours(

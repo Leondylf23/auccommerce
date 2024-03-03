@@ -6,7 +6,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { numberWithPeriods, timerDisplay } from '@utils/allUtils';
+import { formatDateTimeSlashes, numberWithPeriods, timerDisplay } from '@utils/allUtils';
 import { selectLogin, selectToken } from '@containers/Client/selectors';
 import { selectSocket } from '@containers/App/selectors';
 import { setLoading, showPopup } from '@containers/App/actions';
@@ -64,7 +64,7 @@ const ItemDetail = ({ isLogin, token, itemDetailData, socket }) => {
     dispatch(
       showPopup(
         intl.formatMessage({ id: 'app_banned_title' }),
-        `${intl.formatMessage({ id: 'app_banned_msg' })} ${dateTimeBan}. ${intl.formatMessage({
+        `${intl.formatMessage({ id: 'app_banned_msg' })} ${formatDateTimeSlashes(dateTimeBan)}. ${intl.formatMessage({
           id: 'app_banned_msg2',
         })}`
       )

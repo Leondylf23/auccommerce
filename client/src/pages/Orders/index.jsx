@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import PopupWindow from '@components/PopupWindow/Dialog';
 import EmptyContainer from './components/EmptyContainer';
 import { selectOrderList } from './selectors';
-import { getOrderDetail, getOrders } from './actions';
+import { getOrders } from './actions';
 import TransactionCard from './components/TransactionCard';
 import DetailPopup from './components/DetailPopup';
 
@@ -60,6 +60,7 @@ const Orders = ({ ordersData }) => {
               <TransactionCard
                 data={transaction}
                 setDetailId={() => setDetailId(transaction?.id)}
+                refresh={() => fetchData(true)}
                 key={transaction?.id}
               />
             ))}

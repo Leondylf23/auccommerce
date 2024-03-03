@@ -324,7 +324,7 @@ const deleteUserAddress = async (dataObject, userId) => {
 
   try {
     const data = await db.address.findOne({ where: { id, isActive: true } });
-    if (_.isEmpty(data)) throw Boom.badRequest("Unknown data!");
+    if (_.isEmpty(data)) throw Boom.notFound("Unknown data!");
     if (data?.dataValues?.userId !== userId)
       throw Boom.unauthorized("Cannot delete other user data!");
 

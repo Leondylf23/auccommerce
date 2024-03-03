@@ -18,6 +18,7 @@ import { selectAuctionDetailData } from './selectors';
 import { deleteAuctionData, getAuctionDetailData, saveAuctionData } from './actions';
 
 import classes from './style.module.scss';
+import { encryptDataAES } from '@utils/allUtils';
 
 const itemGeneralDataDefault = {
   itemName: '',
@@ -47,7 +48,8 @@ const AuctionForm = ({ detailData, categories }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [errImgMsg, setErrImgMsg] = useState([]);
   const [errTimoutId, setErrTimeoutId] = useState(null);
-  const [isLive, setIsLive] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+  const [isDeletable, setIsDeletable] = useState(false);
   const [isLoadingCategory, setIsLoadingCategory] = useState(false);
   const [isShowDeletePopup, setIsShowDeletePopup] = useState(false);
 
@@ -203,11 +205,11 @@ const AuctionForm = ({ detailData, categories }) => {
       formData.append('id', id);
       formData.append(
         'imageArray',
-        JSON.stringify(itemImages?.filter((image) => image?.url !== '').map((image) => image.url))
+        encryptDataAES(JSON.stringify(itemImages?.filter((image) => image?.url !== '').map((image) => image.url)))
       );
     }
-    formData.append('itemGeneralData', JSON.stringify(itemGeneralData));
-    formData.append('itemSpecificationData', JSON.stringify(itemSpecificationData));
+    formData.append('itemGeneralData', encryptDataAES(JSON.stringify(itemGeneralData)));
+    formData.append('itemSpecificationData', encryptDataAES(JSON.stringify(itemSpecificationData)));
 
     for (let index = 0; index < itemImages.length; index++) {
       const image = itemImages[index];
@@ -242,8 +244,11 @@ const AuctionForm = ({ detailData, categories }) => {
     if (id && detailData) {
       setItemGeneralData(detailData?.itemGeneralData);
       setItemSpecificationData(detailData?.itemSpecificationData);
-      setIsLive(detailData?.isLive);
+      setIsEditable(detailData?.isEditable);
+      setIsDeletable(detailData?.isDeletable);
       setItemImages(detailData?.itemImages?.map((image) => ({ id: uuid(), imageData: null, url: image })));
+    } else {
+      setIsEditable(true);
     }
   }, [detailData]);
   useEffect(() => {
@@ -301,7 +306,7 @@ const AuctionForm = ({ detailData, categories }) => {
                   })
                 )
               }
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -321,7 +326,7 @@ const AuctionForm = ({ detailData, categories }) => {
                   })
                 )
               }
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -342,7 +347,7 @@ const AuctionForm = ({ detailData, categories }) => {
                   })
                 )
               }
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -361,7 +366,7 @@ const AuctionForm = ({ detailData, categories }) => {
                   })
                 )
               }
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -388,7 +393,7 @@ const AuctionForm = ({ detailData, categories }) => {
                     })
                   )
                 }
-                disabled={isLive}
+                disabled={!isEditable}
               >
                 <option value={-1}>
                   <FormattedMessage id="auction_form_general_itm_ctg_op" />
@@ -421,7 +426,7 @@ const AuctionForm = ({ detailData, categories }) => {
                   })
                 )
               }
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -441,7 +446,7 @@ const AuctionForm = ({ detailData, categories }) => {
               className={classes.input}
               value={itemSpecificationData?.length}
               onChange={(e) => onChangeInputItmSpec('length', e.target.value)}
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -455,7 +460,7 @@ const AuctionForm = ({ detailData, categories }) => {
               className={classes.input}
               value={itemSpecificationData?.width}
               onChange={(e) => onChangeInputItmSpec('width', e.target.value)}
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -471,7 +476,7 @@ const AuctionForm = ({ detailData, categories }) => {
               className={classes.input}
               value={itemSpecificationData?.height}
               onChange={(e) => onChangeInputItmSpec('height', e.target.value)}
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -485,7 +490,7 @@ const AuctionForm = ({ detailData, categories }) => {
               className={classes.input}
               value={itemSpecificationData?.weight}
               onChange={(e) => onChangeInputItmSpec('weight', e.target.value)}
-              disabled={isLive}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -535,13 +540,13 @@ const AuctionForm = ({ detailData, categories }) => {
                     className={classes.button}
                     data-type="red"
                     onClick={() => deleteImage(index)}
-                    disabled={isLive}
+                    disabled={!isEditable}
                   >
                     <DeleteIcon className={classes.icon} />
                   </button>
                 </div>
               ))}
-              {isShowFileForm && !isLive && itemImages.length < 8 && (
+              {isShowFileForm && isEditable && itemImages.length < 8 && (
                 <div className={classes.buttonContainer}>
                   <label htmlFor="imageInput" className={classes.imageInputBtn} data-type="clean">
                     <AddPhotoAlternateIcon />
@@ -553,7 +558,7 @@ const AuctionForm = ({ detailData, categories }) => {
                     hidden
                     id="imageInput"
                     onChange={addImageData}
-                    disabled={isLive}
+                    disabled={!isEditable}
                   />
                 </div>
               )}
@@ -562,7 +567,7 @@ const AuctionForm = ({ detailData, categories }) => {
         </div>
       </div>
       <div className={classes.buttons}>
-        <button type="button" className={classes.button} disabled={isLive} onClick={saveDataToDb}>
+        <button type="button" className={classes.button} disabled={!isEditable} onClick={saveDataToDb}>
           <FormattedMessage id="save" />
         </button>
         {id && (
@@ -570,7 +575,7 @@ const AuctionForm = ({ detailData, categories }) => {
             type="button"
             className={classes.button}
             data-type="red"
-            disabled={isLive}
+            disabled={!isDeletable}
             onClick={() => setIsShowDeletePopup(true)}
           >
             <FormattedMessage id="delete" />

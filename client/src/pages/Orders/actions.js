@@ -23,7 +23,8 @@ export const getOrderDetail = (formData, cb) => ({
   cb,
 });
 
-export const sendProcessStatus = (formData) => ({
+export const sendProcessStatus = (formData, cb) => ({
   type: SEND_PROCESS_STATUS,
   formData,
+  cb,
 });

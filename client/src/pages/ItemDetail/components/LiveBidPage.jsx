@@ -54,6 +54,15 @@ const LiveBidPage = ({ socket, id, timer, token }) => {
   };
 
   const sendBidData = () => {
+    if (bidPriceInput > 25000000) {
+      dispatch(
+        showPopup(
+          intl.formatMessage({ id: 'item_detail_bid_place_validation_title' }),
+          intl.formatMessage({ id: 'item_detail_bid_place_validation_msg_max' })
+        )
+      );
+      return;
+    }
     if (bidPriceInput <= higestBidPrice) {
       dispatch(
         showPopup(
@@ -201,7 +210,7 @@ const LiveBidPage = ({ socket, id, timer, token }) => {
                 type="number"
                 name="bidPrice"
                 min={0}
-                max={1000000000000}
+                max={25000000}
                 value={bidPriceInput}
                 onChange={(e) => onChangeBidPriceInput(e.target.value)}
                 className={classes.input}

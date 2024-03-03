@@ -150,13 +150,18 @@ const createNewAuction = async (request, reply) => {
 
     const { itemGeneralData, itemSpecificationData } = request.body;
 
-    ValidationAuction.generalAuctionFormDataValidation(
-      JSON.parse(itemGeneralData)
-    );
-    ValidationAuction.specAuctionFormDataValidation(
-      JSON.parse(itemSpecificationData)
-    );
+    let decryptedGeneral = null;
+    let decrypteditemSpec = null;
 
+    try {
+      decryptedGeneral = JSON.parse(decryptData(itemGeneralData));
+      decrypteditemSpec = JSON.parse(decryptData(itemSpecificationData));
+    } catch (error) {
+      throw Boom.badRequest("Form data is invalid!");
+    }
+
+    ValidationAuction.generalAuctionFormDataValidation(decryptedGeneral);
+    ValidationAuction.specAuctionFormDataValidation(decrypteditemSpec);
     const imageFiles = request?.files?.images;
 
     const userData = GeneralHelper.getUserData(request);
@@ -187,12 +192,18 @@ const updateAuction = async (request, reply) => {
 
     const { itemGeneralData, itemSpecificationData } = request.body;
 
-    ValidationAuction.generalAuctionFormDataValidation(
-      JSON.parse(itemGeneralData)
-    );
-    ValidationAuction.specAuctionFormDataValidation(
-      JSON.parse(itemSpecificationData)
-    );
+    let decryptedGeneral = null;
+    let decrypteditemSpec = null;
+
+    try {
+      decryptedGeneral = JSON.parse(decryptData(itemGeneralData));
+      decrypteditemSpec = JSON.parse(decryptData(itemSpecificationData));
+    } catch (error) {
+      throw Boom.badRequest("Form data is invalid!");
+    }
+
+    ValidationAuction.generalAuctionFormDataValidation(decryptedGeneral);
+    ValidationAuction.specAuctionFormDataValidation(decrypteditemSpec);
 
     const imageFiles = request?.files?.images;
 
@@ -274,10 +285,6 @@ Router.patch(
   updateAuction
 );
 
-Router.delete(
-  "/auctions/delete",
-  AuthMiddleware.validateToken,
-  deleteAuction
-);
+Router.delete("/auctions/delete", AuthMiddleware.validateToken, deleteAuction);
 
 module.exports = Router;

@@ -12,8 +12,8 @@ import myBidsReducer from '@pages/MyBids/reducer';
 import bidDetailReducer from '@pages/MyBidDetail/reducer';
 import myAuctionsReducer from '@pages/MyAuctions/reducer';
 import auctionFormReducer from '@pages/AuctionForm/reducer';
-import { mapWithPersistor } from './persistence';
 import ordersReducer from '@pages/Orders/reducer';
+import { mapWithPersistor } from './persistence';
 
 const storedReducers = {
   app: { reducer: appReducer, whitelist: storedAppState },

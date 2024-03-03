@@ -1,8 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { showPopup } from '@containers/App/actions';
-import { getOrderDetailApi, getOrdersApi } from '@domain/api';
+import { setLoading, showPopup } from '@containers/App/actions';
+import { getOrderDetailApi, getOrdersApi, sendProcessStatusApi } from '@domain/api';
 import { resetOrders, setOrders } from './actions';
-import { GET_ORDERS, GET_ORDER_DETAIL } from './constants';
+import { GET_ORDERS, GET_ORDER_DETAIL, SEND_PROCESS_STATUS } from './constants';
 
 function* doGetOrders({ formData, isReset, cb, cbErr }) {
   try {
@@ -28,7 +28,23 @@ function* doGetOrderDetail({ formData, cb }) {
   }
 }
 
+function* doSendProcessStatus({ formData, cb }) {
+  yield put(setLoading(true));
+
+  try {
+    yield call(sendProcessStatusApi, formData);
+
+    cb && cb(null);
+  } catch (error) {
+    yield put(showPopup());
+    cb && cb(error);
+  }
+
+  yield put(setLoading(false));
+}
+
 export default function* ordersSaga() {
   yield takeLatest(GET_ORDERS, doGetOrders);
   yield takeLatest(GET_ORDER_DETAIL, doGetOrderDetail);
+  yield takeLatest(SEND_PROCESS_STATUS, doSendProcessStatus);
 }

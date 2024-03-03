@@ -55,7 +55,7 @@ export const timerDisplay = (value) => {
 export const formatDateTimeSlashes = (value) => {
   if (!value) return '';
 
-  const date = new Date(value);
+  const date = new Date(new Date(value) - timeZoneOffset);
   const isoString = date.toISOString();
   const formatted = isoString.replace('-', '/').replace('-', '/').replace('T', ' ').slice(0, 16);
 

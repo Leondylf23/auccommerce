@@ -111,3 +111,6 @@ export const completeFormDataApi = (formData) => callAPI(`${urls.paymentForm}/co
 // Orders
 export const getOrdersApi = (formData) => callAPI(`${urls.transaction}/get-orders`, 'get', {}, formData);
 export const getOrderDetailApi = (formData) => callAPI(`${urls.transaction}/get-orders/detail`, 'get', {}, formData);
+
+export const sendProcessStatusApi = (formData) => callAPI(`${urls.transaction}/processed`, 'post', {}, {}, formData);
+export const sendCompleteStatusApi = (formData) => callAPI(`${urls.transaction}/completed`, 'post', {}, {}, formData);

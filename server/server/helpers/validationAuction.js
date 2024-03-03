@@ -70,8 +70,8 @@ const generalAuctionFormDataValidation = (data) => {
     itemName: Joi.string().min(5).max(255).description("Item name in string"),
     startBid: Joi.number()
       .min(5000)
-      .max(50000000000)
-      .description("Start bid in number min 5.000 and max 50.000.000.000"),
+      .max(25000000)
+      .description("Start bid in number min 5.000 and max 25.000.000"),
     startBidDate: Joi.date().description("Start bid date in date time"),
     deadlineBid: Joi.date().description("Deadline bid date in date time"),
     description: Joi.string()

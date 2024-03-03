@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { v4: uuid } = require("uuid");
@@ -8,6 +9,7 @@ const db = require("../../models");
 
 const AuctionHelper = require("../helpers/auctionHelper");
 const AuthHelper = require("../helpers/authUserHelper");
+const { setTimerEventData } = require("../timers/ItemStatus");
 
 const signatureSecretKey = process.env.SIGN_SECRET_KEY || "pgJApn9pJ8";
 
@@ -18,6 +20,7 @@ const joinedUser = [];
 const cooldown = [];
 const timer = [];
 const liveRedisTTL = 2 * 60 * 60;
+
 
 // PRIVATE FUNCTION
 const __verifiedUser = (token) => jwt.verify(token, signatureSecretKey);
@@ -81,43 +84,6 @@ const __addBidDataInDb = async (userId, itemId, bidPlacePrice) => {
   });
 };
 
-const __updateBidWinner = async (itemId) => {
-  let tryCount = 5;
-
-  const updateDataFunc = async () => {
-    try {
-      const winnerData = await db.bid.findOne({
-        where: { itemId },
-        order: [["bidPlacePrice", "DESC"]],
-        limit: 1,
-      });
-
-      const updateData = await winnerData.update({ status: "WAITING" });
-      if (!updateData) throw new Error("Couldn't update winner data");
-    } catch (error) {
-      if (tryCount > 0) {
-        console.log(
-          ["Error"],
-          `Error updating winner data. Trying to update next 10 seconds. ${tryCount} count left.`
-        );
-
-        // eslint-disable-next-line no-plusplus
-        tryCount--;
-
-        setTimeout(() => {
-          updateDataFunc();
-        }, 10000);
-      } else if (tryCount < 1) {
-        console.log(
-          ["Error"],
-          "Error updating winner data. All count are used!"
-        );
-      }
-    }
-  };
-  updateDataFunc();
-};
-
 const __setBidComplete = async (io, id) => {
   io.to(id).emit("auction/LIVE_ENDED");
 
@@ -127,7 +93,6 @@ const __setBidComplete = async (io, id) => {
   if (findLiveDataIndx !== -1) {
     tempLiveData[findLiveDataIndx].timerDeadline = 0;
   }
-  __updateBidWinner(id);
 };
 
 // AUCOMMERCE FUNCTION
@@ -149,7 +114,7 @@ const AucommerceLiveBid = (io, socket) => {
       const userData = getUserData?.userData;
       const userDataIndex = getUserData?.index;
       const joinedItemId = userData?.itemId;
-      
+
       joinedUser.splice(userDataIndex, 1);
 
       const getLiveData = __getLiveData(joinedItemId);

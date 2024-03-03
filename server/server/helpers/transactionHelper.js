@@ -12,6 +12,9 @@ const {
 } = require("../services/redis");
 const { getPaymentRequestData } = require("../services/xendit");
 const { decryptData, encryptData } = require("./utilsHelper");
+const { setTimerEventData } = require("../timers/PaymentStatus");
+
+const paymentTimerEvents = setTimerEventData();
 
 // PRIVATE FUNCTIONS
 
@@ -37,6 +40,8 @@ const getRedirectData = async (dataObject) => {
     if (!updateBid) throw Boom.internal("Error updating bid status!");
 
     await deleteKeyValue(`TRANSACTION-${token}`);
+
+    paymentTimerEvents.emit("PaymentStatus/STOP_TASK_BY_DATA_ID", { dataId: getBidData?.id })
 
     return Promise.resolve({
       bidId: bidData?.id,
@@ -64,13 +69,13 @@ const getOrders = async (dataObject, userId) => {
         {
           association: "bid",
           required: true,
-          attributes: ["bidPlacePrice", "status"],
+          attributes: ["bidPlacePrice", "status", "createdAt"],
           where: { status: { [not]: "PLACED" } },
         },
         {
           association: "item",
           required: true,
-          attributes: ["itemName"],
+          attributes: ["id", "itemName"],
         },
       ],
       where: {
@@ -94,6 +99,8 @@ const getOrders = async (dataObject, userId) => {
       itemName: element?.item.dataValues?.itemName,
       price: element?.bid.dataValues?.bidPlacePrice,
       status: element?.bid.dataValues?.status,
+      itemId: element?.item.dataValues?.id,
+      createdAt: element?.bid.dataValues?.createdAt,
     }));
 
     return Promise.resolve({
@@ -106,50 +113,116 @@ const getOrders = async (dataObject, userId) => {
 };
 
 const getOrderDetail = async (dataObject, userId) => {
-    const { id } = dataObject;
-  
-    try {
-      const data = await db.transaction.findOne({
-        attributes: ["transactionCode", "bidId", "paymentDatas"],
-        include: [
-          {
-            association: "bid",
-            required: true,
-            attributes: ["bidPlacePrice", "status"],
-            where: { status: { [not]: "PLACED" } },
-          },
-          {
-            association: "item",
-            required: true,
-            attributes: ["itemName"],
-          },
-          {
-            association: "user",
-            required: true,
-            attributes: ["fullname", "pictureUrl"],
-          },
-        ],
-        where: {
-          sellerUserId: userId,
-          isActive: true,
-          id
-        },
-      });
+  const { id } = dataObject;
 
-      const remappedData = {
-        ...data?.dataValues,
-        ...data?.item?.dataValues,
-        ...data?.user?.dataValues,
-      };
-  
-      return Promise.resolve(remappedData);
-    } catch (err) {
-      return Promise.reject(GeneralHelper.errorResponse(err));
-    }
-  };
+  try {
+    const data = await db.transaction.findOne({
+      attributes: ["transactionCode", "paymentDatas"],
+      include: [
+        {
+          association: "bid",
+          required: true,
+          attributes: ["bidPlacePrice", "status", "createdAt"],
+          where: { status: { [not]: "PLACED" } },
+        },
+        {
+          association: "user",
+          required: true,
+          attributes: ["fullname", "pictureUrl"],
+        },
+      ],
+      where: {
+        sellerUserId: userId,
+        isActive: true,
+        id,
+      },
+    });
+
+    const paymentData = data?.dataValues?.paymentDatas;
+
+    const remappedData = {
+      ...data?.dataValues,
+      transactionData: {
+        itemName: paymentData?.itemData?.itemName,
+        shippingData: {
+          address: paymentData?.step1?.addressInformation?.address,
+          reciever: paymentData?.step1?.addressInformation?.pic,
+          phone: paymentData?.step1?.addressInformation?.phone,
+          provider: paymentData?.step2?.providerInfo?.name,
+          price: paymentData?.step2?.providerInfo?.estPrice,
+          estTime: paymentData?.step2?.providerInfo?.estTime,
+        },
+      },
+      paymentDatas: undefined,
+    };
+
+    return Promise.resolve(remappedData);
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const confirmOrderData = async (dataObject, userId) => {
+  const { id } = dataObject;
+
+  try {
+    const transactionData = await db.transaction.findOne({
+      attributes: ["bidId"],
+      where: {
+        sellerUserId: userId,
+        isActive: true,
+        id,
+      },
+    });
+
+    const bidData = await db.bid.findOne({
+      where: {
+        status: "WAIT_CONFIRM",
+        isActive: true,
+        id: transactionData?.dataValues?.bidId,
+      },
+    });
+
+    if (_.isEmpty(bidData)) throw Boom.notFound("Data is not found");
+
+    const updateData = await bidData.update({ status: "SHIPPING" });
+    if (!updateData) throw Boom.internal("Update status data failed!");
+
+    return Promise.resolve("Data updated successfully!");
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
+
+const completeOrderData = async (dataObject, userId) => {
+  const { id } = dataObject;
+
+  try {
+    const data = await db.bid.findOne({
+      where: {
+        userId,
+        isActive: true,
+        status: "SHIPPING",
+        id,
+      },
+    });
+
+    if (_.isEmpty(data)) throw Boom.notFound("Data is not found");
+
+    const updateData = await data.update({ status: "COMPLETED" });
+    if (!updateData) throw Boom.internal("Update status data failed!");
+
+    return Promise.resolve("Data updated successfully!");
+  } catch (err) {
+    return Promise.reject(GeneralHelper.errorResponse(err));
+  }
+};
 
 module.exports = {
   getRedirectData,
   getOrders,
   getOrderDetail,
+
+  confirmOrderData,
+  completeOrderData,
 };

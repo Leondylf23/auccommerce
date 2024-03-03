@@ -1,0 +1,1122 @@
+{
+	"info": {
+		"_postman_id": "b8968efa-92a1-4760-8b81-baab26c566ec",
+		"name": "Auccommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22956573"
+	},
+	"item": [
+		{
+			"name": "[POST] Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"U2FsdGVkX19zWhk1JkIg9/+WbczQpU8z0/ZXhfFfjf4=\",\r\n    \"password\" : \"U2FsdGVkX18CK9oFLFnAu6okMD8vF/L6u4/0WUbku/I=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullname\": \"U2FsdGVkX19+8/ro+7Q4NWpubkwdOqgn/k2kCmtUWPY=\",\r\n    \"email\": \"U2FsdGVkX19Rtkjp0xZ8qNeCppUsFFQpBzFvCYQrHM8=\",\r\n    \"password\": \"U2FsdGVkX18vH013aWTFLqmS7usuA/BWXDQcZIL+kcE=\",\r\n    \"dob\": \"U2FsdGVkX1+MVgyWcTKKp8niGjP+7z8D98qdSGCORVU=\",\r\n    \"role\": \"U2FsdGVkX1+t/s1xIYlmrwVb3BmmAWIjWOMJzfn0JTQ=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Reset password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"bbb@b.b\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/reset-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get user login data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/init-profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"init-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get user addresses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/addresses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Get user profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Add new address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"label\": \"test tambah\",\r\n    \"address\": \"ini jalan aja alamatnya\",\r\n    \"phone\": \"12313333333333\",\r\n    \"pic\": \"penerima\",\r\n    \"note\": \"test catatan alamat baru\",\r\n    \"postalCode\": \"11111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/addresses/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"addresses",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] Delete user address",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/addresses/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"addresses",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH] Edit address",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5,\r\n    \"label\": \"test tambah\",\r\n    \"address\": \"ini jalan aja alamatnya\",\r\n    \"phone\": \"12313333333333\",\r\n    \"pic\": \"penerima\",\r\n    \"note\": \"test catatan alamat baru edit\",\r\n    \"postalCode\": \"11111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/addresses/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"addresses",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH] Change user password",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oldPassword\": \"U2FsdGVkX1/kdM9FctxBjFvrMGwNWipQJDnP9uIj6gc=\",\r\n    \"newPassword\": \"U2FsdGVkX1+KwhIkWwmR6I1w2X88+wt3t6IiLwp/DSc=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH] Change user profile data",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fullname",
+							"value": "Customer 1",
+							"type": "text"
+						},
+						{
+							"key": "dob",
+							"value": "2023-01-01",
+							"type": "text"
+						},
+						{
+							"key": "imageData",
+							"type": "file",
+							"src": "/D:/Pictures/333580.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get all my auctions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/my-auctions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"my-auctions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get auction detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/my-auctions/detail?id=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"my-auctions",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get latest auctions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/latest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get all five minute time remaining auctions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/fivemin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"fivemin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get all auction categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get all auctions with filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions?search=data&category=1&nextId=aa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "data"
+						},
+						{
+							"key": "category",
+							"value": "1"
+						},
+						{
+							"key": "nextId",
+							"value": "aa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get auction detail data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Create new auction",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "itemGeneralData",
+							"value": "U2FsdGVkX18Y7X4tTkzIJyJWvHjOmwL9weznxXBmJQmioxP3rhYStFHMrTx77sLTI5tDFj+xYEGFcEVd9jj+pq4CNEUeQ2dnapLHLUEeLGm2D17hRO/QAa35Z40etpgglNnoL9Vq7ynEs9SH4CpAdvywsmLaMDuVVkN+3QEKI+kM8/NH3aNEsmKzvTSBWI7DMOA6JtEN/+83xFVVawpt/8C05+c4j9Jd7H4jFz9cXwpbSXxue3l02yxVts/xVJpvcTC9NOaUf9k3pvfm4pe+C+OTikuA46K2dNan/kSpu3M=",
+							"type": "text"
+						},
+						{
+							"key": "itemSpecificationData",
+							"value": "U2FsdGVkX19CsZBBdy2mzm4R+1xpwVN8jhUB3LRDHe8dtxK47FF8WkdhQRb4snbNQKyVe3Rd4Im7Z0mkQo0pDFbXGTIQhXiGTFT5qh+9CZI=",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/D:/Pictures/hyperx-cloud-ii.front.variety.1588672869981.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PATCH] Edit auction",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageArray",
+							"value": "U2FsdGVkX18zDu8Z+632FZ9eqV6PDJrUqRAMsSZxh315SS9DnvbxySiZD/snq3NBwcq/x0Edyu7VaBfD1vKlXgKgJ3DfANs7aKPqKT5b6e8AIGuJCDo8TtDC/1tRj6C/rliSnCG1a4ye7C4t8lgO5SgKoj6PA9ndrEEkDjXuXE8xFCWdzyWZ5pNqkVDxEqilH8q7KN/BbIOKY14kwGLJaPhCUXCx5kmf+UFzsHEQRVxpPQYu3tWV7isKtXxvxNc4iJpolJxbUBPfKvRx1579MECR+e98Q2qTroLg1TzqO0Uz7/yVwQwcRgu3kSzw2cjL/89DnQVw5m9tlg1LS/ILHLw1fvMsE83Kiow47EyzV+ZOe+/RwZZUG+WCimVV+dtAlZ/V8O+z0McYz9uaWycM8g==",
+							"type": "text"
+						},
+						{
+							"key": "itemGeneralData",
+							"value": "U2FsdGVkX18Y7X4tTkzIJyJWvHjOmwL9weznxXBmJQmioxP3rhYStFHMrTx77sLTI5tDFj+xYEGFcEVd9jj+pq4CNEUeQ2dnapLHLUEeLGm2D17hRO/QAa35Z40etpgglNnoL9Vq7ynEs9SH4CpAdvywsmLaMDuVVkN+3QEKI+kM8/NH3aNEsmKzvTSBWI7DMOA6JtEN/+83xFVVawpt/8C05+c4j9Jd7H4jFz9cXwpbSXxue3l02yxVts/xVJpvcTC9NOaUf9k3pvfm4pe+C+OTikuA46K2dNan/kSpu3M=",
+							"type": "text"
+						},
+						{
+							"key": "itemSpecificationData",
+							"value": "U2FsdGVkX19CsZBBdy2mzm4R+1xpwVN8jhUB3LRDHe8dtxK47FF8WkdhQRb4snbNQKyVe3Rd4Im7Z0mkQo0pDFbXGTIQhXiGTFT5qh+9CZI=",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": [
+								"/D:/Pictures/333580.jpg",
+								"/D:/Pictures/115821530_887583424980820_1918733592932035975_n.jpg"
+							]
+						},
+						{
+							"key": "id",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] Delete auction data",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auction/auctions/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auction",
+						"auctions",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get my bids data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/my-bids?filter=successful&nextId=adwa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"my-bids"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "successful"
+						},
+						{
+							"key": "nextId",
+							"value": "adwa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] My bid detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/my-bids/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"my-bids",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Payment form append data (new step)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": \"U2FsdGVkX19iqZ2SPkG2Idq50DpOxVfbEbLTJMeTC3wT2xkpjoCw+XXmemKVxCpoRgN5YtbF2AeZihsbzzJ0R6CZ02bnbPLeOrtSYU9wOTWPxHnqsQvecMJE9nhymkP9OeFamSHg//idNWPeHQol4xoznJLruMguEWlV5yhccCODYbmyyZGUnCAInBzL8FKQhsev7uax2VfZeeIptCrjKI79OnvTEHbzwrO63hZ5fr6qU+tB7dMZeb6htfSCsVxMKTput7kjnyLMWR4ZoBJ0eSmVYMtiigfbp6IW3T1cYDXTHVJyRqyJE6Ux5dDD8Btf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/append-form",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"append-form"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Payment form append data (step 1, 2,3)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": \"U2FsdGVkX19D7RTZfWGEaqQtL3SX/kdGuLm+5mRILY7ZKnSgiptv0hLkzGAYQhgzWB53XC/Z8YzeNZJ2xk1Yx2SVailXiy99Qm/bMB2VQvs4QEsWX3yZDlu0SwOhVDdNWhimVgUEila70h2tOKT9sLe3pUXqn8HKL4v1geUTTMIBdetH7YskuWph5B+2cPH5GucUip/qW5Ebnj2SAgu5rQqHZPgtEYT5vQkz/Jix6Y2jiBw3iQZ5DlRR5wT+PZ2zQrW1Vy62Q2jZgcLLIPQpfrJzv3hZjk1DHOEU6JoL8odPDhVEsfRjAdavhRiCOMeCvPQOsH7DmgjuQ0a2PNU5FQ==\",\r\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.OWQ2NDFkNTUtNDRjNi00NjcyLWEyNWUtYTA4N2ZkNmEzMGMz.jbasHLH6O6LkSHQlOKfp0AMnMC4GOOklYUAnEOhjO88\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/append-form",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"append-form"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Complete payment form",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.OWQ2NDFkNTUtNDRjNi00NjcyLWEyNWUtYTA4N2ZkNmEzMGMz.jbasHLH6O6LkSHQlOKfp0AMnMC4GOOklYUAnEOhjO88\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/complete-form",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"complete-form"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Check last payment data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/check-data?token=eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8&bidId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"check-data"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8"
+						},
+						{
+							"key": "bidId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get step data from last append",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/get-form-data?token=eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8&step=1&bidId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"get-form-data"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8"
+						},
+						{
+							"key": "step",
+							"value": "1"
+						},
+						{
+							"key": "bidId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get shipment datas for payment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/get-shipment-providers?token=eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"get-shipment-providers"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get payment methods",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/get-payment-methods?token=eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"get-payment-methods"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get form summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/payment-form/get-form-summary?token=eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payment-form",
+						"get-form-summary"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NzZiMTM1OTgtYWQ5YS00Mjc4LTljYzEtZjIyNDJjZTI0MThh.g2xQjeyUQENda9ythP5DK74WhzJhv-OdTsT2rgK2qC8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Authorize payment data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/success?transactioncode=TRX/2024-03-03/o8KNo&token=WCzhftcfH4auLMJ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"success"
+					],
+					"query": [
+						{
+							"key": "transactioncode",
+							"value": "TRX/2024-03-03/o8KNo"
+						},
+						{
+							"key": "token",
+							"value": "WCzhftcfH4auLMJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get Order List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/get-orders?nextId=a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"get-orders"
+					],
+					"query": [
+						{
+							"key": "nextId",
+							"value": "a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Get order detail data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/get-orders/detail?id=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"get-orders",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Change status to Shipping from seller",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/processed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"processed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Change status to completed from user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/completed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"completed"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token-customer}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token-customer",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJidXllciIsImlhdCI6MTcwOTQ2MjgxOSwiZXhwIjoxNzQwOTk4ODE5fQ.LMEcxEhUwivhjPK9goOkf51N8grG3cExRM56Q6rq-tI",
+			"type": "string"
+		},
+		{
+			"key": "token-seller",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3MDk0NjQzMTQsImV4cCI6MTc0MTAwMDMxNH0.aQv02LYpNra-Kjar78gq6fdCNyJBQ-kzGBoKhRjLCp0",
+			"type": "string"
+		}
+	]
+}

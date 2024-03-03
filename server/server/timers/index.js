@@ -16,16 +16,17 @@ const loadTimerFunctions = async () => {
     const data = dataDb.map((dataVals) => dataVals?.dataValues);
 
     // Load functions with timer datas. Ex -> 'FunctionName(timerData in Arr)'
-    ItemStatus(
+    ItemStatus.itemsStatusAppend(
       data?.filter((filterData) => filterData?.type === "ITEM_STATUS")
     );
-    PaymentStatus(
+    PaymentStatus.paymentStatusAppend(
       data?.filter((filterData) => filterData?.type === "PAYMENT_STATUS")
     );
   } catch (error) {
     console.log(
       ["Error"],
-      "Timer load error! Unfinished task(s) will not be loaded until next restart!", error
+      "Timer load error! Unfinished task(s) will not be loaded until next restart!",
+      error
     );
   }
 

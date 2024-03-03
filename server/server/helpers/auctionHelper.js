@@ -1,7 +1,6 @@
 const _ = require("lodash");
 const Boom = require("boom");
-const { lte, gte, like } = require("sequelize/lib/operators");
-const EventEmitter = require("events");
+const { lte, gte, like, not } = require("sequelize/lib/operators");
 
 const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
@@ -12,8 +11,9 @@ const {
   getKeyJSONValue,
   deleteKeyJSONValue,
 } = require("../services/redis");
+const { setTimerEventData } = require("../timers/ItemStatus");
 
-const event = new EventEmitter();
+const itemTimerEvents = setTimerEventData();
 
 // PRIVATE FUNCTIONS
 const __formatDateNonISO = (date, isShowSeconds) => {
@@ -34,7 +34,6 @@ const __formatDateNonISO = (date, isShowSeconds) => {
 // AUCTION HELPERS FUNCTIONS
 const getMyAuctionsData = async (dataObject, userId) => {
   const { nextId } = dataObject;
-  event.emit("test", "test data");
   try {
     let nextIdData = null;
 
@@ -115,7 +114,8 @@ const getMyAuctionDetailData = async (dataObject, userId) => {
       },
       itemSpecificationData: data?.dataValues.itemPhysicalSpec,
       itemImages: data?.dataValues.itemPictures,
-      isLive: data?.dataValues?.status === "LIVE",
+      isEditable: data?.dataValues?.status === "ACTIVED",
+      isDeletable: data?.dataValues?.status === "DEACTIVATED" || data?.dataValues?.status === "ACTIVED",
     });
   } catch (err) {
     return Promise.reject(GeneralHelper.errorResponse(err));
@@ -166,6 +166,7 @@ const getLatestAuctionsData = async () => {
         ],
         where: {
           isActive: true,
+          status: { [not]: "DEACTIVATED" },
         },
         order: [["updatedAt", "DESC"]],
         limit: 15,
@@ -377,9 +378,15 @@ const getAuctionDetail = async (dataObject) => {
 };
 
 const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
-  const { itemGeneralData, itemSpecificationData } = dataObject;
+  const {
+    itemGeneralData: encryptedItemGeneral,
+    itemSpecificationData: encryptedItemSpec,
+  } = dataObject;
 
   try {
+    const itemGeneralData = decryptData(encryptedItemGeneral);
+    const itemSpecificationData = decryptData(encryptedItemSpec);
+    
     if (!(imageFiles?.length > 0))
       throw Boom.badRequest("At least have 1 image!");
 
@@ -410,10 +417,15 @@ const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
 
     if (!createdData) throw Boom.internal("Auction item is not created!");
 
-    event.emit("ItemStatus/SET_NEW_TASK", {
+    itemTimerEvents.emit("ItemStatus/SET_NEW_TASK", {
       dataId: createdData?.id,
       dateActivate: JSON.parse(itemGeneralData)?.startBidDate,
       dataValue: { status: "LIVE" },
+    });
+    itemTimerEvents.emit("ItemStatus/SET_NEW_TASK", {
+      dataId: createdData?.id,
+      dateActivate: JSON.parse(itemGeneralData)?.deadlineBid,
+      dataValue: { status: "DEACTIVATED" },
     });
 
     return Promise.resolve({
@@ -425,11 +437,20 @@ const createNewAuctionItem = async (dataObject, imageFiles, userId) => {
 };
 
 const editAuctionItem = async (dataObject, imageFiles, userId) => {
-  const { id, itemGeneralData, itemSpecificationData, imageArray } = dataObject;
+  const {
+    id,
+    itemGeneralData: encryptedItemGeneral,
+    itemSpecificationData: encryptedItemSpec,
+    imageArray: encryptedImageArr,
+  } = dataObject;
 
   try {
+    const itemGeneralData = decryptData(encryptedItemGeneral);
+    const itemSpecificationData = decryptData(encryptedItemSpec);
+    const imageArray = decryptData(encryptedImageArr);
+
     const itemData = await db.item.findOne({
-      where: { id, isActive: true, userId },
+      where: { id, isActive: true, userId, status: { [not]: "LIVE" } },
     });
     if (_.isEmpty(itemData)) throw Boom.notFound("Data not found!");
 
@@ -470,11 +491,20 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
     if (!updatedData) throw Boom.internal("Auction item is not updated!");
 
     await deleteKeyJSONValue(`ITEM-DETAIL-${id}`);
-    event.emit("ItemStatus/STOP_TASK_BY_DATA_ID", { dataId: itemData?.id })
-    event.emit("ItemStatus/SET_NEW_TASK", {
+
+    itemTimerEvents.emit("ItemStatus/STOP_TASK_BY_DATA_ID", {
+      dataId: itemData?.id,
+    });
+
+    itemTimerEvents.emit("ItemStatus/SET_NEW_TASK", {
       dataId: itemData?.id,
       dateActivate: JSON.parse(itemGeneralData)?.startBidDate,
       dataValue: { status: "LIVE" },
+    });
+    itemTimerEvents.emit("ItemStatus/SET_NEW_TASK", {
+      dataId: itemData?.id,
+      dateActivate: JSON.parse(itemGeneralData)?.deadlineBid,
+      dataValue: { status: "DEACTIVATED" },
     });
 
     return Promise.resolve({
@@ -482,7 +512,8 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
         itemGeneralData: JSON.parse(itemGeneralData),
         itemSpecificationData: JSON.parse(itemSpecificationData),
         itemImages: imagesData,
-        isLive: false,
+        isEditable: true,
+        isDeletable: true,
       },
     });
   } catch (err) {
@@ -504,6 +535,10 @@ const deleteAuctionItemData = async (dataObject, userId) => {
     });
 
     if (!updatedData) throw Boom.internal("Auction item is not deleted!");
+
+    itemTimerEvents.emit("ItemStatus/STOP_TASK_BY_DATA_ID", {
+      dataId: itemData?.id,
+    });
 
     return Promise.resolve({
       deletedId: id,

@@ -375,7 +375,7 @@ const appendFormData = async (dataObject, userId) => {
             attributes: ["itemName", "itemPictures"],
           },
         ],
-        where: { id: formData?.bidId, isActive: true, status: "WAITING" },
+        where: { id: formData?.bidId, isActive: true, status: "WAITING", userId },
       });
       if (_.isEmpty(bidDbData))
         throw Boom.badRequest("This bid data is empty.");
