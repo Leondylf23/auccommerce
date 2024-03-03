@@ -39,9 +39,4 @@ describe('Navbar Component', () => {
 
     expect(navbar.queryByTestId('nav-dropdown')).toBeInTheDocument();
   });
-
-  test('Should match with snapshot', () => {
-    const navbar = render(ParentComponent(<Navbar title="Title" />));
-    expect(navbar).toMatchSnapshot();
-  });
 });

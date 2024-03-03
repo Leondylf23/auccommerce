@@ -1,0 +1,632 @@
+[
+  {
+    "dataValues": {
+      "id": 825,
+      "itemName": "Kiwi pi",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:30:37.000Z",
+      "startDate": "2024-03-03T16:10:05.000Z",
+      "price": "418839.15",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 825,
+      "itemName": "Kiwi pi",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:30:37.000Z",
+      "startDate": "2024-03-03T16:10:05.000Z",
+      "price": "418839.15",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 156,
+      "itemName": "Grape",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:21.000Z",
+      "startDate": "2024-03-03T16:12:12.000Z",
+      "price": "431890.40",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 156,
+      "itemName": "Grape",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:21.000Z",
+      "startDate": "2024-03-03T16:12:12.000Z",
+      "price": "431890.40",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1032,
+      "itemName": "Strxwberry se",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:58:51.000Z",
+      "startDate": "2024-03-03T16:04:26.000Z",
+      "price": "189752.92",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1032,
+      "itemName": "Strxwberry se",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:58:51.000Z",
+      "startDate": "2024-03-03T16:04:26.000Z",
+      "price": "189752.92",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 313,
+      "itemName": "upple pro",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:01.000Z",
+      "startDate": "2024-03-03T16:00:56.000Z",
+      "price": "255032.40",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 313,
+      "itemName": "upple pro",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:01.000Z",
+      "startDate": "2024-03-03T16:00:56.000Z",
+      "price": "255032.40",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 372,
+      "itemName": "xApple",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:47:05.000Z",
+      "startDate": "2024-03-03T16:03:28.000Z",
+      "price": "148462.74",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 372,
+      "itemName": "xApple",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:47:05.000Z",
+      "startDate": "2024-03-03T16:03:28.000Z",
+      "price": "148462.74",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 385,
+      "itemName": "Rambutan plus",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:26:23.000Z",
+      "startDate": "2024-03-03T16:04:56.000Z",
+      "price": "196353.83",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 385,
+      "itemName": "Rambutan plus",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:26:23.000Z",
+      "startDate": "2024-03-03T16:04:56.000Z",
+      "price": "196353.83",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 841,
+      "itemName": "Rambutan core",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:43:44.000Z",
+      "startDate": "2024-03-03T16:04:52.000Z",
+      "price": "336351.70",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 841,
+      "itemName": "Rambutan core",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:43:44.000Z",
+      "startDate": "2024-03-03T16:04:52.000Z",
+      "price": "336351.70",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 937,
+      "itemName": "aiwi",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:50:28.000Z",
+      "startDate": "2024-03-03T16:04:57.000Z",
+      "price": "429902.14",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 937,
+      "itemName": "aiwi",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:50:28.000Z",
+      "startDate": "2024-03-03T16:04:57.000Z",
+      "price": "429902.14",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 534,
+      "itemName": "Cherey air",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:57:43.000Z",
+      "startDate": "2024-03-03T16:00:00.000Z",
+      "price": "334984.04",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 534,
+      "itemName": "Cherey air",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:57:43.000Z",
+      "startDate": "2024-03-03T16:00:00.000Z",
+      "price": "334984.04",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 671,
+      "itemName": "Apple",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:23:22.000Z",
+      "startDate": "2024-03-03T16:09:04.000Z",
+      "price": "261750.49",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 671,
+      "itemName": "Apple",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:23:22.000Z",
+      "startDate": "2024-03-03T16:09:04.000Z",
+      "price": "261750.49",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 501,
+      "itemName": "Pluots",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:25:41.000Z",
+      "startDate": "2024-03-03T16:12:30.000Z",
+      "price": "457371.37",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 501,
+      "itemName": "Pluots",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:25:41.000Z",
+      "startDate": "2024-03-03T16:12:30.000Z",
+      "price": "457371.37",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 192,
+      "itemName": "Apple mini",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:56:35.000Z",
+      "startDate": "2024-03-03T16:02:02.000Z",
+      "price": "289213.89",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 192,
+      "itemName": "Apple mini",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:56:35.000Z",
+      "startDate": "2024-03-03T16:02:02.000Z",
+      "price": "289213.89",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 974,
+      "itemName": "trange elite",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:17:30.000Z",
+      "startDate": "2024-03-03T16:09:25.000Z",
+      "price": "44915.33",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 974,
+      "itemName": "trange elite",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:17:30.000Z",
+      "startDate": "2024-03-03T16:09:25.000Z",
+      "price": "44915.33",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 684,
+      "itemName": "Straiberry",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:36:00.000Z",
+      "startDate": "2024-03-03T16:03:17.000Z",
+      "price": "349570.58",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 684,
+      "itemName": "Straiberry",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:36:00.000Z",
+      "startDate": "2024-03-03T16:03:17.000Z",
+      "price": "349570.58",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 178,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:49:31.000Z",
+      "startDate": "2024-03-03T16:13:24.000Z",
+      "price": "340690.14",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 178,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:49:31.000Z",
+      "startDate": "2024-03-03T16:13:24.000Z",
+      "price": "340690.14",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  }
+]

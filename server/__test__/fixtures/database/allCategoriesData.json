@@ -1,0 +1,98 @@
+[
+  {
+    "dataValues": {
+      "id": 1,
+      "name": "Electronics",
+      "nameId": "Elektronik",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005037/static_resources/gv8ofuleo27pcmc9n8xd.jpg"
+    },
+    "_previousDataValues": {
+      "id": 1,
+      "name": "Electronics",
+      "nameId": "Elektronik",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005037/static_resources/gv8ofuleo27pcmc9n8xd.jpg"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": ["id", "name", "nameId", "pictureUrl"]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 2,
+      "name": "Jewerly",
+      "nameId": "Perhiasan",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005039/static_resources/h7ehsjq4kev4ruxrmcab.jpg"
+    },
+    "_previousDataValues": {
+      "id": 2,
+      "name": "Jewerly",
+      "nameId": "Perhiasan",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005039/static_resources/h7ehsjq4kev4ruxrmcab.jpg"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": ["id", "name", "nameId", "pictureUrl"]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 3,
+      "name": "Hobbies",
+      "nameId": "Hobi",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005041/static_resources/y4rkrry1aktxuzokdck6.png"
+    },
+    "_previousDataValues": {
+      "id": 3,
+      "name": "Hobbies",
+      "nameId": "Hobi",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005041/static_resources/y4rkrry1aktxuzokdck6.png"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": ["id", "name", "nameId", "pictureUrl"]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 4,
+      "name": "Other",
+      "nameId": "Lainnya",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005038/static_resources/ttzsoa1ed76gilvewhfq.jpg"
+    },
+    "_previousDataValues": {
+      "id": 4,
+      "name": "Other",
+      "nameId": "Lainnya",
+      "pictureUrl": "https://res.cloudinary.com/dwyzuwtel/image/upload/v1709005038/static_resources/ttzsoa1ed76gilvewhfq.jpg"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": ["id", "name", "nameId", "pictureUrl"]
+    },
+    "isNewRecord": false
+  }
+]

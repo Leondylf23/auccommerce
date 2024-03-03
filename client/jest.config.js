@@ -3,7 +3,7 @@ export default {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^.+\\.svg$': 'jest-svg-transformer',
-    '^.+\\.(png|jpg|ttf|woff|woff2|css|less|scss)$': 'identity-obj-proxy',
+    '^.+\\.(png|jpg|ttf|woff|woff2|css|less|scss|svg|mp4)$': 'identity-obj-proxy',
     '@config/(.*)': '<rootDir>/config/$1',
     '@components/(.*)': '<rootDir>/src/components/$1',
     '@containers/(.*)': '<rootDir>/src/containers/$1',

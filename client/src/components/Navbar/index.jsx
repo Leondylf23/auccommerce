@@ -13,7 +13,7 @@ import { getUserDataDecrypt } from '@utils/allUtils';
 import { setLocale } from '@containers/App/actions';
 import { selectLogin, selectUserData } from '@containers/Client/selectors';
 import DropDownMenu from './components/DropdownMenu';
-import Logo from '../../static/images/auction.png';
+import { Logo } from '../../static/images/auction.png';
 
 import classes from './style.module.scss';
 
