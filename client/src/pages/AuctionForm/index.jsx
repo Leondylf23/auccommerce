@@ -49,7 +49,7 @@ const AuctionForm = ({ detailData, categories }) => {
   const [errImgMsg, setErrImgMsg] = useState([]);
   const [errTimoutId, setErrTimeoutId] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
-  const [isDeletable, setIsDeletable] = useState(false);
+  const [isDeletable, setIsDeletable] = useState(true);
   const [isLoadingCategory, setIsLoadingCategory] = useState(false);
   const [isShowDeletePopup, setIsShowDeletePopup] = useState(false);
 
@@ -249,6 +249,7 @@ const AuctionForm = ({ detailData, categories }) => {
       setItemImages(detailData?.itemImages?.map((image) => ({ id: uuid(), imageData: null, url: image })));
     } else {
       setIsEditable(true);
+      setIsDeletable(true);
     }
   }, [detailData]);
   useEffect(() => {
