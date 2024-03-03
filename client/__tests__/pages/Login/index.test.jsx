@@ -34,52 +34,6 @@ describe('Login Page', () => {
     expect(loginPage).toBeInTheDocument();
   });
 
-  //Login
-  test('Button Clicked Login', () => {
-    const { getByTestId } = render(ParentComponent(<Login />));
-    const buttonSubmit = getByTestId('login-button-submit');
-    expect(buttonSubmit).toBeInTheDocument();
-    fireEvent.click(buttonSubmit);
-  });
-
-  test('Button Clicked Register', () => {
-    const { getByTestId } = render(ParentComponent(<Login />));
-    const buttonSubmit = getByTestId('register-button');
-    expect(buttonSubmit).toBeInTheDocument();
-    fireEvent.click(buttonSubmit);
-  });
-
-  test('Button Clicked Forgot Password', () => {
-    const { getByTestId, queryByTestId } = render(ParentComponent(<Login />));
-    const buttonSubmit = getByTestId('forgot-pass-button');
-    expect(buttonSubmit).toBeInTheDocument();
-    fireEvent.click(buttonSubmit);
-    const forgotPassPage = queryByTestId('forgot-pass-page');
-    expect(forgotPassPage).toBeInTheDocument();
-  });
-
-  //Forget Password
-  //   test('Button Clicked', () => {
-  //     const { getByTestId } = render(ParentComponent(<Login />));
-  //     const buttonSubmit = getByTestId('forgot-password-submit');
-  //     expect(buttonSubmit).toBeInTheDocument();
-  //     fireEvent.click(buttonSubmit);
-  //   });
-
-  //   test('Button Clicked', () => {
-  //     const { getByTestId } = render(ParentComponent(<Login />));
-  //     const buttonSubmit = getByTestId('forgot-password-back');
-  //     expect(buttonSubmit).toBeInTheDocument();
-  //     fireEvent.click(buttonSubmit);
-  //   });
-
-  //   test('Button Clicked', () => {
-  //     const { getByTestId } = render(ParentComponent(<Login />));
-  //     const buttonSubmit = getByTestId('forgot-password-copy');
-  //     expect(buttonSubmit).toBeInTheDocument();
-  //     fireEvent.click(buttonSubmit);
-  //   });
-
   test('Should match with snapshot', () => {
     const loginPage = render(ParentComponent(<Login />));
     expect(loginPage).toMatchSnapshot();

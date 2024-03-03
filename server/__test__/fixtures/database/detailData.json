@@ -1,0 +1,45 @@
+{
+  "dataValues": {
+    "itemName": "Grape",
+    "itemImages": [
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+    ],
+    "itemDescription": "What you get by achieving your goals is not as important as what you become by achieving your goals. Navicat Monitor can be installed on any local computer or virtual machine and does not require any software installation on the servers being monitored.",
+    "itemDeadlineBid": "2024-03-03T16:29:21.000Z",
+    "itemStartBidDate": "2024-03-03T16:12:12.000Z",
+    "startingPrice": "431890.40",
+    "status": "ACTIVED",
+    "highestBid": null
+  },
+  "_previousDataValues": {
+    "itemName": "Grape",
+    "itemImages": [
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+    ],
+    "itemDescription": "What you get by achieving your goals is not as important as what you become by achieving your goals. Navicat Monitor can be installed on any local computer or virtual machine and does not require any software installation on the servers being monitored.",
+    "itemDeadlineBid": "2024-03-03T16:29:21.000Z",
+    "itemStartBidDate": "2024-03-03T16:12:12.000Z",
+    "startingPrice": "431890.40",
+    "status": "ACTIVED",
+    "highestBid": null
+  },
+  "uniqno": 1,
+  "_changed": {},
+  "_options": {
+    "isNewRecord": false,
+    "_schema": null,
+    "_schemaDelimiter": "",
+    "raw": true,
+    "attributes": [
+      "itemName",
+      "itemImages",
+      "itemDescription",
+      "itemDeadlineBid",
+      "itemStartBidDate",
+      "startingPrice",
+      "status",
+      "highestBid"
+    ]
+  },
+  "isNewRecord": false
+}

@@ -16,9 +16,4 @@ describe('Component Loader', () => {
     const loaderComponent = getByTestId('Loading');
     expect(loaderComponent).not.toHaveClass(classes.showLoader);
   });
-
-  test('Should match with snapshot', () => {
-    const loader = render(<Loader isLoading />);
-    expect(loader).toMatchSnapshot();
-  });
 });

@@ -1,0 +1,422 @@
+[
+  {
+    "dataValues": {
+      "id": 1087,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:56:56.000Z",
+      "startDate": "2024-03-03T16:01:29.000Z",
+      "price": "62273.33",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1087,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/product-1/2017/8/3/2370725/2370725_6717d74d-2465-4037-8864-04d5431cda6f_680_484.jpg"
+      ],
+      "endsOn": "2024-03-03T16:56:56.000Z",
+      "startDate": "2024-03-03T16:01:29.000Z",
+      "price": "62273.33",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1078,
+      "itemName": "Mando",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:44:58.000Z",
+      "startDate": "2024-03-03T16:09:56.000Z",
+      "price": "100494.12",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1078,
+      "itemName": "Mando",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:44:58.000Z",
+      "startDate": "2024-03-03T16:09:56.000Z",
+      "price": "100494.12",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1051,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:19:45.000Z",
+      "startDate": "2024-03-03T16:06:43.000Z",
+      "price": "413190.57",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1051,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:19:45.000Z",
+      "startDate": "2024-03-03T16:06:43.000Z",
+      "price": "413190.57",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1044,
+      "itemName": "Mahgo",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:23:51.000Z",
+      "startDate": "2024-03-03T16:09:31.000Z",
+      "price": "19427.56",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 1044,
+      "itemName": "Mahgo",
+      "itemPictures": [
+        "https://www.dbs.id/id/iwov-resources/images/blog/1404x630-article-kta-17012022-7-r.jpg"
+      ],
+      "endsOn": "2024-03-03T16:23:51.000Z",
+      "startDate": "2024-03-03T16:09:31.000Z",
+      "price": "19427.56",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1025,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:20:02.000Z",
+      "startDate": "2024-03-03T16:11:25.000Z",
+      "price": "70995.54",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1025,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:20:02.000Z",
+      "startDate": "2024-03-03T16:11:25.000Z",
+      "price": "70995.54",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1022,
+      "itemName": "Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:20:45.000Z",
+      "startDate": "2024-03-03T16:12:45.000Z",
+      "price": "297687.69",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 1022,
+      "itemName": "Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:20:45.000Z",
+      "startDate": "2024-03-03T16:12:45.000Z",
+      "price": "297687.69",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1012,
+      "itemName": "ultra-Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:40:56.000Z",
+      "startDate": "2024-03-03T16:03:53.000Z",
+      "price": "324340.46",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 1012,
+      "itemName": "ultra-Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:40:56.000Z",
+      "startDate": "2024-03-03T16:03:53.000Z",
+      "price": "324340.46",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 1005,
+      "itemName": "Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:49:11.000Z",
+      "startDate": "2024-03-03T16:01:27.000Z",
+      "price": "140589.72",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 1005,
+      "itemName": "Mango",
+      "itemPictures": [
+        "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709465868/image/c22rbfwkjw0l4xxanpsu.jpg"
+      ],
+      "endsOn": "2024-03-03T16:49:11.000Z",
+      "startDate": "2024-03-03T16:01:27.000Z",
+      "price": "140589.72",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 995,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:38.000Z",
+      "startDate": "2024-03-03T16:07:21.000Z",
+      "price": "409731.09",
+      "status": "LIVE"
+    },
+    "_previousDataValues": {
+      "id": 995,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:29:38.000Z",
+      "startDate": "2024-03-03T16:07:21.000Z",
+      "price": "409731.09",
+      "status": "LIVE"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  },
+  {
+    "dataValues": {
+      "id": 990,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:45:43.000Z",
+      "startDate": "2024-03-03T16:01:08.000Z",
+      "price": "220792.73",
+      "status": "ACTIVED"
+    },
+    "_previousDataValues": {
+      "id": 990,
+      "itemName": "Mango",
+      "itemPictures": [
+        "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/8/25/e1fa873c-1c5d-485f-b241-6eb3fbc6c407.jpg"
+      ],
+      "endsOn": "2024-03-03T16:45:43.000Z",
+      "startDate": "2024-03-03T16:01:08.000Z",
+      "price": "220792.73",
+      "status": "ACTIVED"
+    },
+    "uniqno": 1,
+    "_changed": {},
+    "_options": {
+      "isNewRecord": false,
+      "_schema": null,
+      "_schemaDelimiter": "",
+      "raw": true,
+      "attributes": [
+        "id",
+        "itemName",
+        "itemPictures",
+        "endsOn",
+        "startDate",
+        "price",
+        "status"
+      ]
+    },
+    "isNewRecord": false
+  }
+]

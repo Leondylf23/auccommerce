@@ -6,11 +6,7 @@ const db = require("../../models");
 const GeneralHelper = require("./generalHelper");
 const cloudinary = require("../services/cloudinary");
 const { decryptData, encryptData } = require("./utilsHelper");
-const {
-  setKeyJSONValue,
-  getKeyJSONValue,
-  deleteKeyJSONValue,
-} = require("../services/redis");
+const redisService = require("../services/redis");
 const { setTimerEventData } = require("../timers/ItemStatus");
 
 const itemTimerEvents = setTimerEventData();
@@ -125,7 +121,7 @@ const getMyAuctionDetailData = async (dataObject, userId) => {
 const getCategories = async () => {
   try {
     let data = null;
-    const redisData = await getKeyJSONValue(`CATEGORIES`);
+    const redisData = await redisService.getKeyJSONValue(`CATEGORIES`);
 
     if (redisData) {
       data = redisData;
@@ -136,7 +132,7 @@ const getCategories = async () => {
       });
 
       data = dbData?.map((dataEl) => dataEl?.dataValues);
-      await setKeyJSONValue(`CATEGORIES`, data, 24 * 60 * 60);
+      await redisService.setKeyJSONValue(`CATEGORIES`, data, 24 * 60 * 60);
     }
 
     return Promise.resolve(data);
@@ -149,7 +145,7 @@ const getLatestAuctionsData = async () => {
   try {
     let data = null;
 
-    const redisData = await getKeyJSONValue(`LATEST-ITEMS`);
+    const redisData = await redisService.getKeyJSONValue(`LATEST-ITEMS`);
 
     if (redisData) {
       data = redisData;
@@ -173,7 +169,7 @@ const getLatestAuctionsData = async () => {
       });
 
       data = dbData?.map((dataEl) => dataEl?.dataValues);
-      await setKeyJSONValue(`LATEST-ITEMS`, data, 120);
+      await redisService.setKeyJSONValue(`LATEST-ITEMS`, data, 120);
     }
 
     const remappedData = data?.map((element) => ({
@@ -233,6 +229,7 @@ const getFiveMinAuctionsData = async () => {
       limit: 15,
     });
 
+    
     const remappedData = data?.map((element) => ({
       ...element?.dataValues,
       itemImage: element?.dataValues?.itemPictures[0],
@@ -279,6 +276,7 @@ const getAllAuctions = async (dataObject) => {
       limit: 10,
     });
 
+
     let next = null;
     if (data?.length > 9) {
       next = data[9]?.dataValues?.id.toString();
@@ -307,7 +305,7 @@ const getAuctionDetail = async (dataObject) => {
 
   try {
     let data;
-    const redisData = await getKeyJSONValue(`ITEM-DETAIL-${id}`);
+    const redisData = await redisService.getKeyJSONValue(`ITEM-DETAIL-${id}`);
 
     if (!redisData) {
       const dbData = await db.item.findOne({
@@ -351,9 +349,9 @@ const getAuctionDetail = async (dataObject) => {
       (new Date(data?.itemDeadlineBid).getTime() - timeNow) / 1000
     );
 
-    const liveDataRedis = await getKeyJSONValue(`LIVEBID-${id}`);
+    const liveDataRedis = await redisService.getKeyJSONValue(`LIVEBID-${id}`);
 
-    await setKeyJSONValue(`ITEM-DETAIL-${id}`, data, 120);
+    await redisService.setKeyJSONValue(`ITEM-DETAIL-${id}`, data, 120);
 
     const mappedData = {
       ...data,
@@ -490,7 +488,7 @@ const editAuctionItem = async (dataObject, imageFiles, userId) => {
 
     if (!updatedData) throw Boom.internal("Auction item is not updated!");
 
-    await deleteKeyJSONValue(`ITEM-DETAIL-${id}`);
+    await redisService.deleteKeyJSONValue(`ITEM-DETAIL-${id}`);
 
     itemTimerEvents.emit("ItemStatus/STOP_TASK_BY_DATA_ID", {
       dataId: itemData?.id,
