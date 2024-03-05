@@ -29,7 +29,7 @@ const MyBidDetail = ({ bidDetailData }) => {
   useEffect(() => {}, [bidDetailData]);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="my-bid-detail-page">
       <div className={classes.contentContainer}>
         <div className={classes.leftSide}>
           <div className={classes.backBtnContainer}>

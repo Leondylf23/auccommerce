@@ -111,7 +111,7 @@ const ItemDetail = ({ isLogin, token, itemDetailData, socket }) => {
   }, [socket]);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="item-detail-page">
       <div className={classes.contentContainer}>
         <div className={classes.leftSide}>
           <div className={classes.backBtnContainer}>

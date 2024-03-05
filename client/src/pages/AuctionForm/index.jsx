@@ -151,7 +151,7 @@ const AuctionForm = ({ detailData, categories }) => {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_start_bid_err' })));
       return;
     }
-    if (new Date(itemGeneralData?.startBidDate).getTime() < new Date().getTime() + 10 * 60 * 1000) {
+    if (new Date(itemGeneralData?.startBidDate).getTime() < new Date().getTime()) {
       dispatch(showPopup(pageTitle, intl.formatMessage({ id: 'auction_form_general_start_bid_date_err' })));
       return;
     }

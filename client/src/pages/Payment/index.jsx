@@ -114,7 +114,7 @@ const Payment = ({ token, stepData, stepPaymentData, isAnyChanges }) => {
   }, []);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="payment-page">
       <h1 className={classes.pageTitle}>{pageTitle}</h1>
       <div className={classes.stepContainer}>{page}</div>
       <div className={classes.footer}>

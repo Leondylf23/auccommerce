@@ -1,0 +1,60 @@
+{
+  "dataValues": {
+    "itemName": "wrape",
+    "itemPictures": [
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709490213/image/qptii3t8nvajrsdj788d.jpg",
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709490215/image/kdzlfbwhlrgsyklbyba7.jpg"
+    ],
+    "deadlineBid": "2011-08-16T03:18:49.000Z",
+    "startBidDate": "2009-10-21T12:42:20.000Z",
+    "startBid": "563.00",
+    "description": "After comparing data, the window shows the number of records that will be inserted, updated or deleted in the target. Remember that failure is an event, not a person. Anyone who has ever made anything of importance was disciplined.",
+    "itemPhysicalSpec": {
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "weight": 1
+    },
+    "status": "ACTIVED",
+    "categoryId": 2
+  },
+  "_previousDataValues": {
+    "itemName": "wrape",
+    "itemPictures": [
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709490213/image/qptii3t8nvajrsdj788d.jpg",
+      "http://res.cloudinary.com/dwyzuwtel/image/upload/v1709490215/image/kdzlfbwhlrgsyklbyba7.jpg"
+    ],
+    "deadlineBid": "2011-08-16T03:18:49.000Z",
+    "startBidDate": "2009-10-21T12:42:20.000Z",
+    "startBid": "563.00",
+    "description": "After comparing data, the window shows the number of records that will be inserted, updated or deleted in the target. Remember that failure is an event, not a person. Anyone who has ever made anything of importance was disciplined.",
+    "itemPhysicalSpec": {
+      "width": 1,
+      "height": 1,
+      "length": 1,
+      "weight": 1
+    },
+    "status": "ACTIVED",
+    "categoryId": 2
+  },
+  "uniqno": 1,
+  "_changed": {},
+  "_options": {
+    "isNewRecord": false,
+    "_schema": null,
+    "_schemaDelimiter": "",
+    "raw": true,
+    "attributes": [
+      "itemName",
+      "itemPictures",
+      "deadlineBid",
+      "startBidDate",
+      "startBid",
+      "description",
+      "itemPhysicalSpec",
+      "status",
+      "categoryId"
+    ]
+  },
+  "isNewRecord": false
+}

@@ -44,7 +44,7 @@ const MyAuctions = ({ myAuctionsData }) => {
   }, []);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="my-auction-page">
       <h1 className={classes.pageTitle}>
         <FormattedMessage id="my_auctions_title" />
       </h1>

@@ -59,7 +59,7 @@ const Home = ({ latestItem, fiveMinBid, categories }) => {
   }, []);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="home-page">
       <SearchComponent onSubmitSearch={(search) => setSearchData(search)} />
       {searchData !== '' || categoryId ? (
         <SearchPage

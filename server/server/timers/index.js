@@ -11,6 +11,7 @@ const loadTimerFunctions = async () => {
     // Load unfinished tasks from db
     const dataDb = await db.timer.findAll({
       where: { isActive: true },
+      // raw: true
     });
 
     const data = dataDb.map((dataVals) => dataVals?.dataValues);

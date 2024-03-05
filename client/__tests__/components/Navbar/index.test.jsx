@@ -11,6 +11,8 @@ const ParentComponent = (children) => (
   </Provider>
 );
 
+jest.mock('../../static/images/auction.png');
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
 }));

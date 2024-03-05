@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { sendForgotPassword, sendLoginData, showPopup } from '@containers/App/actions';
 import { decryptDataAES, encryptDataAES } from '@utils/allUtils';
 import { selectLogin } from '@containers/Client/selectors';
-import { Logo } from '../../static/images/auction.png';
+import Logo from '../../static/images/auction.png';
 
 import classes from './style.module.scss';
 

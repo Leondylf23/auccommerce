@@ -12,6 +12,7 @@ const redis = require("../../server/services/redis");
 const MockItemData = require("../fixtures/database/allItemsData.json");
 const MockAuctionLatest = require("../fixtures/database/latestAuction.json");
 const MockAuctionDetail = require("../fixtures/database/detailData.json");
+const MockMyAuctionDetail = require("../fixtures/database/myAuction.json");
 
 // Config
 let apiUrl;
@@ -186,7 +187,7 @@ describe("Auction APIs", () => {
     beforeEach(() => {
       apiUrl = "/auction/auctions/my-auctions/detail";
 
-      mockData = _.cloneDeep(MockAuctionDetail);
+      mockData = _.cloneDeep(MockMyAuctionDetail);
 
       getData = jest.spyOn(db.item, "findOne");
 
@@ -204,7 +205,7 @@ describe("Auction APIs", () => {
 
       const res = await Request(server)
         .get(`${apiUrl}?${QS.stringify(query)}`)
-        .set("Autorization", bearerTokenBusiness)
+        .set("Authorization", bearerTokenBusiness)
         .expect(200);
 
       expect(res.body).toBeTruthy();

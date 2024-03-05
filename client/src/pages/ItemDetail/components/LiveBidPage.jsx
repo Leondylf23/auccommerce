@@ -50,6 +50,8 @@ const LiveBidPage = ({ socket, id, timer, token }) => {
   };
 
   const addBid = (price) => {
+
+    console.log(higestBidPrice, price);
     setBidPriceInput(higestBidPrice + price);
   };
 

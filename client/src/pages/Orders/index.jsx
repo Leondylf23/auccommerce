@@ -46,7 +46,7 @@ const Orders = ({ ordersData }) => {
   }, []);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="orders-page">
       <PopupWindow open={Boolean(detailId)} onClose={onClosePopup}>
         <DetailPopup id={detailId} onClose={onClosePopup} />
       </PopupWindow>

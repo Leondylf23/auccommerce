@@ -35,4 +35,19 @@ describe('Register Page', () => {
     const loginPage = getByTestId('register-page');
     expect(loginPage).toBeInTheDocument();
   });
+
+  //Register
+  test('Button Clicked', () => {
+    const { getByTestId } = render(ParentComponent(<Register />));
+    const buttonSubmit = getByTestId('register-button-submit');
+    expect(buttonSubmit).toBeInTheDocument();
+    fireEvent.click(buttonSubmit);
+  });
+
+  test('Button Clicked', () => {
+    const { getByTestId } = render(ParentComponent(<Register />));
+    const buttonSubmit = getByTestId('login-button');
+    expect(buttonSubmit).toBeInTheDocument();
+    fireEvent.click(buttonSubmit);
+  });
 });

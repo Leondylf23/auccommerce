@@ -46,7 +46,7 @@ const MyBids = ({ bidsData }) => {
   }, [tabIndex]);
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} data-testid="my-bids-page">
       <div className={classes.tabs}>
         <div className={classes.tab} data-active={tabIndex === 0} onClick={() => changeTab(0)}>
           <p className={classes.text}>

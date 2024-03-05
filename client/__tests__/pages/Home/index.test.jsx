@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import RouterDom from 'react-router-dom';
 
-import Register from '@pages/Register';
+import Home from '@pages/Home';
 import store from '@store';
 import Language from '@containers/Language';
 
@@ -22,17 +22,19 @@ jest.mock('reselect', () => ({
 }));
 
 const ParentComponent = (children) => (
-  <Provider store={store}>
-    <Language>{children}</Language>
-  </Provider>
+  <RouterDom.BrowserRouter>
+    <Provider store={store}>
+      <Language>{children}</Language>
+    </Provider>
+  </RouterDom.BrowserRouter>
 );
 
-describe('Register Page', () => {
+describe('Home Page', () => {
   beforeEach(() => {});
 
   test('Rendered', () => {
-    const { getByTestId } = render(ParentComponent(<Register />));
-    const loginPage = getByTestId('register-page');
+    const { getByTestId } = render(ParentComponent(<Home />));
+    const loginPage = getByTestId('home-page');
     expect(loginPage).toBeInTheDocument();
   });
 });

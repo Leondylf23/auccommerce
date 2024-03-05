@@ -1,17 +1,17 @@
 import { fireEvent, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import Profile from '@pages/Profile';
+import RouterDom from 'react-router-dom';
 
 import store from '@store';
 import Language from '@containers/Language';
-import { MemoryRouter } from 'react-router-dom';
 
 const ParentComponent = (children) => (
-  <Provider store={store}>
-    <Language>
-      <MemoryRouter>{children}</MemoryRouter>
-    </Language>
-  </Provider>
+  <RouterDom.BrowserRouter>
+    <Provider store={store}>
+      <Language>{children}</Language>
+    </Provider>
+  </RouterDom.BrowserRouter>
 );
 
 describe('Profile Page', () => {

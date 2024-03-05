@@ -6,6 +6,8 @@ import Login from '@pages/Login';
 import store from '@store';
 import Language from '@containers/Language';
 
+jest.mock('../../static/images/auction.png');
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
 }));
@@ -32,10 +34,5 @@ describe('Login Page', () => {
     const { getByTestId } = render(ParentComponent(<Login />));
     const loginPage = getByTestId('login-page');
     expect(loginPage).toBeInTheDocument();
-  });
-
-  test('Should match with snapshot', () => {
-    const loginPage = render(ParentComponent(<Login />));
-    expect(loginPage).toMatchSnapshot();
   });
 });

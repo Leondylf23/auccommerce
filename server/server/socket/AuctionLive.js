@@ -9,7 +9,7 @@ const db = require("../../models");
 
 const AuctionHelper = require("../helpers/auctionHelper");
 const AuthHelper = require("../helpers/authUserHelper");
-const { setTimerEventData } = require("../timers/ItemStatus");
+
 
 const signatureSecretKey = process.env.SIGN_SECRET_KEY || "pgJApn9pJ8";
 
@@ -312,7 +312,7 @@ const AucommerceLiveBid = (io, socket) => {
   const placeBid = async ({ bid }) => {
     try {
       // Race condition & spam handler
-      const setCooldown = 3;
+      const setCooldown = 10;
 
       const getUserData = __getUserJoinedData(socket?.id);
       if (!getUserData)
