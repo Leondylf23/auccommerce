@@ -1,20 +1,37 @@
 # Auccommerce
 
-Live Auction with Auccommerce in real time bid
+Live Auction with Auccommerce in real time bid. Live bid using socket io connection for real time live bid auction. Auction winner will be prompted to payment page pay the bid price. This web is using Xendit as payment gateway.
 
 ## Tech Stack
 
+### Languages
+
+- Javascript - Frontend and backend language
+- HTML - Markup language in frontend
+- CSS & SCSS - For styling purposes
+- JSON - For data structure
+
 ### Frontend
 
-- ReactJs, React Redux, Redux Saga, Material UI
+- Vite - Frontend tooling with HMR for faster development
+- ReactJs - Frontend core framework
+- React Redux - For state management in reactJS
+- Redux Saga - Side Effects management in Redux
+- Material UI - Library UI components
+- SCSS - For CSS preprocessor
 
 ### Backend
 
-- NodeJS, ExpressJS, Xendit Payment, Cloudinary, Socket.IO
+- NodeJS & ExpressJS - Web app framework in javascript runtime
+- Xendit Payment Gateway - For payment gateway solution
+- Cloudinary - For file storing and host solution
+- Socket.IO - For enabling bidirectional connection for real-time communication between frontend and backend
 
 ### Database & Cache
 
-- Sequelize ORM, MySQL, Redis
+- Sequelize ORM - Library for database management tool for managing database solution
+- MySQL - Open source RDBMS for storing datas
+- Redis - For caching solution to reduce database load
 
 ## Setup Project
 
@@ -29,22 +46,7 @@ Live Auction with Auccommerce in real time bid
 > 1. Start mysql server and redis server first to continue
 > 2. write .env config to config the server
 >
-> `NODEJS_PORT=<port>` </br>
-> `NODE_ENV=<development | test | production>` </br>
-> `MYSQL_CONFIG_HOST=<dbHost>` </br>
-> `MYSQL_CONFIG_USER=<dbUser>` </br>
-> `MYSQL_CONFIG_PASSWORD=<dbPassword>` </br>
-> `MYSQL_CONFIG_DATABASE_DEV=<dbNameDev>` </br>
-> `MYSQL_CONFIG_DATABASE_TEST=<dbNameTest>` </br>
-> `MYSQL_CONFIG_DATABASE_PROD=<dbNameProd>` </br>
-> `MYSQL_CONFIG_DIALECT=<msql>` </br>
-> `MYSQL_CONFIG_PORT=<dbPort>` </br>
-> `MYSQL_CONFIG_CONNECTION_LIMIT=<default '1'>` </br>
-> `JWT_SECRET_TOKEN=<tokenSecrete>` </br>
-> `JWT_EXPIRES_IN=<default '30d'>` </br>
-> `CRYPTO_SECRET=<encryptSecret>` </br>
-> `PAYMENT_FORM_SIGN_KEY=<paymentTokenSecret>` </br>
-> `XENDIT_SECRET_KEY=<xenditSecretKey - "get xendit key from xendit dashboard, go to settings > API Keys > API Keys section > click Generate secret key > set API key name > set all permissions to write except money-out products > copy generated key"` 
+> `NODEJS_PORT=<port>` </br> > `NODE_ENV=<development | test | production>` </br> > `MYSQL_CONFIG_HOST=<dbHost>` </br> > `MYSQL_CONFIG_USER=<dbUser>` </br> > `MYSQL_CONFIG_PASSWORD=<dbPassword>` </br> > `MYSQL_CONFIG_DATABASE_DEV=<dbNameDev>` </br> > `MYSQL_CONFIG_DATABASE_TEST=<dbNameTest>` </br> > `MYSQL_CONFIG_DATABASE_PROD=<dbNameProd>` </br> > `MYSQL_CONFIG_DIALECT=<msql>` </br> > `MYSQL_CONFIG_PORT=<dbPort>` </br> > `MYSQL_CONFIG_CONNECTION_LIMIT=<default '1'>` </br> > `JWT_SECRET_TOKEN=<tokenSecrete>` </br> > `JWT_EXPIRES_IN=<default '30d'>` </br> > `CRYPTO_SECRET=<encryptSecret>` </br> > `PAYMENT_FORM_SIGN_KEY=<paymentTokenSecret>` </br> > `XENDIT_SECRET_KEY=<xenditSecretKey - "get xendit key from xendit dashboard, go to settings > API Keys > API Keys section > click Generate secret key > set API key name > set all permissions to write except money-out products > copy generated key"`
 >
 > 2. execute `npm i --save`
 > 3. execute `npx sequelize-cli db:create`
