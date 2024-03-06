@@ -46,7 +46,15 @@ Live Auction with Auccommerce in real time bid. Live bid using socket io connect
 > 1. Start mysql server and redis server first to continue
 > 2. write .env config to config the server
 >
-> `NODEJS_PORT=<port>` </br> > `NODE_ENV=<development | test | production>` </br> > `MYSQL_CONFIG_HOST=<dbHost>` </br> > `MYSQL_CONFIG_USER=<dbUser>` </br> > `MYSQL_CONFIG_PASSWORD=<dbPassword>` </br> > `MYSQL_CONFIG_DATABASE_DEV=<dbNameDev>` </br> > `MYSQL_CONFIG_DATABASE_TEST=<dbNameTest>` </br> > `MYSQL_CONFIG_DATABASE_PROD=<dbNameProd>` </br> > `MYSQL_CONFIG_DIALECT=<msql>` </br> > `MYSQL_CONFIG_PORT=<dbPort>` </br> > `MYSQL_CONFIG_CONNECTION_LIMIT=<default '1'>` </br> > `JWT_SECRET_TOKEN=<tokenSecrete>` </br> > `JWT_EXPIRES_IN=<default '30d'>` </br> > `CRYPTO_SECRET=<encryptSecret>` </br> > `PAYMENT_FORM_SIGN_KEY=<paymentTokenSecret>` </br> > `XENDIT_SECRET_KEY=<xenditSecretKey - "get xendit key from xendit dashboard, go to settings > API Keys > API Keys section > click Generate secret key > set API key name > set all permissions to write except money-out products > copy generated key"`
+> `NODEJS_PORT=<port>` </br> 
+`NODE_ENV=<development | test | production>` </br> 
+`MYSQL_CONFIG_HOST=<dbHost>` </br> 
+`MYSQL_CONFIG_USER=<dbUser>` </br> 
+`MYSQL_CONFIG_PASSWORD=<dbPassword>` </br> 
+`MYSQL_CONFIG_DATABASE_DEV=<dbNameDev>` </br> 
+`MYSQL_CONFIG_DATABASE_TEST=<dbNameTest>` </br> 
+`MYSQL_CONFIG_DATABASE_PROD=<dbNameProd>` </br>
+`MYSQL_CONFIG_DIALECT=<msql>` </br> `MYSQL_CONFIG_PORT=<dbPort>` </br> `MYSQL_CONFIG_CONNECTION_LIMIT=<default '1'>` </br> `JWT_SECRET_TOKEN=<tokenSecrete>` </br> `JWT_EXPIRES_IN=<default '30d'>` </br> `CRYPTO_SECRET=<encryptSecret>` </br> `PAYMENT_FORM_SIGN_KEY=<paymentTokenSecret>` </br> `XENDIT_SECRET_KEY=<xenditSecretKey - "get xendit key from xendit dashboard, go to settings > API Keys > API Keys section > click Generate secret key > set API key name > set all permissions to write except money-out products > copy generated key"`
 >
 > 2. execute `npm i --save`
 > 3. execute `npx sequelize-cli db:create`
