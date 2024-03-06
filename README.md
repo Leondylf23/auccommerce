@@ -2,6 +2,55 @@
 
 Live Auction with Auccommerce in real time bid
 
+## Tech Stack
+
+### Frontend
+
+- ReactJs, React Redux, Redux Saga, Material UI
+
+### Backend
+
+- NodeJS, ExpressJS, Xendit Payment, Cloudinary, Socket.IO
+
+### Database & Cache
+
+- Sequelize ORM, MySQL, Redis
+
+## Setup Project
+
+### Setup Frontend
+
+> 1. execute `npm install --save`
+> 2. execute `npm start`
+> 3. access `localhost:<port>`
+
+### Setup Backend
+
+> 1. Start mysql server and redis server first to continue
+> 2. write .env config to config the server
+>
+> `NODEJS_PORT=<port>` </br>
+> `NODE_ENV=<development | test | production>` </br>
+> `MYSQL_CONFIG_HOST=<dbHost>` </br>
+> `MYSQL_CONFIG_USER=<dbUser>` </br>
+> `MYSQL_CONFIG_PASSWORD=<dbPassword>` </br>
+> `MYSQL_CONFIG_DATABASE_DEV=<dbNameDev>` </br>
+> `MYSQL_CONFIG_DATABASE_TEST=<dbNameTest>` </br>
+> `MYSQL_CONFIG_DATABASE_PROD=<dbNameProd>` </br>
+> `MYSQL_CONFIG_DIALECT=<msql>` </br>
+> `MYSQL_CONFIG_PORT=<dbPort>` </br>
+> `MYSQL_CONFIG_CONNECTION_LIMIT=<default '1'>` </br>
+> `JWT_SECRET_TOKEN=<tokenSecrete>` </br>
+> `JWT_EXPIRES_IN=<default '30d'>` </br>
+> `CRYPTO_SECRET=<encryptSecret>` </br>
+> `PAYMENT_FORM_SIGN_KEY=<paymentTokenSecret>` </br>
+> `XENDIT_SECRET_KEY=<xenditSecretKey - "get xendit key from xendit dashboard, go to settings > API Keys > API Keys section > click Generate secret key > set API key name > set all permissions to write except money-out products > copy generated key"` 
+>
+> 2. execute `npm i --save`
+> 3. execute `npx sequelize-cli db:create`
+> 4. execute `npx sequelize-cli db:migrate`
+> 5. execute `npm start` to start the server
+> 6. to access the server, access using endpoint `locahost:<port>/api/`
 
 ## Screenshots Pages
 
@@ -10,13 +59,10 @@ Live Auction with Auccommerce in real time bid
 Halaman home page untuk mencari barang lelang yang sudah didaftarkan di web
 ![App Screenshot](https://res.cloudinary.com/dwyzuwtel/image/upload/v1709485695/Screenshot_2024-03-03_231503_zxdmnt.png)
 
-
-
 #### Item Detail
 
 Halaman detail barang untuk menampilkan informasi barang sperti gambar dan beberapa deskripsi. Jika user sudah login, tekan gabung lelang live untuk ikut siaran lelang yang secara langsung.
 ![App Screenshot](https://res.cloudinary.com/dwyzuwtel/image/upload/v1709485694/Screenshot_2024-03-03_190836_xktn5h.png)
-
 
 #### Item Detail Live Bid
 
@@ -42,6 +88,7 @@ Halaman yang menampilkan status dan data transaksi yang sudah dilakukan
 ![App Screenshot](https://res.cloudinary.com/dwyzuwtel/image/upload/v1709485696/Screenshot_2024-03-03_192016_femcya.png)
 
 #### Profile
+
 Halaman untuk mengubah informasi profil. User dapat menambahkan foto dengan menekan tobol ganti gambar. Setelah beberapa informasi sudah diganti, tekan tombol simpan.
 User juga dapat menambah alamat dengan tekan tombol tambah dan popup form akan muncul User juga dapat mengubah informasi alamat dengan menekan tombol pensil, serta dapat menghapus alamat dengan menekan tombol merah. User juga dapat mengubah password dengan memasukkan password lama terlebih dahulu dan password baru dan juga konfirmasi password. setelah itu, user menekan tombol simpan di bawah field.
 ![App Screenshot](https://res.cloudinary.com/dwyzuwtel/image/upload/v1709485694/Screenshot_2024-03-03_191833_bwd5xc.png)
